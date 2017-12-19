@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Movieteca</string>
+
+    <string name="key">01a0f811358384a096f01f4ec867116b</string>
+    <string name="url">https://api.themoviedb.org/3/</string>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
+
 </resources>

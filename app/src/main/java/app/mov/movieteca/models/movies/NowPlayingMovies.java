@@ -6,26 +6,26 @@ import java.util.List;
  * Created by Catalin on 12/20/2017.
  */
 
-public class SimilarMovies {
+public class NowPlayingMovies {
 
-    private Integer page;
+    private Integer id;
     private List<MovieShort> results;
     private Integer total_pages;
     private Integer total_results;
 
-    public SimilarMovies(Integer page, List<MovieShort> results, Integer total_pages, Integer total_results) {
-        this.page = page;
+    public NowPlayingMovies(Integer id, List<MovieShort> results, Integer total_pages, Integer total_results) {
+        this.id = id;
         this.results = results;
         this.total_pages = total_pages;
         this.total_results = total_results;
     }
 
-    public Integer getPage() {
-        return page;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<MovieShort> getResults() {

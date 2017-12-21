@@ -1,9 +1,10 @@
 package app.mov.movieteca.retronetwork;
 
 import app.mov.movieteca.models.movies.Genres;
+import app.mov.movieteca.models.movies.GenresList;
 import app.mov.movieteca.models.movies.Movie;
 import app.mov.movieteca.models.movies.MovieCredits;
-import app.mov.movieteca.models.movies.NowShowingMovies;
+import app.mov.movieteca.models.movies.NowPlayingMovies;
 import app.mov.movieteca.models.movies.PopularMovies;
 import app.mov.movieteca.models.movies.SimilarMovies;
 import app.mov.movieteca.models.movies.TopRatedMovies;
@@ -25,12 +26,12 @@ import retrofit2.http.Query;
  * Created by Catalin on 12/7/2017.
  */
 
-public interface NetworkInterface {
+public interface NetworkService {
 
     /* For movies */
 
     @GET("movie/now_playing")
-    Call<NowShowingMovies> getNowShowingMovies(@Query("api_key") String apiKey, @Query("page") Integer page, @Query("region") String region);
+    Call<NowPlayingMovies> getNowShowingMovies(@Query("api_key") String apiKey, @Query("page") Integer page, @Query("region") String region);
 
     @GET("movie/popular")
     Call<PopularMovies> getPopularMovies(@Query("api_key") String apiKey, @Query("page") Integer page, @Query("region") String region);
@@ -54,7 +55,7 @@ public interface NetworkInterface {
     Call<SimilarMovies> getSimilarMovies(@Path("id") Integer movieId, @Query("api_key") String apiKey, @Query("page") Integer page);
 
     @GET("genre/movie/list")
-    Call<Genres> getMovieGenresList(@Query("api_key") String apiKey);
+    Call<GenresList> getMovieGenresList(@Query("api_key") String apiKey);
 
 
     /* For tv shows */

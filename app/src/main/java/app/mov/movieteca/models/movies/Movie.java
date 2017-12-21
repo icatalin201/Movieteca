@@ -8,29 +8,29 @@ import java.util.List;
 
 public class Movie {
 
-    private boolean adult;
-    private int budget;
-    List<Genres> genres;
-    private int id;
+    private Boolean adult;
+    private Integer budget;
+    private List<Genres> genres;
+    private Integer id;
     private String imdb_id;
     private String original_language;
     private String original_title;
     private String overview;
-    private double popularity;
+    private Double popularity;
     private String poster_path;
     private String release_date;
-    private int revenue;
-    private int runtime;
+    private Integer revenue;
+    private Integer runtime;
     private String status;
     private String tagline;
     private String title;
-    private double vote_average;
-    private int vote_count;
+    private Double vote_average;
+    private Integer vote_count;
 
-    public Movie(boolean adult, int budget, List<Genres> genres, int id, String imdb_id,
-                 String original_language, String original_title, String overview, double popularity,
-                 String poster_path, String release_date, int revenue, int runtime, String status,
-                 String tagline, String title, double vote_average, int vote_count) {
+    public Movie(Boolean adult, Integer budget, List<Genres> genres, Integer id, String imdb_id,
+                 String original_language, String original_title, String overview, Double popularity,
+                 String poster_path, String release_date, Integer revenue, Integer runtime, String status,
+                 String tagline, String title, Double vote_average, Integer vote_count) {
         this.adult = adult;
         this.budget = budget;
         this.genres = genres;
@@ -51,19 +51,19 @@ public class Movie {
         this.vote_count = vote_count;
     }
 
-    public boolean isAdult() {
+    public Boolean getAdult() {
         return adult;
     }
 
-    public void setAdult(boolean adult) {
+    public void setAdult(Boolean adult) {
         this.adult = adult;
     }
 
-    public int getBudget() {
+    public Integer getBudget() {
         return budget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(Integer budget) {
         this.budget = budget;
     }
 
@@ -75,11 +75,11 @@ public class Movie {
         this.genres = genres;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -115,11 +115,11 @@ public class Movie {
         this.overview = overview;
     }
 
-    public double getPopularity() {
+    public Double getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(double popularity) {
+    public void setPopularity(Double popularity) {
         this.popularity = popularity;
     }
 
@@ -139,19 +139,19 @@ public class Movie {
         this.release_date = release_date;
     }
 
-    public int getRevenue() {
+    public Integer getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(int revenue) {
+    public void setRevenue(Integer revenue) {
         this.revenue = revenue;
     }
 
-    public int getRuntime() {
+    public Integer getRuntime() {
         return runtime;
     }
 
-    public void setRuntime(int runtime) {
+    public void setRuntime(Integer runtime) {
         this.runtime = runtime;
     }
 
@@ -179,19 +179,19 @@ public class Movie {
         this.title = title;
     }
 
-    public double getVote_average() {
+    public Double getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(double vote_average) {
+    public void setVote_average(Double vote_average) {
         this.vote_average = vote_average;
     }
 
-    public int getVote_count() {
+    public Integer getVote_count() {
         return vote_count;
     }
 
-    public void setVote_count(int vote_count) {
+    public void setVote_count(Integer vote_count) {
         this.vote_count = vote_count;
     }
 }

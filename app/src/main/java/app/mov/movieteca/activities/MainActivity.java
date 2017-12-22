@@ -8,19 +8,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.fragments.About;
 import app.mov.movieteca.fragments.Home;
-import app.mov.movieteca.models.movies.Movie;
-import app.mov.movieteca.retronetwork.NetworkClient;
-import app.mov.movieteca.retronetwork.NetworkService;
-import app.mov.movieteca.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

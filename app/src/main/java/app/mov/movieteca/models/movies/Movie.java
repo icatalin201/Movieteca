@@ -17,6 +17,7 @@ public class Movie {
     private String original_title;
     private String overview;
     private Double popularity;
+    private String backdrop_path;
     private String poster_path;
     private String release_date;
     private Integer revenue;
@@ -29,8 +30,8 @@ public class Movie {
 
     public Movie(Boolean adult, Integer budget, List<Genres> genres, Integer id, String imdb_id,
                  String original_language, String original_title, String overview, Double popularity,
-                 String poster_path, String release_date, Integer revenue, Integer runtime, String status,
-                 String tagline, String title, Double vote_average, Integer vote_count) {
+                 String backdrop_path, String poster_path, String release_date, Integer revenue,
+                 Integer runtime, String status, String tagline, String title, Double vote_average, Integer vote_count) {
         this.adult = adult;
         this.budget = budget;
         this.genres = genres;
@@ -40,6 +41,7 @@ public class Movie {
         this.original_title = original_title;
         this.overview = overview;
         this.popularity = popularity;
+        this.backdrop_path = backdrop_path;
         this.poster_path = poster_path;
         this.release_date = release_date;
         this.revenue = revenue;
@@ -121,6 +123,14 @@ public class Movie {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
+    }
+
+    public String getBackdrop_path() {
+        return backdrop_path;
+    }
+
+    public void setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
     }
 
     public String getPoster_path() {

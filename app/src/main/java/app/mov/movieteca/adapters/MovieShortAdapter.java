@@ -1,9 +1,12 @@
 package app.mov.movieteca.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,9 +21,11 @@ import java.io.InputStream;
 import java.util.List;
 
 import app.mov.movieteca.R;
+import app.mov.movieteca.fragments.FullDetailMovie;
 import app.mov.movieteca.models.movies.MovieShort;
 import app.mov.movieteca.utils.Constants;
 import app.mov.movieteca.utils.GenresUtil;
+import app.mov.movieteca.utils.Helper;
 
 /**
  * Created by Catalin on 12/21/2017.
@@ -38,7 +43,7 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_item_info, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_item_card, parent, false);
         return new MovieViewHolder(view);
     }
 
@@ -58,7 +63,7 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
             holder.movieRatingTextView.setVisibility(View.GONE);
         }
         if (movies.get(position).getRelease_date() != null){
-            holder.releaseDate.setText("Release date: ".concat(movies.get(position).getRelease_date()));
+            holder.releaseDate.setText("Release date: ".concat(Helper.formatDate(movies.get(position).getRelease_date())));
         }
         else {
             holder.releaseDate.setText("");
@@ -70,6 +75,7 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
     public int getItemCount() {
         return movies.size();
     }
+
 
     private void setGenres(MovieViewHolder holder, MovieShort movie) {
         String genreString = "";
@@ -108,6 +114,19 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
                 @Override
                 public void onClick(View view) {
                     favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
+                }
+            });
+
+            movieCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("movies", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(Constants.movie_id, movies.get(getAdapterPosition()).getId());
+                    editor.commit();
+                    FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.FragmentContainer, new FullDetailMovie()).commit();
                 }
             });
         }

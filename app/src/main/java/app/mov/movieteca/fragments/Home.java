@@ -3,16 +3,14 @@ package app.mov.movieteca.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,7 @@ import app.mov.movieteca.retronetwork.NetworkClient;
 import app.mov.movieteca.retronetwork.NetworkService;
 import app.mov.movieteca.utils.Constants;
 import app.mov.movieteca.utils.GenresUtil;
+import app.mov.movieteca.utils.Helper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,22 +38,15 @@ import retrofit2.Response;
 
 public class Home extends Fragment {
 
-    private FrameLayout nowPlayingLayout;
     private RecyclerView nowPlayingRecycler;
     private List<MovieShort> nowPlayingMovies;
     private MovieShortAdapter nowPlayingAdapter;
-
-    private FrameLayout popularLayout;
     private RecyclerView popularRecycler;
     private List<MovieShort> popularMovies;
     private MovieShortAdapter popularAdapter;
-
-    private FrameLayout topRatedLayout;
     private RecyclerView topRatedRecycler;
     private List<MovieShort> topRatedMovies;
     private MovieShortAdapter topRatedAdapter;
-
-    private FrameLayout upcomingLayout;
     private RecyclerView upcomingRecycler;
     private List<MovieShort> upcomingMovies;
     private MovieShortAdapter upcomingAdapter;
@@ -64,7 +56,9 @@ public class Home extends Fragment {
     private TextView upcomingViewAll;
     private TextView popularViewAll;
 
-    private List<Boolean> isJobDone;
+    private ScrollView layout;
+
+    private boolean[] isJobDone;
     private ProgressBar progressBar;
 
     private Call<GenresList> genreListCall;
@@ -76,24 +70,26 @@ public class Home extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        nowPlayingLayout = (FrameLayout)view.findViewById(R.id.layout_now_showing);
         nowPlayingRecycler = (RecyclerView)view.findViewById(R.id.recycler_now_showing);
-        popularLayout = (FrameLayout)view.findViewById(R.id.layout_popular);
         popularRecycler = (RecyclerView)view.findViewById(R.id.recycler_popular);
-        topRatedLayout = (FrameLayout)view.findViewById(R.id.layout_top_rated);
         topRatedRecycler = (RecyclerView)view.findViewById(R.id.recycler_top_rated);
-        upcomingLayout = (FrameLayout)view.findViewById(R.id.layout_upcoming);
         upcomingRecycler = (RecyclerView)view.findViewById(R.id.recycler_upcoming);
-        isJobDone = new ArrayList<>(4);
+        layout = (ScrollView)view.findViewById(R.id.entire_layout);
+        isJobDone = new boolean[]{false, false, false, false};
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setIndeterminate(true);
         progressBar.setMax(100);
-
+        getActivity().setTitle("Movieteca");
         nowPlayingViewAll = (TextView)view.findViewById(R.id.text_view_view_all);
         topRatedViewAll = (TextView)view.findViewById(R.id.top_rated_view_all);
         upcomingViewAll = (TextView)view.findViewById(R.id.upcoming_view_all) ;
         popularViewAll = (TextView)view.findViewById(R.id.popular_view_all);
+
+        (new LinearSnapHelper()).attachToRecyclerView(nowPlayingRecycler);
+        (new LinearSnapHelper()).attachToRecyclerView(popularRecycler);
+        (new LinearSnapHelper()).attachToRecyclerView(topRatedRecycler);
+        (new LinearSnapHelper()).attachToRecyclerView(upcomingRecycler);
 
         nowPlayingMovies = new ArrayList<>();
         nowPlayingAdapter = new MovieShortAdapter(getContext(), nowPlayingMovies);
@@ -118,28 +114,32 @@ public class Home extends Fragment {
         nowPlayingViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("check", "pressed");
+                Constants.movieType = "now_playing";
+                Helper.changeFragment(getContext(), new FullList());
             }
         });
 
         popularViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Constants.movieType = "popular";
+                Helper.changeFragment(getContext(), new FullList());
             }
         });
 
         topRatedViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Constants.movieType = "top_rated";
+                Helper.changeFragment(getContext(), new FullList());
             }
         });
 
         upcomingViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Constants.movieType = "upcoming";
+                Helper.changeFragment(getContext(), new FullList());
             }
         });
 
@@ -171,22 +171,18 @@ public class Home extends Fragment {
     }
 
     private void checkJobDone(){
-        Boolean check = false;
-        for (Boolean flag : isJobDone){
+        boolean check = false;
+        for (boolean flag : isJobDone){
             if (flag){
                 check = true;
+            }
+            else {
+                check = false;
             }
         }
         if (check){
             progressBar.setVisibility(View.GONE);
-            nowPlayingRecycler.setVisibility(View.VISIBLE);
-            nowPlayingLayout.setVisibility(View.VISIBLE);
-            popularRecycler.setVisibility(View.VISIBLE);
-            popularLayout.setVisibility(View.VISIBLE);
-            topRatedLayout.setVisibility(View.VISIBLE);
-            topRatedRecycler.setVisibility(View.VISIBLE);
-            upcomingLayout.setVisibility(View.VISIBLE);
-            upcomingRecycler.setVisibility(View.VISIBLE);
+            layout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -209,9 +205,9 @@ public class Home extends Fragment {
                         upcomingMovies.add(movieShort);
                     }
                 }
-                isJobDone.add(true);
-                checkJobDone();
+                isJobDone[0] = true;
                 upcomingAdapter.notifyDataSetChanged();
+                checkJobDone();
             }
 
             @Override
@@ -240,9 +236,9 @@ public class Home extends Fragment {
                         topRatedMovies.add(movieShort);
                     }
                 }
-                isJobDone.add(true);
-                checkJobDone();
+                isJobDone[1] = true;
                 topRatedAdapter.notifyDataSetChanged();
+                checkJobDone();
             }
 
             @Override
@@ -271,9 +267,9 @@ public class Home extends Fragment {
                         popularMovies.add(movieShort);
                     }
                 }
-                isJobDone.add(true);
-                checkJobDone();
+                isJobDone[2] = true;
                 popularAdapter.notifyDataSetChanged();
+                checkJobDone();
             }
 
             @Override
@@ -303,9 +299,9 @@ public class Home extends Fragment {
                         nowPlayingMovies.add(movieShort);
                     }
                 }
-                isJobDone.add(true);
-                checkJobDone();
+                isJobDone[3] = true;
                 nowPlayingAdapter.notifyDataSetChanged();
+                checkJobDone();
             }
 
             @Override

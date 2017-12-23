@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import app.mov.movieteca.R;
 import app.mov.movieteca.fragments.FullDetailMovie;
 import app.mov.movieteca.models.movies.MovieShort;
 import app.mov.movieteca.utils.Constants;
+import app.mov.movieteca.utils.Helper;
 
 /**
  * Created by Catalin on 12/22/2017.
@@ -46,7 +50,11 @@ public class MovieSimilarAdapter extends RecyclerView.Adapter<MovieSimilarAdapte
 
     @Override
     public void onBindViewHolder(MovieSimilarAdapter.MovieSimilarViewHolder holder, int position) {
-        new GetImage(holder.imageView).execute(Constants.IMAGE_LOADING_BASE_URL_780 + movieShortList.get(position).getBackdrop_path());
+        Glide.with(context.getApplicationContext()).load(Constants.IMAGE_LOADING_BASE_URL_342.concat(movieShortList.get(position).getBackdrop_path()))
+                .asBitmap()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.imageView);
         if (movieShortList.get(position).getOriginal_title() != null){
             holder.similarText.setText(movieShortList.get(position).getOriginal_title());
         }
@@ -76,38 +84,9 @@ public class MovieSimilarAdapter extends RecyclerView.Adapter<MovieSimilarAdapte
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(Constants.movie_id, movieShortList.get(getAdapterPosition()).getId());
                     editor.commit();
-                    FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.FragmentContainer, new FullDetailMovie()).commit();
+                    Helper.changeFragment(context, new FullDetailMovie());
                 }
             });
-        }
-    }
-
-    private class GetImage extends AsyncTask<String, Void, Bitmap> {
-
-        ImageView bmImage;
-
-        public GetImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
         }
     }
 }

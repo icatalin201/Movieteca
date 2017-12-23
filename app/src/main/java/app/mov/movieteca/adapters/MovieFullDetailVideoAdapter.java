@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.InputStream;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -49,7 +52,13 @@ public class MovieFullDetailVideoAdapter extends RecyclerView.Adapter<MovieFullD
 
     @Override
     public void onBindViewHolder(MovieFullDetailViewHolder holder, int position) {
-        new GetImage(holder.trailerImage).execute(Constants.YOUTUBE_THUMBNAIL_BASE_URL + videosList.get(position).getKey() + Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY);
+        Glide.with(context.getApplicationContext()).load(Constants.YOUTUBE_THUMBNAIL_BASE_URL
+                + videosList.get(position).getKey()
+                + Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY)
+                .asBitmap()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.trailerImage);
         if (videosList.get(position).getName() != null) {
             holder.trailerInfo.setText(videosList.get(position).getName());
         }
@@ -85,30 +94,4 @@ public class MovieFullDetailVideoAdapter extends RecyclerView.Adapter<MovieFullD
         }
     }
 
-    private class GetImage extends AsyncTask<String, Void, Bitmap> {
-
-        ImageView bmImage;
-
-        public GetImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 }

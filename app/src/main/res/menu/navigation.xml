@@ -1,26 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/nav1"
-        android:icon="@mipmap/ic_info_black_24dp"
-        android:title="Home"
-        android:background="?selectableItemBackground">
-    </item>
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav1"
+            android:icon="@mipmap/ic_info_black_24dp"
+            android:title="Movies"
+            android:background="?selectableItemBackground">
+        </item>
 
-    <item
-        android:id="@+id/nav2"
-        android:icon="@mipmap/ic_info_black_24dp"
-        android:title="About"
-        android:background="?selectableItemBackground">
-    </item>
+        <item
+            android:id="@+id/nav2"
+            android:icon="@mipmap/ic_info_black_24dp"
+            android:title="TvShows"
+            android:background="?selectableItemBackground">
+        </item>
+    </group>
 
-    <item
-        android:id="@+id/nav3"
-        android:icon="@mipmap/ic_info_black_24dp"
-        android:title="Optiune3"
-        android:background="?selectableItemBackground">
-    </item>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav3"
+            android:icon="@mipmap/ic_info_black_24dp"
+            android:title="Favorites"
+            android:background="?selectableItemBackground">
+        </item>
+    </group>
+    <group
+        android:id="@+id/group3"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav4"
+            android:icon="@mipmap/ic_info_black_24dp"
+            android:title="Seen"
+            android:background="?selectableItemBackground">
+        </item>
+    </group>
+    <group
+        android:id="@+id/group4"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav5"
+            android:icon="@mipmap/ic_info_black_24dp"
+            android:title="About"
+            android:background="?selectableItemBackground">
+        </item>
+    </group>
 
 
 </menu>

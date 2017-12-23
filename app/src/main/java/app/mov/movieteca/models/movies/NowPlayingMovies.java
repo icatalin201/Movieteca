@@ -8,24 +8,24 @@ import java.util.List;
 
 public class NowPlayingMovies {
 
-    private Integer id;
+    private Integer page;
     private List<MovieShort> results;
     private Integer total_pages;
     private Integer total_results;
 
-    public NowPlayingMovies(Integer id, List<MovieShort> results, Integer total_pages, Integer total_results) {
-        this.id = id;
+    public NowPlayingMovies(Integer page, List<MovieShort> results, Integer total_pages, Integer total_results) {
+        this.page = page;
         this.results = results;
         this.total_pages = total_pages;
         this.total_results = total_results;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer page) {
+        this.page = page;
     }
 
     public List<MovieShort> getResults() {

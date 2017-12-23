@@ -12,7 +12,9 @@ import android.view.MenuItem;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.fragments.About;
+import app.mov.movieteca.fragments.Favorites;
 import app.mov.movieteca.fragments.Home;
+import app.mov.movieteca.utils.Helper;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -58,16 +60,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new Home();
                 break;
             case R.id.nav2:
+                //fragment = new Shows();
+                break;
+            case R.id.nav3:
+                fragment = new Favorites();
+                break;
+            case R.id.nav4:
+                //fragment = new Seen();
+                break;
+            case R.id.nav5:
                 fragment = new About();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.FragmentContainer, fragment).commit();
-
+            Helper.changeFragment(this, fragment);
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

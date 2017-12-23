@@ -1,5 +1,9 @@
 package app.mov.movieteca.retronetwork;
 
+import app.mov.movieteca.models.cast.MovieCastsDetails;
+import app.mov.movieteca.models.cast.Person;
+import app.mov.movieteca.models.cast.ShowCastsDetails;
+import app.mov.movieteca.models.cast.TVCastsDetails;
 import app.mov.movieteca.models.movies.Genres;
 import app.mov.movieteca.models.movies.GenresList;
 import app.mov.movieteca.models.movies.Movie;
@@ -86,5 +90,15 @@ public interface NetworkService {
 
     @GET("genre/tv/list")
     Call<app.mov.movieteca.models.tvshows.Genres> getTVShowGenresList(@Query("api_key") String apiKey);
+
+    /* For Casts */
+    @GET("person/{id}")
+    Call<Person> getPersonDetails(@Path("id") Integer personId, @Query("api_key") String apiKey);
+
+    @GET("person/{id}/movie_credits")
+    Call<MovieCastsDetails> getMovieCastsOfPerson(@Path("id") Integer personId, @Query("api_key") String apiKey);
+
+    @GET("person/{id}/tv_credits")
+    Call<ShowCastsDetails> getTVCastsOfPerson(@Path("id") Integer personId, @Query("api_key") String apiKey);
 
 }

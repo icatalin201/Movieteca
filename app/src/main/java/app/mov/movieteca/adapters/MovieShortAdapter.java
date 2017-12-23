@@ -2,6 +2,7 @@ package app.mov.movieteca.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +19,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.InputStream;
 import java.util.List;
 
 import app.mov.movieteca.R;
+import app.mov.movieteca.database.FavoritesHandler;
 import app.mov.movieteca.fragments.FullDetailMovie;
 import app.mov.movieteca.models.movies.MovieShort;
 import app.mov.movieteca.utils.Constants;
@@ -50,9 +56,13 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
-        new GetImage(holder.movieImageView).execute(Constants.IMAGE_LOADING_BASE_URL_780 + movies.get(position).getBackdrop_path());
-        if (movies.get(position).getTitle() != null)
-            holder.movieTitleTextView.setText(movies.get(position).getTitle());
+        Glide.with(context.getApplicationContext()).load(Constants.IMAGE_LOADING_BASE_URL_342.concat(movies.get(position).getBackdrop_path()))
+                .asBitmap()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.movieImageView);
+        if (movies.get(position).getOriginal_title() != null)
+            holder.movieTitleTextView.setText(movies.get(position).getOriginal_title());
         else {
             holder.movieTitleTextView.setText("");
         }
@@ -69,6 +79,14 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
             holder.releaseDate.setText("");
         }
         setGenres(holder, movies.get(position));
+        if (FavoritesHandler.isMovieFav(context, "movie", movies.get(position).getId())){
+            holder.favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
+            holder.favButton.setTag("favorit");
+        }
+        else {
+            holder.favButton.setImageResource(R.drawable.ic_favorite_border_black_18dp);
+            holder.favButton.setTag("nefavorit");
+        }
     }
 
     @Override
@@ -113,7 +131,18 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
             favButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
+                    view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                    if (favButton.getTag().equals("favorit")){
+                        FavoritesHandler.removeMovieFromFavorites(context, "movie", movies.get(getAdapterPosition()).getId());
+                        favButton.setTag("nefavorit");
+                        favButton.setImageResource(R.drawable.ic_favorite_border_black_18dp);
+                    }
+                    else if (favButton.getTag().equals("nefavorit")){
+                        FavoritesHandler.addMovieToFavorites(context, "movie", movies.get(getAdapterPosition()).getId(),
+                                movies.get(getAdapterPosition()).getTitle(), movies.get(getAdapterPosition()).getBackdrop_path());
+                        favButton.setTag("favorit");
+                        favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
+                    }
                 }
             });
 
@@ -124,38 +153,9 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(Constants.movie_id, movies.get(getAdapterPosition()).getId());
                     editor.commit();
-                    FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.FragmentContainer, new FullDetailMovie()).commit();
+                    Helper.changeFragment(context, new FullDetailMovie());
                 }
             });
-        }
-    }
-
-    private class GetImage extends AsyncTask<String, Void, Bitmap>{
-
-        ImageView bmImage;
-
-        public GetImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
         }
     }
 }

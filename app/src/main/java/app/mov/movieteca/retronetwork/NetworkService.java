@@ -80,7 +80,7 @@ public interface NetworkService {
     Call<TVShow> getTVShowDetails(@Path("id") Integer tvShowId, @Query("api_key") String apiKey);
 
     @GET("tv/{id}/videos")
-    Call<app.mov.movieteca.models.tvshows.Videos> getTVShowVideos(@Path("id") Integer movieId, @Query("api_key") String apiKey);
+    Call<Videos> getTVShowVideos(@Path("id") Integer movieId, @Query("api_key") String apiKey);
 
     @GET("tv/{id}/credits")
     Call<TVShowCredits> getTVShowCredits(@Path("id") Integer movieId, @Query("api_key") String apiKey);
@@ -89,7 +89,7 @@ public interface NetworkService {
     Call<SimilarTVShows> getSimilarTVShows(@Path("id") Integer movieId, @Query("api_key") String apiKey, @Query("page") Integer page);
 
     @GET("genre/tv/list")
-    Call<app.mov.movieteca.models.tvshows.Genres> getTVShowGenresList(@Query("api_key") String apiKey);
+    Call<Genres> getTVShowGenresList(@Query("api_key") String apiKey);
 
     /* For Casts */
     @GET("person/{id}")

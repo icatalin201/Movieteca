@@ -19,59 +19,51 @@ import java.util.List;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.database.FavoritesHandler;
-import app.mov.movieteca.fragments.FullDetailMovie;
-import app.mov.movieteca.models.movies.MovieShort;
+import app.mov.movieteca.fragments.FullDetailShow;
+import app.mov.movieteca.models.tvshows.TVShowShort;
 import app.mov.movieteca.utils.Constants;
 import app.mov.movieteca.utils.GenresUtil;
 import app.mov.movieteca.utils.Helper;
 
 /**
- * Created by Catalin on 12/21/2017.
+ * Created by Catalin on 12/24/2017.
  */
 
-public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.MovieViewHolder>{
+public class TVShortAdapter extends RecyclerView.Adapter<TVShortAdapter.TVShortViewHolder> {
 
     private Context context;
-    private List<MovieShort> movies;
+    private List<TVShowShort> tvShowShortList;
 
-    public MovieShortAdapter(Context context, List<MovieShort> movies){
+    public TVShortAdapter(Context context, List<TVShowShort> tvShowShortList){
         this.context = context;
-        this.movies = movies;
+        this.tvShowShortList = tvShowShortList;
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_item_card, parent, false);
-        return new MovieViewHolder(view);
+    public TVShortViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.show_item_card, parent, false);
+        return new TVShortViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-
-        Glide.with(context.getApplicationContext()).load(Constants.IMAGE_LOADING_BASE_URL_342.concat(movies.get(position).getBackdrop_path()))
+    public void onBindViewHolder(TVShortViewHolder holder, int position) {
+        Glide.with(context.getApplicationContext()).load(Constants.IMAGE_LOADING_BASE_URL_342.concat(tvShowShortList.get(position).getBackdrop_path()))
                 .asBitmap()
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.movieImageView);
-        if (movies.get(position).getOriginal_title() != null)
-            holder.movieTitleTextView.setText(movies.get(position).getOriginal_title());
+        if (tvShowShortList.get(position).getOriginal_name() != null)
+            holder.movieTitleTextView.setText(tvShowShortList.get(position).getOriginal_name());
         else {
             holder.movieTitleTextView.setText("");
         }
-        if (movies.get(position).getVote_average() != null && movies.get(position).getVote_average() > 0) {
+        if (tvShowShortList.get(position).getVote_average() != null && tvShowShortList.get(position).getVote_average() > 0) {
             holder.movieRatingTextView.setVisibility(View.VISIBLE);
-            holder.movieRatingTextView.setText(String.format("%.1f", movies.get(position).getVote_average()) + Constants.RATING_SYMBOL);
+            holder.movieRatingTextView.setText(String.format("%.1f", tvShowShortList.get(position).getVote_average()) + Constants.RATING_SYMBOL);
         } else {
             holder.movieRatingTextView.setVisibility(View.GONE);
         }
-        if (movies.get(position).getRelease_date() != null){
-            holder.releaseDate.setText("Release date: ".concat(Helper.formatDate(movies.get(position).getRelease_date())));
-        }
-        else {
-            holder.releaseDate.setText("");
-        }
-        setGenres(holder, movies.get(position));
-        if (FavoritesHandler.isMovieFav(context, "movie", movies.get(position).getId())){
+        if (FavoritesHandler.isMovieFav(context, "tv_show", tvShowShortList.get(position).getId())){
             holder.favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
             holder.favButton.setTag("favorit");
         }
@@ -83,55 +75,37 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return tvShowShortList.size();
     }
 
-
-    private void setGenres(MovieViewHolder holder, MovieShort movie) {
-        String genreString = "";
-        for (int i = 0; i < movie.getGenre_ids().size(); i++) {
-            if (movie.getGenre_ids().get(i) == null) continue;
-            if (GenresUtil.getGenreName(movie.getGenre_ids().get(i)) == null) continue;
-            genreString += GenresUtil.getGenreName(movie.getGenre_ids().get(i)) + ", ";
-        }
-        if (!genreString.isEmpty())
-            holder.movieGenreTextView.setText(genreString.substring(0, genreString.length() - 2));
-        else
-            holder.movieGenreTextView.setText("");
-    }
-
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class TVShortViewHolder extends RecyclerView.ViewHolder {
 
         public CardView movieCard;
         public TextView movieTitleTextView;
         public TextView movieRatingTextView;
-        public TextView movieGenreTextView;
         public ImageView movieImageView;
         public ImageButton favButton;
-        public TextView releaseDate;
 
-        public MovieViewHolder(final View itemView) {
+        public TVShortViewHolder(View itemView) {
             super(itemView);
             movieCard = (CardView) itemView.findViewById(R.id.card_view_show_card);
             movieImageView = (ImageView) itemView.findViewById(R.id.image_view);
             movieTitleTextView = (TextView) itemView.findViewById(R.id.text_view_title_show_card);
             movieRatingTextView = (TextView) itemView.findViewById(R.id.text_view_rating_show_card);
-            movieGenreTextView = (TextView) itemView.findViewById(R.id.text_view_genre_show_card);
             favButton = (ImageButton) itemView.findViewById(R.id.image_button_fav);
-            releaseDate = (TextView) itemView.findViewById(R.id.text_view_release_date);
 
             favButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     if (favButton.getTag().equals("favorit")){
-                        FavoritesHandler.removeMovieFromFavorites(context, "movie", movies.get(getAdapterPosition()).getId());
+                        FavoritesHandler.removeMovieFromFavorites(context, "tv_show", tvShowShortList.get(getAdapterPosition()).getId());
                         favButton.setTag("nefavorit");
                         favButton.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                     }
                     else if (favButton.getTag().equals("nefavorit")){
-                        FavoritesHandler.addMovieToFavorites(context, "movie", movies.get(getAdapterPosition()).getId(),
-                                movies.get(getAdapterPosition()).getOriginal_title(), movies.get(getAdapterPosition()).getBackdrop_path());
+                        FavoritesHandler.addMovieToFavorites(context, "tv_show", tvShowShortList.get(getAdapterPosition()).getId(),
+                                tvShowShortList.get(getAdapterPosition()).getOriginal_name(), tvShowShortList.get(getAdapterPosition()).getBackdrop_path());
                         favButton.setTag("favorit");
                         favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
                     }
@@ -141,11 +115,11 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
             movieCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("movies", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("tv_shows", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(Constants.movie_id, movies.get(getAdapterPosition()).getId());
+                    editor.putInt(Constants.tv_show_id, tvShowShortList.get(getAdapterPosition()).getId());
                     editor.commit();
-                    Helper.changeFragment(context, new FullDetailMovie());
+                    Helper.changeFragment(context, new FullDetailShow());
                 }
             });
         }

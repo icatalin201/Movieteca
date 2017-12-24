@@ -10,6 +10,7 @@ import java.util.List;
 
 import app.mov.movieteca.models.movies.MovieShort;
 import app.mov.movieteca.models.tvshows.TVShow;
+import app.mov.movieteca.models.tvshows.TVShowShort;
 
 /**
  * Created by Catalin on 12/23/2017.
@@ -96,8 +97,8 @@ public class FavoritesHandler {
         return favMovies;
     }
 
-    public static List<TVShow> getTVShowFavoritesList(Context context) {
-        List<TVShow> favShows = new ArrayList<>();
+    public static List<TVShowShort> getTVShowFavoritesList(Context context) {
+        List<TVShowShort> favShows = new ArrayList<>();
         SqlHelper helper = new SqlHelper(context);
         SQLiteDatabase database = helper.getReadableDatabase();
         Cursor cursor = database.query(SqlStructure.SqlData.FAV_TVSERIES,null, null, null,
@@ -106,7 +107,7 @@ public class FavoritesHandler {
             int id = cursor.getInt(cursor.getColumnIndex(SqlStructure.SqlData.tv_series_id));
             String title = cursor.getString(cursor.getColumnIndex(SqlStructure.SqlData.name));
             String image = cursor.getString(cursor.getColumnIndex(SqlStructure.SqlData.poster));
-            favShows.add(new TVShow());
+            favShows.add(new TVShowShort(id, image, null, null, title));
         }
         cursor.close();
         database.close();

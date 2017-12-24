@@ -38,10 +38,11 @@ public class Helper {
         return format.format(date);
     }
 
-    public static void changeFragment(Context context, Fragment fragment){
-        FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.FragmentContainer, fragment).commit();
-    }
+    public static void changeFragment(Context context, Fragment fragment) {
+        Fragment frag = ((AppCompatActivity) context).getSupportFragmentManager().findFragmentById(R.id.FragmentContainer);
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+        fragmentManager.beginTransaction().hide(frag).add(R.id.FragmentContainer, fragment).addToBackStack(null).commit();
+     }
 
     public static String formatValue(Integer value){
         int length = value.toString().length();

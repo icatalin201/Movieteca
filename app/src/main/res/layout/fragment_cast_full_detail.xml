@@ -49,8 +49,7 @@
                         android:gravity="center"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_height="wrap_content"
-                        android:text="Cast Name"/>
+                        android:layout_height="wrap_content"/>
 
                     <View
                         android:id="@+id/bar"
@@ -74,8 +73,7 @@
                         android:layout_marginTop="5dp"
                         android:textColor="@color/primaryTextColor"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="100"/>
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -91,8 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/primaryTextColor"
-                        android:text="Example"/>
+                        android:textColor="@color/primaryTextColor"/>
 
                 </LinearLayout>
 
@@ -118,8 +115,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryTextColor"
-                    android:text="ex"/>
+                    android:textColor="@color/primaryTextColor"/>
             </LinearLayout>
 
 

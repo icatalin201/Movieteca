@@ -205,40 +205,41 @@ public class FullDetailCast extends Fragment {
     }
 
     public void setAgeOrDeath(String born, String death){
-        if (death == null || death.trim().isEmpty()){
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-            int bornYear;
-            String age = "";
-            Date bornDate = null;
-            try {
-                bornDate = format.parse(born);
-                bornYear = Integer.parseInt(yearFormat.format(bornDate));
-                age = Integer.toString(currentYear - bornYear);
-            } catch (ParseException e) {
-                e.printStackTrace();
+        if (born != null) {
+            if (death == null || death.trim().isEmpty()) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                int bornYear;
+                String age = "";
+                Date bornDate = null;
+                try {
+                    bornDate = format.parse(born);
+                    bornYear = Integer.parseInt(yearFormat.format(bornDate));
+                    age = Integer.toString(currentYear - bornYear);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                castAge.setText(age + " years");
+            } else {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+                Date borndate;
+                Date deathdate;
+                String age = "";
+                int bornYear;
+                int deathYear;
+                try {
+                    borndate = format.parse(born);
+                    deathdate = format.parse(death);
+                    bornYear = Integer.parseInt(yearFormat.format(borndate));
+                    deathYear = Integer.parseInt(yearFormat.format(deathdate));
+                    age = Integer.toString(deathYear - bornYear);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                castAge.setText("Died on " + death + " at " + age + " years.");
             }
-            castAge.setText(age + " years");
-        }
-        else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-            Date borndate;
-            Date deathdate;
-            String age = "";
-            int bornYear;
-            int deathYear;
-            try {
-                borndate = format.parse(born);
-                deathdate = format.parse(death);
-                bornYear = Integer.parseInt(yearFormat.format(borndate));
-                deathYear = Integer.parseInt(yearFormat.format(deathdate));
-                age = Integer.toString(deathYear - bornYear);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            castAge.setText("Died on " + death + " at " + age + " years.");
         }
     }
 

@@ -20,39 +20,41 @@ import java.util.List;
 import app.mov.movieteca.R;
 import app.mov.movieteca.database.FavoritesHandler;
 import app.mov.movieteca.fragments.FullDetailMovie;
+import app.mov.movieteca.fragments.FullDetailShow;
 import app.mov.movieteca.models.movies.MovieShort;
+import app.mov.movieteca.models.tvshows.TVShowShort;
 import app.mov.movieteca.utils.Constants;
 import app.mov.movieteca.utils.Helper;
 
 /**
- * Created by Catalin on 12/22/2017.
+ * Created by Catalin on 12/24/2017.
  */
 
-public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdapter.FullListMovieViewHolder> {
+public class FullListShowAdapter extends RecyclerView.Adapter<FullListShowAdapter.FullListViewHolder> {
 
     public Context context;
-    public List<MovieShort> movieList;
+    public List<TVShowShort> movieList;
 
-    public FullListMovieAdapter(Context context, List<MovieShort> movieList){
+    public FullListShowAdapter(Context context, List<TVShowShort> movieList){
         this.context = context;
         this.movieList = movieList;
     }
 
     @Override
-    public FullListMovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FullListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.full_list_item_card, parent, false);
-        return new FullListMovieViewHolder(view);
+        return new FullListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(FullListMovieViewHolder holder, int position) {
+    public void onBindViewHolder(FullListViewHolder holder, int position) {
         Glide.with(context.getApplicationContext()).load(Constants.IMAGE_LOADING_BASE_URL_342.concat(movieList.get(position).getBackdrop_path()))
                 .asBitmap()
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imageView);
-        holder.textView.setText(movieList.get(position).getOriginal_title());
-        if (FavoritesHandler.isMovieFav(context, "movie", movieList.get(position).getId())){
+        holder.textView.setText(movieList.get(position).getOriginal_name());
+        if (FavoritesHandler.isMovieFav(context, "tv_show", movieList.get(position).getId())){
             holder.fav.setImageResource(R.drawable.ic_favorite_black_18dp);
             holder.fav.setTag("favorit");
         }
@@ -67,14 +69,14 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
         return movieList.size();
     }
 
-    public class FullListMovieViewHolder extends RecyclerView.ViewHolder{
+    public class FullListViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView imageView;
         public TextView textView;
         public CardView cardView;
         public ImageButton fav;
 
-        public FullListMovieViewHolder(View itemView) {
+        public FullListViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.image);
             textView = (TextView)itemView.findViewById(R.id.title);
@@ -83,11 +85,11 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("movies", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("tv_shows", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(Constants.movie_id, movieList.get(getAdapterPosition()).getId());
+                    editor.putInt(Constants.tv_show_id, movieList.get(getAdapterPosition()).getId());
                     editor.commit();
-                    Helper.changeFragment(context, new FullDetailMovie());
+                    Helper.changeFragment(context, new FullDetailShow());
                 }
             });
             fav.setOnClickListener(new View.OnClickListener() {
@@ -95,13 +97,13 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     if (fav.getTag().equals("favorit")){
-                        FavoritesHandler.removeMovieFromFavorites(context, "movie", movieList.get(getAdapterPosition()).getId());
+                        FavoritesHandler.removeMovieFromFavorites(context, "tv_show", movieList.get(getAdapterPosition()).getId());
                         fav.setTag("nefavorit");
                         fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                     }
                     else if (fav.getTag().equals("nefavorit")){
-                        FavoritesHandler.addMovieToFavorites(context, "movie", movieList.get(getAdapterPosition()).getId(),
-                                movieList.get(getAdapterPosition()).getOriginal_title(), movieList.get(getAdapterPosition()).getBackdrop_path());
+                        FavoritesHandler.addMovieToFavorites(context, "tv_show", movieList.get(getAdapterPosition()).getId(),
+                                movieList.get(getAdapterPosition()).getOriginal_name(), movieList.get(getAdapterPosition()).getBackdrop_path());
                         fav.setTag("favorit");
                         fav.setImageResource(R.drawable.ic_favorite_black_18dp);
                     }
@@ -109,4 +111,5 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
             });
         }
     }
+
 }

@@ -2,12 +2,8 @@ package app.mov.movieteca.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import java.io.InputStream;
 import java.util.List;
 
 import app.mov.movieteca.R;
@@ -79,6 +74,8 @@ public class MovieFullDetailCastsAdapter extends RecyclerView.Adapter<MovieFullD
             castMovieName = (TextView)itemView.findViewById(R.id.cast_movie_name);
             castImage = (ImageView)itemView.findViewById(R.id.image_view_cast);
             castCard = (CardView)itemView.findViewById(R.id.cast_card);
+            castName.setSelected(true);
+            castMovieName.setSelected(true);
             castCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

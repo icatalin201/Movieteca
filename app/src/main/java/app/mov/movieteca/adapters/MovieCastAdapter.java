@@ -66,7 +66,8 @@ public class MovieCastAdapter extends RecyclerView.Adapter<MovieCastAdapter.Cast
             image = (ImageView)itemView.findViewById(R.id.cast_plays_image);
             title = (TextView)itemView.findViewById(R.id.cast_plays_title);
             role = (TextView)itemView.findViewById(R.id.cast_plays_char);
-
+            title.setSelected(true);
+            role.setSelected(true);
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

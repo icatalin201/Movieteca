@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
@@ -80,9 +80,9 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_alignTop="@+id/layout_poster"
-                    android:layout_alignLeft="@+id/layout_poster"
+                    android:layout_alignStart="@+id/layout_poster"
                     android:layout_marginTop="65dp"
-                    android:layout_marginLeft="105dp"/>
+                    android:layout_marginStart="105dp"/>
 
                 <TextView
                     android:id="@+id/movie_genre"
@@ -92,8 +92,8 @@
                     android:textColor="@color/primaryTextColor"
                     android:textSize="12sp"
                     android:layout_below="@id/movie_title"
-                    android:layout_alignLeft="@id/layout_poster"
-                    android:layout_marginLeft="105dp"
+                    android:layout_alignStart="@id/layout_poster"
+                    android:layout_marginStart="105dp"
                     android:layout_marginTop="5dp"/>
 
                 <ImageButton
@@ -127,7 +127,7 @@
                     android:id="@+id/movie_rating_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
                     android:visibility="visible">
@@ -144,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginStart="4dp"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -170,7 +170,7 @@
                     android:id="@+id/layout_details_movie_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical"
                     android:visibility="visible">
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="5sp"
-                        android:text="TV Show Details"
+                        android:text="@string/detailst"
                         android:textColor="@color/primaryDarkColor" />
 
                     <LinearLayout
@@ -216,10 +216,10 @@
                     android:id="@+id/movie_trailers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Trailers"
+                    android:text="@string/trailers"
                     android:textColor="@color/primaryDarkColor"
                     android:visibility="visible" />
 
@@ -233,10 +233,10 @@
                     android:id="@+id/movie_cast"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Cast"
+                    android:text="@string/cast"
                     android:textColor="@color/primaryDarkColor"
                     android:visibility="visible" />
 
@@ -252,8 +252,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:text="Similar TV Shows"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/similart"
                     android:textColor="@color/primaryDarkColor"
                     android:visibility="gone" />
 

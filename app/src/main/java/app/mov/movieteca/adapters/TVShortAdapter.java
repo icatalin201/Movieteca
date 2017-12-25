@@ -18,11 +18,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.database.FavoritesHandler;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.fragments.FullDetailShow;
 import app.mov.movieteca.models.tvshows.TVShowShort;
 import app.mov.movieteca.utils.Constants;
-import app.mov.movieteca.utils.GenresUtil;
 import app.mov.movieteca.utils.Helper;
 
 /**
@@ -63,7 +62,7 @@ public class TVShortAdapter extends RecyclerView.Adapter<TVShortAdapter.TVShortV
         } else {
             holder.movieRatingTextView.setVisibility(View.GONE);
         }
-        if (FavoritesHandler.isMovieFav(context, "tv_show", tvShowShortList.get(position).getId())){
+        if (Handler.isFav(context, "tv_show", tvShowShortList.get(position).getId())){
             holder.favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
             holder.favButton.setTag("favorit");
         }
@@ -93,19 +92,21 @@ public class TVShortAdapter extends RecyclerView.Adapter<TVShortAdapter.TVShortV
             movieTitleTextView = (TextView) itemView.findViewById(R.id.text_view_title_show_card);
             movieRatingTextView = (TextView) itemView.findViewById(R.id.text_view_rating_show_card);
             favButton = (ImageButton) itemView.findViewById(R.id.image_button_fav);
-
+            movieTitleTextView.setSelected(true);
             favButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     if (favButton.getTag().equals("favorit")){
-                        FavoritesHandler.removeMovieFromFavorites(context, "tv_show", tvShowShortList.get(getAdapterPosition()).getId());
+                        Handler.removeFromFavorites(context, "tv_show", tvShowShortList.get(getAdapterPosition()).getId());
+                        Helper.notifyUser("remove", "fav", tvShowShortList.get(getAdapterPosition()).getOriginal_name(), context);
                         favButton.setTag("nefavorit");
                         favButton.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                     }
                     else if (favButton.getTag().equals("nefavorit")){
-                        FavoritesHandler.addMovieToFavorites(context, "tv_show", tvShowShortList.get(getAdapterPosition()).getId(),
+                        Handler.addToFavorites(context, "tv_show", tvShowShortList.get(getAdapterPosition()).getId(),
                                 tvShowShortList.get(getAdapterPosition()).getOriginal_name(), tvShowShortList.get(getAdapterPosition()).getBackdrop_path());
+                        Helper.notifyUser("add", "fav", tvShowShortList.get(getAdapterPosition()).getOriginal_name(), context);
                         favButton.setTag("favorit");
                         favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
                     }

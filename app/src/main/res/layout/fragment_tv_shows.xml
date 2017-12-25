@@ -37,8 +37,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Airing Today"
+                    android:layout_gravity="start"
+                    android:text="@string/airing_today_shows"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
@@ -46,10 +46,11 @@
                     android:id="@+id/text_view_view_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:text="View All"
+                    android:layout_gravity="bottom|end"
+                    android:text="@string/view_all"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
+                    android:focusable="true"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="14sp" />
 
@@ -74,8 +75,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Popular TV Shows"
+                    android:layout_gravity="start"
+                    android:text="@string/popular_shows"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
@@ -83,10 +84,11 @@
                     android:id="@+id/popular_view_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:text="View All"
+                    android:layout_gravity="bottom|end"
+                    android:text="@string/view_all"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
+                    android:focusable="true"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="14sp" />
 
@@ -110,8 +112,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="Top Rated TV Shows"
+                    android:layout_gravity="start"
+                    android:text="@string/top_rated_shows"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
@@ -119,10 +121,11 @@
                     android:id="@+id/top_rated_view_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
+                    android:layout_gravity="bottom|end"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    android:text="View All"
+                    android:focusable="true"
+                    android:text="@string/view_all"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="14sp" />
 
@@ -146,8 +149,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="On The Air"
+                    android:layout_gravity="start"
+                    android:text="@string/on_the_air_shows"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
 
@@ -155,10 +158,11 @@
                     android:id="@+id/upcoming_view_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
+                    android:layout_gravity="bottom|end"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    android:text="View All"
+                    android:focusable="true"
+                    android:text="@string/view_all"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="14sp" />
 

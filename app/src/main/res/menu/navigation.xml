@@ -6,15 +6,15 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav1"
-            android:icon="@mipmap/ic_info_black_24dp"
-            android:title="Movies"
+            android:icon="@drawable/ic_movie_white_18dp"
+            android:title="@string/movies"
             android:background="?selectableItemBackground">
         </item>
 
         <item
             android:id="@+id/nav2"
-            android:icon="@mipmap/ic_info_black_24dp"
-            android:title="TvShows"
+            android:icon="@drawable/ic_tv_white_18dp"
+            android:title="@string/tv_shows"
             android:background="?selectableItemBackground">
         </item>
     </group>
@@ -24,8 +24,8 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav3"
-            android:icon="@mipmap/ic_info_black_24dp"
-            android:title="Favorites"
+            android:icon="@drawable/hhh"
+            android:title="@string/favorites"
             android:background="?selectableItemBackground">
         </item>
     </group>
@@ -34,8 +34,8 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav4"
-            android:icon="@mipmap/ic_info_black_24dp"
-            android:title="Seen"
+            android:icon="@drawable/ic_remove_red_eye_white_18dp"
+            android:title="@string/seen"
             android:background="?selectableItemBackground">
         </item>
     </group>
@@ -44,8 +44,8 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav5"
-            android:icon="@mipmap/ic_info_black_24dp"
-            android:title="About"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="@string/about"
             android:background="?selectableItemBackground">
         </item>
     </group>

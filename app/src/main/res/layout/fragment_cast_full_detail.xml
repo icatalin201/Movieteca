@@ -17,12 +17,12 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:scrollbars="none"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -42,14 +42,39 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/cast_name"
-                        android:textColor="@color/primaryTextColor"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/cast_name"
+                            android:textColor="@color/primaryTextColor"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit ="marquee_forever"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:scrollHorizontally="true"
+                            android:layout_height="wrap_content"/>
+
+
+                        <ImageButton
+                            android:id="@+id/image_button_fav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_favorite_border_black_18dp"
+                            android:translationZ="5dp"
+                            android:tint="@android:color/holo_red_dark" />
+
+                    </LinearLayout>
 
                     <View
                         android:id="@+id/bar"
@@ -63,14 +88,14 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Age"
+                        android:text="@string/age"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="@color/primaryTextColor"/>
 
                     <TextView
                         android:id="@+id/cast_age"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="3dp"
                         android:textColor="@color/primaryTextColor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
@@ -82,13 +107,14 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="@color/primaryTextColor"
-                        android:text="Birthplace"/>
+                        android:text="@string/birthplace"/>
 
                     <TextView
                         android:id="@+id/cast_birthplace"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:maxLines="2"
+                        android:layout_marginTop="3dp"
                         android:textColor="@color/primaryTextColor"/>
 
                 </LinearLayout>
@@ -103,7 +129,7 @@
                 android:background="@color/primaryColor">
 
                 <TextView
-                    android:text="Biography"
+                    android:text="@string/bio"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/primaryTextColor"
@@ -129,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_margin="10dp"
-                    android:text="Roles in Movies"/>
+                    android:text="@string/role_movie"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/cast_movie_role_recycler"
@@ -145,7 +171,7 @@
                     android:layout_marginTop="10dp"
                     android:textStyle="bold"
                     android:layout_margin="10dp"
-                    android:text="Roles in TV Shows"/>
+                    android:text="@string/role_show"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/cast_show_role_recycler"

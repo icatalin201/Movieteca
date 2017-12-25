@@ -16,10 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.fragments.FullDetailMovie;
 import app.mov.movieteca.fragments.FullDetailShow;
-import app.mov.movieteca.models.movies.MovieShort;
-import app.mov.movieteca.models.tvshows.TVShow;
 import app.mov.movieteca.models.tvshows.TVShowShort;
 import app.mov.movieteca.utils.Constants;
 import app.mov.movieteca.utils.Helper;

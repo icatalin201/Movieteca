@@ -1,18 +1,18 @@
 package app.mov.movieteca.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +24,27 @@ import app.mov.movieteca.R;
  */
 
 public class Helper {
+
+    public static void notifyUser(String type, String action, String name, Context context){
+        switch (type){
+            case "fav":
+                if (action.equals("add")) {
+                    Toast.makeText(context, name.concat(" added to favorites collection."), Toast.LENGTH_SHORT).show();
+                }
+                else if (action.equals("remove")){
+                    Toast.makeText(context, name.concat(" removed from favorites collection."), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case "seen":
+                if (action.equals("add")) {
+                    Toast.makeText(context, name.concat(" added to seen collection"), Toast.LENGTH_SHORT).show();
+                }
+                else if (action.equals("remove")){
+                    Toast.makeText(context, name.concat(" removed from seen collection"), Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 
     public static String formatDate(String dateString){
         Date date = null;

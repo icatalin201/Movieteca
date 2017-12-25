@@ -2,14 +2,8 @@ package app.mov.movieteca.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.drm.DrmStore;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import java.io.InputStream;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.models.movies.Movie;
 import app.mov.movieteca.models.movies.VideoInfo;
-import app.mov.movieteca.models.movies.Videos;
 import app.mov.movieteca.utils.Constants;
 
 /**

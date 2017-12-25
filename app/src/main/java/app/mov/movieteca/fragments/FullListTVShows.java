@@ -13,13 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.adapters.FullListMovieAdapter;
 import app.mov.movieteca.adapters.FullListShowAdapter;
-import app.mov.movieteca.models.movies.MovieShort;
-import app.mov.movieteca.models.movies.NowPlayingMovies;
-import app.mov.movieteca.models.movies.PopularMovies;
-import app.mov.movieteca.models.movies.TopRatedMovies;
-import app.mov.movieteca.models.movies.UpcomingMovies;
 import app.mov.movieteca.models.tvshows.AiringTodayTVShows;
 import app.mov.movieteca.models.tvshows.OnTheAirTVShows;
 import app.mov.movieteca.models.tvshows.PopularTVShows;
@@ -89,20 +83,6 @@ public class FullListTVShows extends Fragment {
                 }
             }
         });
-        switch (listType){
-            case "now_playing":
-                getActivity().setTitle("Now in Theaters");
-                break;
-            case "top_rated":
-                getActivity().setTitle("Top Rated");
-                break;
-            case "upcoming":
-                getActivity().setTitle("Upcoming");
-                break;
-            case "popular":
-                getActivity().setTitle("Popular");
-                break;
-        }
         loadMovies(listType);
         return view;
     }

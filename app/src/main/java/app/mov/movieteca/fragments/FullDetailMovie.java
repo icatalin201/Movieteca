@@ -3,6 +3,7 @@ package app.mov.movieteca.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
@@ -15,18 +16,17 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-import android.support.v4.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapters.MovieFullDetailCastsAdapter;
 import app.mov.movieteca.adapters.MovieFullDetailVideoAdapter;
 import app.mov.movieteca.adapters.MovieSimilarAdapter;
-import app.mov.movieteca.database.FavoritesHandler;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.models.movies.Genres;
 import app.mov.movieteca.models.movies.Movie;
 import app.mov.movieteca.models.movies.MovieCast;
@@ -193,7 +193,6 @@ public class FullDetailMovie extends Fragment  {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(poster);
                 movieTitle.setText(response.body().getOriginal_title());
-                getActivity().setTitle(response.body().getOriginal_title());
                 setGenre(response.body().getGenres());
                 if (response.body().getTagline() != null){
                     movieTagline.setText(response.body().getTagline());
@@ -203,8 +202,8 @@ public class FullDetailMovie extends Fragment  {
                 movieOverview.setText(response.body().getOverview());
                 isJobDone[0] = true;
                 setDetails(response.body().getBudget(), response.body().getRuntime(), response.body().getRevenue(), response.body().getRelease_date());
-                setFavorite(getActivity(), response.body().getId(), response.body().getBackdrop_path(), response.body().getOriginal_title());
-                setSeen();
+                setFavorite(getContext(), response.body().getId(), response.body().getBackdrop_path(), response.body().getOriginal_title());
+                setSeen(getContext(), response.body().getId(), response.body().getBackdrop_path(), response.body().getOriginal_title());
                 setTrailers();
                 setCasts();
                 setSimilarMovies();
@@ -218,17 +217,28 @@ public class FullDetailMovie extends Fragment  {
 
     }
 
-    public void setSeen(){
-        seen.setTag("unseen");
+    public void setSeen(final Context context, final Integer id, final String path, final String title){
+        if (Handler.isSeen(context, "movie", id)){
+            seen.setTag("seen");
+            seen.setImageResource(R.drawable.seen);
+        }
+        else {
+            seen.setTag("unseen");
+            seen.setImageResource(R.drawable.notseen);
+        }
         seen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (seen.getTag().equals("seen")){
+                    Handler.removeFromSeen(context, "movie", id);
+                    Helper.notifyUser("remove", "seen", title, context);
                     seen.setTag("unseen");
                     seen.setImageResource(R.drawable.notseen);
                 }
                 else if (seen.getTag().equals("unseen")){
+                    Handler.addToSeen(context, "movie", id, title, path);
+                    Helper.notifyUser("add", "seen", title, context);
                     seen.setTag("seen");
                     seen.setImageResource(R.drawable.seen);
                 }
@@ -237,7 +247,7 @@ public class FullDetailMovie extends Fragment  {
     }
 
     public void setFavorite(final Context context, final Integer id, final String path, final String title){
-        if (FavoritesHandler.isMovieFav(context, "movie", id)){
+        if (Handler.isFav(context, "movie", id)){
             fav.setImageResource(R.drawable.ic_favorite_black_18dp);
             fav.setTag("favorit");
         }
@@ -250,12 +260,14 @@ public class FullDetailMovie extends Fragment  {
             public void onClick(View view) {
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (fav.getTag().equals("favorit")){
-                    FavoritesHandler.removeMovieFromFavorites(context, "movie", id);
+                    Handler.removeFromFavorites(context, "movie", id);
+                    Helper.notifyUser("remove", "fav", title, context);
                     fav.setTag("nefavorit");
                     fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                 }
                 else if (fav.getTag().equals("nefavorit")){
-                    FavoritesHandler.addMovieToFavorites(context, "movie", id, title, path);
+                    Handler.addToFavorites(context, "movie", id, title, path);
+                    Helper.notifyUser("add", "fav", title, context);
                     fav.setTag("favorit");
                     fav.setImageResource(R.drawable.ic_favorite_black_18dp);
                 }

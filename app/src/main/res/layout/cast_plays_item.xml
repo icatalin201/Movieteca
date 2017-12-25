@@ -28,6 +28,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:id="@+id/cast_plays_title"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit ="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
             android:gravity="center"
             android:textColor="@color/primaryTextColor"
             android:textStyle="bold"/>
@@ -37,6 +43,12 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginBottom="4dp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit ="marquee_forever"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
             android:textColor="@color/primaryTextColor"
             android:id="@+id/cast_plays_char"/>
 

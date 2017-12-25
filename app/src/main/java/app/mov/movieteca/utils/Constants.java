@@ -10,6 +10,7 @@ public class Constants {
     public final static String movie_id = "movie_id";
     public final static String tv_show_id = "tv_show_id";
     public final static String cast_id = "cast_id";
+    public final static String search = "search";
     public static final String RATING_SYMBOL = "\u2605";
     public static final String IMAGE_LOADING_BASE_URL_1000 = "https://image.tmdb.org/t/p/w1000/";
     public static final String IMAGE_LOADING_BASE_URL_342 = "https://image.tmdb.org/t/p/w342/";

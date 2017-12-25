@@ -14,7 +14,7 @@ import java.util.List;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapters.FullListMovieAdapter;
-import app.mov.movieteca.database.FavoritesHandler;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.models.movies.MovieShort;
 
 /**
@@ -45,7 +45,7 @@ public class MovieFavorites extends Fragment {
     }
 
     public void loadFavorites(){
-        List<MovieShort> favs = FavoritesHandler.getMovieFavoritesList(getContext());
+        List<MovieShort> favs = Handler.getMovieFavoritesList(getContext());
         if (favs == null || favs.isEmpty()){
             empty.setVisibility(View.VISIBLE);
             return;

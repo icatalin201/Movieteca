@@ -80,7 +80,6 @@ public class Home extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setIndeterminate(true);
         progressBar.setMax(100);
-        getActivity().setTitle("Movieteca");
         nowPlayingViewAll = (TextView)view.findViewById(R.id.text_view_view_all);
         topRatedViewAll = (TextView)view.findViewById(R.id.top_rated_view_all);
         upcomingViewAll = (TextView)view.findViewById(R.id.upcoming_view_all) ;

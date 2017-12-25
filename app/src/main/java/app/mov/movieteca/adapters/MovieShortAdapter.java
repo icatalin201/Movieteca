@@ -18,7 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.database.FavoritesHandler;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.fragments.FullDetailMovie;
 import app.mov.movieteca.models.movies.MovieShort;
 import app.mov.movieteca.utils.Constants;
@@ -71,7 +71,7 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
             holder.releaseDate.setText("");
         }
         setGenres(holder, movies.get(position));
-        if (FavoritesHandler.isMovieFav(context, "movie", movies.get(position).getId())){
+        if (Handler.isFav(context, "movie", movies.get(position).getId())){
             holder.favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
             holder.favButton.setTag("favorit");
         }
@@ -119,19 +119,21 @@ public class MovieShortAdapter extends RecyclerView.Adapter<MovieShortAdapter.Mo
             movieGenreTextView = (TextView) itemView.findViewById(R.id.text_view_genre_show_card);
             favButton = (ImageButton) itemView.findViewById(R.id.image_button_fav);
             releaseDate = (TextView) itemView.findViewById(R.id.text_view_release_date);
-
+            movieTitleTextView.setSelected(true);
             favButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     if (favButton.getTag().equals("favorit")){
-                        FavoritesHandler.removeMovieFromFavorites(context, "movie", movies.get(getAdapterPosition()).getId());
+                        Handler.removeFromFavorites(context, "movie", movies.get(getAdapterPosition()).getId());
+                        Helper.notifyUser("remove", "fav", movies.get(getAdapterPosition()).getOriginal_title(), context);
                         favButton.setTag("nefavorit");
                         favButton.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                     }
                     else if (favButton.getTag().equals("nefavorit")){
-                        FavoritesHandler.addMovieToFavorites(context, "movie", movies.get(getAdapterPosition()).getId(),
+                        Handler.addToFavorites(context, "movie", movies.get(getAdapterPosition()).getId(),
                                 movies.get(getAdapterPosition()).getOriginal_title(), movies.get(getAdapterPosition()).getBackdrop_path());
+                        Helper.notifyUser("add", "fav", movies.get(getAdapterPosition()).getOriginal_title(), context);
                         favButton.setTag("favorit");
                         favButton.setImageResource(R.drawable.ic_favorite_black_18dp);
                     }

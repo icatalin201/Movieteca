@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.fragments.FullDetailMovie;
+import app.mov.movieteca.fragments.FullDetailShow;
 import app.mov.movieteca.models.cast.ShowCastsForPerson;
 import app.mov.movieteca.utils.Constants;
 import app.mov.movieteca.utils.Helper;
@@ -66,15 +66,16 @@ public class ShowCastAdapter extends RecyclerView.Adapter<ShowCastAdapter.CastVi
             image = (ImageView)itemView.findViewById(R.id.cast_plays_image);
             title = (TextView)itemView.findViewById(R.id.cast_plays_title);
             role = (TextView)itemView.findViewById(R.id.cast_plays_char);
-
+            title.setSelected(true);
+            role.setSelected(true);
             card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    SharedPreferences sharedPreferences = context.getSharedPreferences("shows", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("tv_shows", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(Constants.movie_id, list.get(getAdapterPosition()).getId());
+                    editor.putInt(Constants.tv_show_id, list.get(getAdapterPosition()).getId());
                     editor.commit();
-                    Helper.changeFragment(context, new FullDetailMovie());
+                    Helper.changeFragment(context, new FullDetailShow());
                 }
             });
         }

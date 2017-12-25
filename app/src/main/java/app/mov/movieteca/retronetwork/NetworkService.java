@@ -3,7 +3,6 @@ package app.mov.movieteca.retronetwork;
 import app.mov.movieteca.models.cast.MovieCastsDetails;
 import app.mov.movieteca.models.cast.Person;
 import app.mov.movieteca.models.cast.ShowCastsDetails;
-import app.mov.movieteca.models.cast.TVCastsDetails;
 import app.mov.movieteca.models.movies.Genres;
 import app.mov.movieteca.models.movies.GenresList;
 import app.mov.movieteca.models.movies.Movie;

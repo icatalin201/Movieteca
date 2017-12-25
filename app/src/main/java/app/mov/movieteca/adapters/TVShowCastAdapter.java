@@ -74,6 +74,8 @@ public class TVShowCastAdapter extends RecyclerView.Adapter<TVShowCastAdapter.TV
             castMovieName = (TextView)itemView.findViewById(R.id.cast_movie_name);
             castImage = (ImageView)itemView.findViewById(R.id.image_view_cast);
             castCard = (CardView)itemView.findViewById(R.id.cast_card);
+            castName.setSelected(true);
+            castMovieName.setSelected(true);
             castCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

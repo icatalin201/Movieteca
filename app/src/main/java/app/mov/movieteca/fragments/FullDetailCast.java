@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -16,7 +18,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,15 +28,16 @@ import java.util.List;
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapters.MovieCastAdapter;
 import app.mov.movieteca.adapters.ShowCastAdapter;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.models.cast.MovieCastsDetails;
 import app.mov.movieteca.models.cast.MovieCastsForPerson;
 import app.mov.movieteca.models.cast.Person;
 import app.mov.movieteca.models.cast.ShowCastsDetails;
 import app.mov.movieteca.models.cast.ShowCastsForPerson;
-import app.mov.movieteca.models.movies.Movie;
 import app.mov.movieteca.retronetwork.NetworkClient;
 import app.mov.movieteca.retronetwork.NetworkService;
 import app.mov.movieteca.utils.Constants;
+import app.mov.movieteca.utils.Helper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +54,7 @@ public class FullDetailCast extends Fragment {
     private TextView biography;
     private TextView birthplace;
     private ImageView poster;
+    private ImageButton fav;
     private ScrollView layout;
     private RecyclerView moviesRecycler;
     private RecyclerView showsRecycler;
@@ -76,11 +79,13 @@ public class FullDetailCast extends Fragment {
         progressBar.setIndeterminate(true);
         isJobDone = new boolean[]{false, false};
         castName = (TextView)view.findViewById(R.id.cast_name);
+        castName.setSelected(true);
         castAge = (TextView)view.findViewById(R.id.cast_age);
         birthplace = (TextView)view.findViewById(R.id.cast_birthplace);
         biography = (TextView)view.findViewById(R.id.cast_bio);
         poster = (ImageView)view.findViewById(R.id.cast_image);
         layout = (ScrollView)view.findViewById(R.id.cast_layout);
+        fav = (ImageButton)view.findViewById(R.id.image_button_fav);
         moviesRecycler = (RecyclerView)view.findViewById(R.id.cast_movie_role_recycler);
         showsRecycler = (RecyclerView)view.findViewById(R.id.cast_show_role_recycler);
         movieCastsForPersonList = new ArrayList<>();
@@ -122,7 +127,6 @@ public class FullDetailCast extends Fragment {
                     personCall.enqueue(this);
                     return;
                 }
-                getActivity().setTitle(response.body().getName());
                 if (response.body() == null) return;
                 Glide.with(getContext()).load(Constants.IMAGE_LOADING_BASE_URL_780.concat(response.body().getProfile_path()))
                         .asBitmap().centerCrop().into(poster);
@@ -130,6 +134,7 @@ public class FullDetailCast extends Fragment {
                 setAgeOrDeath(response.body().getBirthday(), response.body().getDeathday());
                 biography.setText(response.body().getBiography());
                 birthplace.setText(response.body().getPlace_of_birth());
+                setFavorite(getContext(), response.body().getId(), response.body().getProfile_path(), response.body().getName());
                 setMovies();
                 setShows();
             }
@@ -140,6 +145,35 @@ public class FullDetailCast extends Fragment {
             }
         });
 
+    }
+
+    public void setFavorite(final Context context, final Integer id, final String path, final String title){
+        if (Handler.isFav(context, "cast", id)){
+            fav.setImageResource(R.drawable.ic_favorite_black_18dp);
+            fav.setTag("favorit");
+        }
+        else {
+            fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
+            fav.setTag("nefavorit");
+        }
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                if (fav.getTag().equals("favorit")){
+                    Handler.removeFromFavorites(context, "cast", id);
+                    Helper.notifyUser("remove", "fav", title, context);
+                    fav.setTag("nefavorit");
+                    fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
+                }
+                else if (fav.getTag().equals("nefavorit")){
+                    Handler.addToFavorites(context, "cast", id, title, path);
+                    Helper.notifyUser("add", "fav", title, context);
+                    fav.setTag("favorit");
+                    fav.setImageResource(R.drawable.ic_favorite_black_18dp);
+                }
+            }
+        });
     }
 
     public void setMovies(){
@@ -193,7 +227,7 @@ public class FullDetailCast extends Fragment {
                     }
                 }
                 isJobDone[1] = true;
-                movieAdapter.notifyDataSetChanged();
+                showAdapter.notifyDataSetChanged();
                 checkLoaded();
             }
 

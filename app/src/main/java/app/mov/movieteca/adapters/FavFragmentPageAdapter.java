@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import app.mov.movieteca.R;
+import app.mov.movieteca.fragments.CastFavorites;
 import app.mov.movieteca.fragments.MovieFavorites;
 import app.mov.movieteca.fragments.ShowsFavorites;
 
@@ -13,11 +14,11 @@ import app.mov.movieteca.fragments.ShowsFavorites;
  * Created by Catalin on 12/23/2017.
  */
 
-public class FragmentPageAdapter extends FragmentPagerAdapter {
+public class FavFragmentPageAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
 
-    public FragmentPageAdapter(Context context, FragmentManager fm) {
+    public FavFragmentPageAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -30,12 +31,15 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
         } else if (position == 1) {
             fragment = new ShowsFavorites();
         }
+        else if (position == 2){
+            fragment = new CastFavorites();
+        }
         return fragment;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -45,6 +49,8 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
                 return mContext.getString(R.string.favorites_movies);
             case 1:
                 return mContext.getString(R.string.favorites_shows);
+            case 2:
+                return mContext.getString(R.string.favorites_casts);
             default:
                 return null;
         }

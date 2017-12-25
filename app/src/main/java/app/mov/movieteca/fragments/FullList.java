@@ -83,20 +83,6 @@ public class FullList extends Fragment {
                 }
             }
         });
-        switch (listType){
-            case "now_playing":
-                getActivity().setTitle("Now in Theaters");
-                break;
-            case "top_rated":
-                getActivity().setTitle("Top Rated");
-                break;
-            case "upcoming":
-                getActivity().setTitle("Upcoming");
-                break;
-            case "popular":
-                getActivity().setTitle("Popular");
-                break;
-        }
         loadMovies(listType);
         return view;
     }

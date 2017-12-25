@@ -18,7 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.database.FavoritesHandler;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.fragments.FullDetailMovie;
 import app.mov.movieteca.models.movies.MovieShort;
 import app.mov.movieteca.utils.Constants;
@@ -52,7 +52,7 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imageView);
         holder.textView.setText(movieList.get(position).getOriginal_title());
-        if (FavoritesHandler.isMovieFav(context, "movie", movieList.get(position).getId())){
+        if (Handler.isFav(context, "movie", movieList.get(position).getId())){
             holder.fav.setImageResource(R.drawable.ic_favorite_black_18dp);
             holder.fav.setTag("favorit");
         }
@@ -80,6 +80,7 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
             textView = (TextView)itemView.findViewById(R.id.title);
             cardView = (CardView)itemView.findViewById(R.id.card_list);
             fav = (ImageButton)itemView.findViewById(R.id.image_button_fav);
+            textView.setSelected(true);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -95,13 +96,15 @@ public class FullListMovieAdapter extends RecyclerView.Adapter<FullListMovieAdap
                 public void onClick(View view) {
                     view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     if (fav.getTag().equals("favorit")){
-                        FavoritesHandler.removeMovieFromFavorites(context, "movie", movieList.get(getAdapterPosition()).getId());
+                        Handler.removeFromFavorites(context, "movie", movieList.get(getAdapterPosition()).getId());
+                        Helper.notifyUser("remove", "fav", movieList.get(getAdapterPosition()).getOriginal_title(), context);
                         fav.setTag("nefavorit");
                         fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                     }
                     else if (fav.getTag().equals("nefavorit")){
-                        FavoritesHandler.addMovieToFavorites(context, "movie", movieList.get(getAdapterPosition()).getId(),
+                        Handler.addToFavorites(context, "movie", movieList.get(getAdapterPosition()).getId(),
                                 movieList.get(getAdapterPosition()).getOriginal_title(), movieList.get(getAdapterPosition()).getBackdrop_path());
+                        Helper.notifyUser("add", "fav", movieList.get(getAdapterPosition()).getOriginal_title(), context);
                         fav.setTag("favorit");
                         fav.setImageResource(R.drawable.ic_favorite_black_18dp);
                     }

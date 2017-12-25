@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,18 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.adapters.MovieFullDetailCastsAdapter;
 import app.mov.movieteca.adapters.MovieFullDetailVideoAdapter;
-import app.mov.movieteca.adapters.MovieSimilarAdapter;
 import app.mov.movieteca.adapters.TVShowCastAdapter;
 import app.mov.movieteca.adapters.TVShowSimilarAdapter;
-import app.mov.movieteca.database.FavoritesHandler;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.models.movies.Genres;
-import app.mov.movieteca.models.movies.Movie;
 import app.mov.movieteca.models.movies.MovieCast;
-import app.mov.movieteca.models.movies.MovieCredits;
-import app.mov.movieteca.models.movies.MovieShort;
-import app.mov.movieteca.models.movies.SimilarMovies;
 import app.mov.movieteca.models.movies.VideoInfo;
 import app.mov.movieteca.models.movies.Videos;
 import app.mov.movieteca.models.tvshows.SimilarTVShows;
@@ -119,7 +112,6 @@ public class FullDetailShow extends Fragment {
 
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("tv_shows", Context.MODE_PRIVATE);
         movieId = sharedPreferences.getInt(Constants.tv_show_id, 0);
-        Log.i("chec", Integer.toString(movieId));
 
         videosList = new ArrayList<>();
         trailerRecycler = (RecyclerView)view.findViewById(R.id.recycler_trailers);
@@ -199,7 +191,6 @@ public class FullDetailShow extends Fragment {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(poster);
                 movieTitle.setText(response.body().getOriginal_name());
-                getActivity().setTitle(response.body().getOriginal_name());
                 setGenre(response.body().getGenres());
                 if (response.body().getType() != null){
                     movieTagline.setText("Type: " + response.body().getType());
@@ -209,8 +200,8 @@ public class FullDetailShow extends Fragment {
                 movieOverview.setText(response.body().getOverview());
                 isJobDone[0] = true;
                 setDetails(response.body().getNumber_of_episodes(), response.body().getNumber_of_seasons(), response.body().getFirst_air_date());
-                setFavorite(getActivity(), response.body().getId(), response.body().getBackdrop_path(), response.body().getOriginal_name());
-                setSeen();
+                setFavorite(getContext(), response.body().getId(), response.body().getBackdrop_path(), response.body().getOriginal_name());
+                setSeen(getContext(), response.body().getId(), response.body().getBackdrop_path(), response.body().getOriginal_name());
                 setTrailers();
                 setCasts();
                 setSimilarMovies();
@@ -224,17 +215,28 @@ public class FullDetailShow extends Fragment {
 
     }
 
-    public void setSeen(){
-        seen.setTag("unseen");
+    public void setSeen(final Context context, final Integer id, final String path, final String title){
+        if (Handler.isSeen(context, "tv_show", id)){
+            seen.setTag("seen");
+            seen.setImageResource(R.drawable.seen);
+        }
+        else {
+            seen.setTag("unseen");
+            seen.setImageResource(R.drawable.notseen);
+        }
         seen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (seen.getTag().equals("seen")){
+                    Handler.removeFromSeen(context, "tv_show", id);
+                    Helper.notifyUser("remove", "seen", title, context);
                     seen.setTag("unseen");
                     seen.setImageResource(R.drawable.notseen);
                 }
                 else if (seen.getTag().equals("unseen")){
+                    Handler.addToSeen(context, "tv_show", id, title, path);
+                    Helper.notifyUser("add", "seen", title, context);
                     seen.setTag("seen");
                     seen.setImageResource(R.drawable.seen);
                 }
@@ -243,7 +245,7 @@ public class FullDetailShow extends Fragment {
     }
 
     public void setFavorite(final Context context, final Integer id, final String path, final String title){
-        if (FavoritesHandler.isMovieFav(context, "tv_show", id)){
+        if (Handler.isFav(context, "tv_show", id)){
             fav.setImageResource(R.drawable.ic_favorite_black_18dp);
             fav.setTag("favorit");
         }
@@ -256,12 +258,14 @@ public class FullDetailShow extends Fragment {
             public void onClick(View view) {
                 view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 if (fav.getTag().equals("favorit")){
-                    FavoritesHandler.removeMovieFromFavorites(context, "tv_show", id);
+                    Handler.removeFromFavorites(context, "tv_show", id);
+                    Helper.notifyUser("remove", "fav", title, context);
                     fav.setTag("nefavorit");
                     fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
                 }
                 else if (fav.getTag().equals("nefavorit")){
-                    FavoritesHandler.addMovieToFavorites(context, "tv_show", id, title, path);
+                    Handler.addToFavorites(context, "tv_show", id, title, path);
+                    Helper.notifyUser("add", "fav", title, context);
                     fav.setTag("favorit");
                     fav.setImageResource(R.drawable.ic_favorite_black_18dp);
                 }

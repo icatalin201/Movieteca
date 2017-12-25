@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.mov.movieteca.R;
-import app.mov.movieteca.adapters.FullListMovieAdapter;
 import app.mov.movieteca.adapters.FullListShowAdapter;
-import app.mov.movieteca.database.FavoritesHandler;
-import app.mov.movieteca.models.movies.MovieShort;
+import app.mov.movieteca.database.Handler;
 import app.mov.movieteca.models.tvshows.TVShowShort;
 
 /**
@@ -47,7 +45,7 @@ public class ShowsFavorites extends Fragment {
     }
 
     public void loadFavorites(){
-        List<TVShowShort> favs = FavoritesHandler.getTVShowFavoritesList(getContext());
+        List<TVShowShort> favs = Handler.getTVShowFavoritesList(getContext());
         if (favs == null || favs.isEmpty()){
             empty.setVisibility(View.VISIBLE);
             return;

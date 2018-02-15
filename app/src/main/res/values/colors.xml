@@ -17,4 +17,6 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#eee</color>
     <color name="anotherWhiteColor">#ccc</color>
+
+    <color name="someGreen">#ff669900</color>
 </resources>

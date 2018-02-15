@@ -26,20 +26,20 @@ import app.mov.movieteca.R;
 public class Helper {
 
     public static void notifyUser(String type, String action, String name, Context context){
-        switch (type){
+        switch (action){
             case "fav":
-                if (action.equals("add")) {
+                if (type.equals("add")) {
                     Toast.makeText(context, name.concat(" added to favorites collection."), Toast.LENGTH_SHORT).show();
                 }
-                else if (action.equals("remove")){
+                else if (type.equals("remove")){
                     Toast.makeText(context, name.concat(" removed from favorites collection."), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case "seen":
-                if (action.equals("add")) {
+                if (type.equals("add")) {
                     Toast.makeText(context, name.concat(" added to seen collection"), Toast.LENGTH_SHORT).show();
                 }
-                else if (action.equals("remove")){
+                else if (type.equals("remove")){
                     Toast.makeText(context, name.concat(" removed from seen collection"), Toast.LENGTH_SHORT).show();
                 }
                 break;

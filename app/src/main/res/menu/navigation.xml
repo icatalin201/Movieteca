@@ -24,7 +24,7 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav3"
-            android:icon="@drawable/hhh"
+            android:icon="@drawable/ic_favorite_black_18dp"
             android:title="@string/favorites"
             android:background="?selectableItemBackground">
         </item>

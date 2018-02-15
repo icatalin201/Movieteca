@@ -39,7 +39,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_favorite_border_black_18dp"
                     android:translationZ="5dp"
                     android:tint="@android:color/holo_red_dark"/>
 
@@ -100,9 +99,8 @@
                     android:id="@+id/seen_button"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="4dp"
+                    android:layout_margin="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/notseen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

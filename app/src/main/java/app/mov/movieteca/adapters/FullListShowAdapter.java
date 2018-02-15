@@ -2,6 +2,7 @@ package app.mov.movieteca.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
@@ -60,6 +61,12 @@ public class FullListShowAdapter extends RecyclerView.Adapter<FullListShowAdapte
             holder.fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
             holder.fav.setTag("nefavorit");
         }
+        if (Handler.isSeen(context, "tv_show", movieList.get(position).getId())){
+            holder.seen.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.seen.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -73,6 +80,7 @@ public class FullListShowAdapter extends RecyclerView.Adapter<FullListShowAdapte
         public TextView textView;
         public CardView cardView;
         public ImageButton fav;
+        public ImageButton seen;
 
         public FullListViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +88,7 @@ public class FullListShowAdapter extends RecyclerView.Adapter<FullListShowAdapte
             textView = (TextView)itemView.findViewById(R.id.title);
             cardView = (CardView)itemView.findViewById(R.id.card_list);
             fav = (ImageButton)itemView.findViewById(R.id.image_button_fav);
+            seen = (ImageButton)itemView.findViewById(R.id.image_button_seen);
             textView.setSelected(true);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override

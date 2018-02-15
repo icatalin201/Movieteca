@@ -2,6 +2,7 @@ package app.mov.movieteca.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
@@ -70,6 +71,12 @@ public class TVShortAdapter extends RecyclerView.Adapter<TVShortAdapter.TVShortV
             holder.favButton.setImageResource(R.drawable.ic_favorite_border_black_18dp);
             holder.favButton.setTag("nefavorit");
         }
+        if (Handler.isSeen(context, "movie", tvShowShortList.get(position).getId())){
+            holder.seen.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.seen.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -84,6 +91,7 @@ public class TVShortAdapter extends RecyclerView.Adapter<TVShortAdapter.TVShortV
         public TextView movieRatingTextView;
         public ImageView movieImageView;
         public ImageButton favButton;
+        public ImageButton seen;
 
         public TVShortViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +100,7 @@ public class TVShortAdapter extends RecyclerView.Adapter<TVShortAdapter.TVShortV
             movieTitleTextView = (TextView) itemView.findViewById(R.id.text_view_title_show_card);
             movieRatingTextView = (TextView) itemView.findViewById(R.id.text_view_rating_show_card);
             favButton = (ImageButton) itemView.findViewById(R.id.image_button_fav);
+            seen = (ImageButton)itemView.findViewById(R.id.image_button_seen);
             movieTitleTextView.setSelected(true);
             favButton.setOnClickListener(new View.OnClickListener() {
                 @Override

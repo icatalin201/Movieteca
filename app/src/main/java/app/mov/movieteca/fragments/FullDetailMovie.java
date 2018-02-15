@@ -248,11 +248,11 @@ public class FullDetailMovie extends Fragment  {
 
     public void setFavorite(final Context context, final Integer id, final String path, final String title){
         if (Handler.isFav(context, "movie", id)){
-            fav.setImageResource(R.drawable.ic_favorite_black_18dp);
+            fav.setImageResource(R.drawable.fav_big);
             fav.setTag("favorit");
         }
         else {
-            fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
+            fav.setImageResource(R.drawable.notfav_big);
             fav.setTag("nefavorit");
         }
         fav.setOnClickListener(new View.OnClickListener() {
@@ -263,13 +263,13 @@ public class FullDetailMovie extends Fragment  {
                     Handler.removeFromFavorites(context, "movie", id);
                     Helper.notifyUser("remove", "fav", title, context);
                     fav.setTag("nefavorit");
-                    fav.setImageResource(R.drawable.ic_favorite_border_black_18dp);
+                    fav.setImageResource(R.drawable.notfav_big);
                 }
                 else if (fav.getTag().equals("nefavorit")){
                     Handler.addToFavorites(context, "movie", id, title, path);
                     Helper.notifyUser("add", "fav", title, context);
                     fav.setTag("favorit");
-                    fav.setImageResource(R.drawable.ic_favorite_black_18dp);
+                    fav.setImageResource(R.drawable.fav_big);
                 }
             }
         });

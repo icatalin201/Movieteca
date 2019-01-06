@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import app.mov.movieteca.models.search.Search;
-import app.mov.movieteca.models.search.SearchResults;
+import app.mov.movieteca.model.Search;
+import app.mov.movieteca.model.SearchResults;
 
 /**
  * Created by Catalin on 12/24/2017.
@@ -47,7 +47,7 @@ public class SearchAsyncTaskLoader extends AsyncTaskLoader<Search> {
         try {
             String urlString = "https://api.themoviedb.org/3/" + "search/multi"
                     + "?"
-                    + "api_key=" + Constants.api_key
+                    + "api_key=" + Util.Constants.API_KEY
                     + "&"
                     + "query=" + keyword
                     + "&"

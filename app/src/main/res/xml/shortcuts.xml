@@ -1,0 +1,15 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="favorites"
+        android:shortcutShortLabel="@string/short_label"
+        android:shortcutLongLabel="@string/long_label"
+        android:shortcutDisabledMessage="@string/disabled_label"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher">
+        <intent
+            android:action="android.intent.action.LAUNCH_FAVORITES"
+            android:targetPackage="app.mov.movieteca"
+            android:targetClass="app.mov.movieteca.activity.MainActivity">
+        </intent>
+    </shortcut>
+</shortcuts>

@@ -12,60 +12,29 @@ import android.util.Log;
 public class SqlHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "SQLHELPER";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "movies.db";
 
-    private static final String SQL_CREATE_FAVMOVIES =
-            "CREATE TABLE " + SqlStructure.SqlData.FAV_MOVIES + " (" +
+    private static final String SQL_CREATE_FAVORITES =
+            "CREATE TABLE " + SqlStructure.SqlData.FAVORITES + " (" +
                     SqlStructure.SqlData._ID + " INTEGER PRIMARY KEY," +
-                    SqlStructure.SqlData.movie_id + " INTEGER," +
-                    SqlStructure.SqlData.name + " TEXT," +
-                    SqlStructure.SqlData.poster + " TEXT)";
-    private static final String SQL_CREATE_FAVTVSERIES =
-            "CREATE TABLE " + SqlStructure.SqlData.FAV_TVSERIES + " (" +
-                    SqlStructure.SqlData._ID + " INTEGER PRIMARY KEY," +
-                    SqlStructure.SqlData.tv_series_id + " INTEGER," +
-                    SqlStructure.SqlData.name + " TEXT," +
-                    SqlStructure.SqlData.poster + " TEXT)";
-    private static final String SQL_CREATE_FAVCASTS =
-            "CREATE TABLE " + SqlStructure.SqlData.FAV_CASTS + " (" +
-                    SqlStructure.SqlData._ID + " INTEGER PRIMARY KEY," +
-                    SqlStructure.SqlData.cast_id + " INTEGER," +
-                    SqlStructure.SqlData.name + " TEXT," +
-                    SqlStructure.SqlData.poster + " TEXT)";
-    private static final String SQL_CREATE_SEENMOVIES =
-            "CREATE TABLE " + SqlStructure.SqlData.SEEN_MOVIES + " (" +
-                    SqlStructure.SqlData._ID + " INTEGER PRIMARY KEY," +
-                    SqlStructure.SqlData.movie_id + " INTEGER," +
-                    SqlStructure.SqlData.name + " TEXT," +
-                    SqlStructure.SqlData.poster + " TEXT)";
-    private static final String SQL_CREATE_SEENTVSERIES =
-            "CREATE TABLE " + SqlStructure.SqlData.SEEN_TVSERIES + " (" +
-                    SqlStructure.SqlData._ID + " INTEGER PRIMARY KEY," +
-                    SqlStructure.SqlData.tv_series_id + " INTEGER," +
-                    SqlStructure.SqlData.name + " TEXT," +
-                    SqlStructure.SqlData.poster + " TEXT)";
+                    SqlStructure.SqlData.RES_ID + " INTEGER," +
+                    SqlStructure.SqlData.RES_TYPE + " TEXT," +
+                    SqlStructure.SqlData.NAME + " TEXT," +
+                    SqlStructure.SqlData.POSTER + " TEXT)";
 
-    private static final String SQL_DELETE_FAVMOVIES =
-            "DROP TABLE IF EXISTS " + SqlStructure.SqlData.FAV_MOVIES;
-    private static final String SQL_DELETE_FAVTVSERIES =
-            "DROP TABLE IF EXISTS " + SqlStructure.SqlData.FAV_TVSERIES;
-    private static final String SQL_DELETE_FAVCASTS =
-            "DROP TABLE IF EXISTS " + SqlStructure.SqlData.FAV_CASTS;
-    private static final String SQL_DELETE_SEENMOVIES =
-            "DROP TABLE IF EXISTS " + SqlStructure.SqlData.SEEN_MOVIES;
-    private static final String SQL_DELETE_SEENTVSERIES =
-            "DROP TABLE IF EXISTS " + SqlStructure.SqlData.SEEN_TVSERIES;
+    private static final String SQL_DELETE_FAVMOVIES = "DROP TABLE IF EXISTS fav_movies";
+    private static final String SQL_DELETE_FAVTVSERIES = "DROP TABLE IF EXISTS fav_tvseries";
+    private static final String SQL_DELETE_FAVCASTS = "DROP TABLE IF EXISTS fav_casts";
+    private static final String SQL_DELETE_SEENMOVIES = "DROP TABLE IF EXISTS seen_movies";
+    private static final String SQL_DELETE_SEENTVSERIES = "DROP TABLE IF EXISTS seen_tvseries";
 
     public SqlHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_FAVMOVIES);
-        db.execSQL(SQL_CREATE_FAVTVSERIES);
-        db.execSQL(SQL_CREATE_FAVCASTS);
-        db.execSQL(SQL_CREATE_SEENMOVIES);
-        db.execSQL(SQL_CREATE_SEENTVSERIES);
+        db.execSQL(SQL_CREATE_FAVORITES);
         Log.i(TAG, "onCreate");
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -25,24 +25,12 @@ import app.mov.movieteca.R;
 
 public class Helper {
 
-    public static void notifyUser(String type, String action, String name, Context context){
-        switch (action){
-            case "fav":
-                if (type.equals("add")) {
-                    Toast.makeText(context, name.concat(" added to favorites collection."), Toast.LENGTH_SHORT).show();
-                }
-                else if (type.equals("remove")){
-                    Toast.makeText(context, name.concat(" removed from favorites collection."), Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case "seen":
-                if (type.equals("add")) {
-                    Toast.makeText(context, name.concat(" added to seen collection"), Toast.LENGTH_SHORT).show();
-                }
-                else if (type.equals("remove")){
-                    Toast.makeText(context, name.concat(" removed from seen collection"), Toast.LENGTH_SHORT).show();
-                }
-                break;
+    public static void notifyUser(String type, String name, Context context){
+        if (type.equals("add")) {
+            Toast.makeText(context, name.concat(" added to favorites collection."), Toast.LENGTH_SHORT).show();
+        }
+        else if (type.equals("remove")){
+            Toast.makeText(context, name.concat(" removed from favorites collection."), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -86,7 +74,7 @@ public class Helper {
         else if (length == 11){
             result = value.toString().substring(0, 2) + " billions";
         }
-        else if (length == 12){
+        else {
             result = value.toString().substring(0, 3) + " billions";
         }
         return result;

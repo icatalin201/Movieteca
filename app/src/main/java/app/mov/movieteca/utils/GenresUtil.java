@@ -3,7 +3,7 @@ package app.mov.movieteca.utils;
 import java.util.HashMap;
 import java.util.List;
 
-import app.mov.movieteca.models.movies.Genres;
+import app.mov.movieteca.model.Genres;
 
 /**
  * Created by Catalin on 12/21/2017.

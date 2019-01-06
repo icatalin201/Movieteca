@@ -1,22 +1,18 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="primaryColorEx">#455a64</color>
-    <color name="primaryColorEx2">#29508e</color>
-
-    <color name="primaryColor">#314e7c</color>
-    <color name="primaryDarkColor">#00264f</color>
-    <color name="primaryLightColor">#607aab</color>
-
-    <color name="primaryLightColorEx">#718792</color>
-    <color name="primaryDarkColorEx">#1c313a</color>
-
-    <color name="secondaryColor">#00838f</color>
-    <color name="secondaryLightColor">#4fb3bf</color>
-    <color name="secondaryDarkColor">#005662</color>
-
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#eee</color>
-    <color name="anotherWhiteColor">#ccc</color>
-
-    <color name="someGreen">#ff669900</color>
+    <color name="primaryColor">#0e1c35</color>
+    <color name="primaryDarkColor">#000010</color>
+    <color name="primaryDarkColorT">#99000010</color>
+    <color name="primaryDarkColorTT">#1A000010</color>
+    <color name="primaryLightColor">#38425f</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorSmokeWhite">#f5f5f5</color>
+    <color name="colorGreen">#5d9500</color>
+    <color name="colorGray">#afb6b9</color>
+    <color name="colorGrayLight">#d9e0e2</color>
+    <color name="colorBlue">#2196f3</color>
+    <color name="colorRed">#ba000d</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDefault">#808080</color>
+    <color name="colorBlackie">#303030</color>
 </resources>

@@ -19,7 +19,6 @@
         android:orientation="vertical">
 
         <ImageView
-            android:src="@drawable/ic_baseline_person_24px"
             android:contentDescription="@string/app_name_motto"
             android:id="@+id/image_view_cast"
             android:layout_width="match_parent"

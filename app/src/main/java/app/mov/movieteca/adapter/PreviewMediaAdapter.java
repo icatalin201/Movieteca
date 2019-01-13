@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,33 +75,29 @@ public class PreviewMediaAdapter extends RecyclerView.Adapter<PreviewMediaAdapte
         }
 
         PreviewMedia previewMedia = previewMediaList.get(i);
-        String path = null;
-        String title;
+        String path;
         if (previewMedia.getType().equals(Util.Constants.MOVIE))  {
-            if (((PreviewMovie) previewMedia).getBackdrop_path() != null) {
-                path = Util.Constants.IMAGE_LOADING_BASE_URL_780
-                        .concat(((PreviewMovie) previewMedia).getBackdrop_path());
-            }
-            if (fulllist && ((PreviewMovie) previewMedia).getPoster_path() != null) {
-                path = Util.Constants.IMAGE_LOADING_BASE_URL_780
-                        .concat(((PreviewMovie) previewMedia).getPoster_path());
-            }
-            title = ((PreviewMovie) previewMedia).getTitle();
+            path = Util.Constants.IMAGE_LOADING_BASE_URL_780
+                    .concat(((PreviewMovie) previewMedia).getPoster_path());
         } else {
-            if (((PreviewTVShow) previewMedia).getBackdrop_path() != null) {
-                path = Util.Constants.IMAGE_LOADING_BASE_URL_780
-                        .concat(((PreviewTVShow) previewMedia).getBackdrop_path());
+            if (!fulllist) {
+                ViewGroup.LayoutParams params = mediaViewHolder.item.getLayoutParams();
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250,
+                        context.getResources().getDisplayMetrics());
+                mediaViewHolder.item.setLayoutParams(params);
             }
-            title = ((PreviewTVShow) previewMedia).getOriginal_name();
+            path = Util.Constants.IMAGE_LOADING_BASE_URL_780
+                    .concat(((PreviewTVShow) previewMedia).getBackdrop_path());
+            String title = ((PreviewTVShow) previewMedia).getOriginal_name();
+            mediaViewHolder.title.setText(title);
+            mediaViewHolder.title.setVisibility(View.VISIBLE);
         }
-        mediaViewHolder.title.setText(title);
-        if (path != null) {
-            Glide.with(context)
-                    .load(path)
-                    .apply(RequestOptions.centerCropTransform())
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(mediaViewHolder.image);
-        }
+
+        Glide.with(context)
+                .load(path)
+                .apply(RequestOptions.centerCropTransform())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(mediaViewHolder.image);
     }
 
     @Override

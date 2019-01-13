@@ -47,13 +47,20 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     @Override
     public void onBindViewHolder(@NonNull TrailersViewHolder trailersViewHolder, int i) {
         VideoInfo videoInfo = videosList.get(i);
-        Glide.with(context)
-                .load(Util.Constants.YOUTUBE_THUMBNAIL_BASE_URL
-                        .concat(videoInfo.getKey())
-                        .concat(Util.Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY))
-                .apply(RequestOptions.centerCropTransform())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(trailersViewHolder.trailerImage);
+        if (videoInfo.getKey() != null) {
+            Glide.with(context)
+                    .load(Util.Constants.YOUTUBE_THUMBNAIL_BASE_URL
+                            .concat(videoInfo.getKey())
+                            .concat(Util.Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY))
+                    .apply(RequestOptions.centerCropTransform())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(trailersViewHolder.trailerImage);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.ic_baseline_movie_creation_24px)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(trailersViewHolder.trailerImage);
+        }
         if (videoInfo.getName() != null) {
             trailersViewHolder.trailerInfo.setText(videoInfo.getName());
         }

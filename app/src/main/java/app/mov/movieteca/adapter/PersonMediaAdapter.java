@@ -71,6 +71,11 @@ public class PersonMediaAdapter extends RecyclerView.Adapter<PersonMediaAdapter.
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions.centerCropTransform())
                     .into(personMediaViewHolder.image);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.ic_baseline_movie_creation_24px)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(personMediaViewHolder.image);
         }
         personMediaViewHolder.title.setText(title);
         personMediaViewHolder.role.setText(role);

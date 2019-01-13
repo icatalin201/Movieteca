@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
@@ -43,9 +44,10 @@ public class PreviewFullListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_full_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         type = getIntent().getStringExtra("type");
         String extra = getIntent().getStringExtra("internal_type");
         internalType = getIntent().getStringExtra("extra");
@@ -58,7 +60,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
         fullListRecycler.setLayoutAnimation(AnimationUtils
                 .loadLayoutAnimation(this, R.anim.layout_animation_down));
         fullListRecycler.setAdapter(previewMediaAdapter);
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         fullListRecycler.setLayoutManager(gridLayoutManager);
         fullListRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -130,8 +132,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewMovieList1 = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null ||
-                                    previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -188,8 +189,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null ||
-                                    previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);

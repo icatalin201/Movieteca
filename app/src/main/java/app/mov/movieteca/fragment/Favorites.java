@@ -2,7 +2,6 @@ package app.mov.movieteca.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -74,7 +73,7 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
         recyclerView = view.findViewById(R.id.favorites);
         noContent = view.findViewById(R.id.no_content);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(activity, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(activity, 3));
         recyclerView.setLayoutAnimation(AnimationUtils
                 .loadLayoutAnimation(activity, R.anim.layout_animation_down));
         favoriteAdapter = new FavoriteAdapter(activity, ALPHABETICAL_COMPARATOR);

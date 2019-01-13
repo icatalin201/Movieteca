@@ -1,6 +1,7 @@
 package app.mov.movieteca.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,6 @@ import app.mov.movieteca.model.ShowCastsDetails;
 import app.mov.movieteca.model.ShowCastsForPerson;
 import app.mov.movieteca.retronetwork.NetworkClient;
 import app.mov.movieteca.retronetwork.NetworkService;
-import app.mov.movieteca.utils.Helper;
 import app.mov.movieteca.utils.LoadHelper;
 import app.mov.movieteca.utils.Util;
 import retrofit2.Call;
@@ -64,6 +64,8 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
 
     private String path;
 
+    private CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -76,6 +78,7 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
         layout = findViewById(R.id.cast_layout);
         final ImageButton favorite = findViewById(R.id.favorite);
         name = findViewById(R.id.name);
+        coordinatorLayout = findViewById(R.id.coordinator);
         moviesLabel = findViewById(R.id.movies_label);
         showsLabel = findViewById(R.id.shows_label);
         age = findViewById(R.id.age);
@@ -113,7 +116,8 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
             public void onClick(View view) {
                 if (favorite.getTag().equals("1")){
                     Handler.removeFavorite(CastActivity.this, castId, Util.Constants.ACTOR);
-                    Helper.notifyUser("remove", name.getText().toString(), CastActivity.this);
+                    Util.notify(coordinatorLayout, name.getText().toString()
+                            .concat(" has been deleted from favorite collection."));
                     favorite.setTag("0");
                     favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
                 }
@@ -124,7 +128,8 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
                     favoritePreviewMedia.setPoster(path);
                     favoritePreviewMedia.setName(name.getText().toString());
                     Handler.insertFavorite(CastActivity.this, favoritePreviewMedia);
-                    Helper.notifyUser("add", name.getText().toString(), CastActivity.this);
+                    Util.notify(coordinatorLayout, name.getText().toString()
+                            .concat(" has been added to favorite collection."));
                     favorite.setTag("1");
                     favorite.setImageResource(R.drawable.ic_baseline_favorite_24px);
                 }
@@ -169,6 +174,11 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_780
                                             .concat(person.getProfile_path()))
                                     .apply(RequestOptions.centerCropTransform())
+                                    .transition(DrawableTransitionOptions.withCrossFade())
+                                    .into(image);
+                        } else {
+                            Glide.with(CastActivity.this)
+                                    .load(R.drawable.ic_baseline_person_24px)
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(image);
                         }

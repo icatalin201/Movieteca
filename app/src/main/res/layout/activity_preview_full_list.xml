@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".activity.PreviewFullListActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:theme="@style/AppTheme.Toolbar"
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:background="@color/primaryColor"
+            android:layout_height="?attr/actionBarSize"/>
+
+    </android.support.design.widget.AppBarLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_gravity="center"
@@ -18,6 +32,8 @@
 
     <android.support.v7.widget.RecyclerView
         android:visibility="gone"
+        android:nestedScrollingEnabled="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/full_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

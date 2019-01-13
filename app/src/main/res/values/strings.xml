@@ -31,4 +31,5 @@
     <string name="short_label">Favorites</string>
     <string name="long_label">View Favorites</string>
     <string name="disabled_label">Favorites</string>
+    <string name="search_label">Search for shows, movies and actors.</string>
 </resources>

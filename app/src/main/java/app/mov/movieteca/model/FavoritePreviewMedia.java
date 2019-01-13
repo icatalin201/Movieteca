@@ -1,16 +1,31 @@
 package app.mov.movieteca.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "favorites")
 public class FavoritePreviewMedia {
 
+    @PrimaryKey
     private long id;
+
+    @ColumnInfo(name = "res_id")
     private Integer resId;
+
+    @ColumnInfo(name = "res_type")
     private String resType;
+
+    @ColumnInfo(name = "name")
     private String name;
+
+    @ColumnInfo(name = "poster")
     private String poster;
 
     public FavoritePreviewMedia() { }
 
-    public FavoritePreviewMedia(long id, Integer resId, String resType, String name, String poster) {
+    public FavoritePreviewMedia(long id, Integer resId, String resType,
+                                String name, String poster) {
         this.id = id;
         this.resId = resId;
         this.resType = resType;

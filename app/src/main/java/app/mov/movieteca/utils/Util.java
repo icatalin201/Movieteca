@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +33,7 @@ public class Util {
         String CAST_ID = "cast_id";
         String SEARCH = "search";
         String RATING_SYMBOL = "\u2605";
-        String IMAGE_LOADING_BASE_URL_1000 = "https://image.tmdb.org/t/p/w1000/";
+        String IMAGE_LOADING_BASE_URL_1000 = "https://image.tmdb.org/t/p/original/";
         String IMAGE_LOADING_BASE_URL_342 = "https://image.tmdb.org/t/p/w342/";
         String IMAGE_LOADING_BASE_URL_780 = "https://image.tmdb.org/t/p/w780/";
         String YOUTUBE_WATCH_BASE_URL = "https://www.youtube.com/watch?v=";
@@ -114,6 +116,33 @@ public class Util {
         return convertDateToString(date1, targetFormat);
     }
 
+    public static String formatValue(Integer value){
+        int length = value.toString().length();
+        String result;
+        if (length < 7 || length > 12){
+            result = value.toString();
+        }
+        else if (length == 7){
+            result = value.toString().substring(0, 1) + " millions";
+        }
+        else if (length == 8){
+            result = value.toString().substring(0, 2) + " millions";
+        }
+        else if (length == 9){
+            result = value.toString().substring(0, 3) + " millions";
+        }
+        else if (length == 10){
+            result = value.toString().substring(0, 1) + " billions";
+        }
+        else if (length == 11){
+            result = value.toString().substring(0, 2) + " billions";
+        }
+        else {
+            result = value.toString().substring(0, 3) + " billions";
+        }
+        return result;
+    }
+
     public static int convertMillisToDays(long millis) {
         return (int) (millis / (1000 * 60 * 60 * 24));
     }
@@ -126,6 +155,11 @@ public class Util {
     public static int getDifferenceInDays(Date current, Date target) {
         long millis = target.getTime() - current.getTime();
         return convertMillisToDays(millis);
+    }
+
+    public static void notify(CoordinatorLayout coordinatorLayout, String message) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
 }

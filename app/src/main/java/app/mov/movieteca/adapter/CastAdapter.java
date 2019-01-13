@@ -53,6 +53,11 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions.circleCropTransform())
                     .into(castViewHolder.castImage);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.ic_baseline_person_24px)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(castViewHolder.castImage);
         }
         if (movieCast.getName() != null){
             castViewHolder.castName.setText(movieCast.getName());

@@ -1,16 +1,24 @@
 package app.mov.movieteca.activity;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.HapticFeedbackConstants;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,11 +33,12 @@ import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.CastAdapter;
 import app.mov.movieteca.adapter.PreviewMediaAdapter;
 import app.mov.movieteca.adapter.TrailersAdapter;
-import app.mov.movieteca.database.Handler;
+import app.mov.movieteca.database.AppDatabaseHelper;
 import app.mov.movieteca.model.BaseMovieResponse;
 import app.mov.movieteca.model.BaseTVShowResponse;
 import app.mov.movieteca.model.Credits;
 import app.mov.movieteca.model.FavoritePreviewMedia;
+import app.mov.movieteca.model.FavoritePreviewMediaDao;
 import app.mov.movieteca.model.Movie;
 import app.mov.movieteca.model.MovieCast;
 import app.mov.movieteca.model.PreviewMedia;
@@ -49,7 +58,7 @@ import retrofit2.Response;
 public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
 
     private ProgressBar progressBar;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
 
     private ImageView imageBackdrop;
     private ImageView imagePoster;
@@ -69,8 +78,9 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
 
     private String type;
     private int count;
-
     private String path;
+    private int movieId;
+    private String name;
 
     private TextView trailersLabel;
     private TextView castLabel;
@@ -79,14 +89,14 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
     private RecyclerView similars;
     private RecyclerView casts;
 
-    private CoordinatorLayout coordinatorLayout;
+    private ImageButton fav;
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        setResult(1);
-        finish();
-        return super.onSupportNavigateUp();
-    }
+    private FavoritePreviewMediaDao favoritePreviewMediaDao;
+
+    private CoordinatorLayout coordinatorLayout;
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
 
     @Override
     public void onBackPressed() {
@@ -96,12 +106,26 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_media);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        toolbar = findViewById(R.id.toolbar);
+        appBarLayout = findViewById(R.id.appbar);
+        collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
+        setSupportActionBar(toolbar);
+        setTitle("");
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(name);
+                } else {
+                    collapsingToolbarLayout.setTitle("");
+                }
+            }
+        });
         count = 0;
-        final int movieId = getIntent().getIntExtra("id", 0);
+        this.favoritePreviewMediaDao = AppDatabaseHelper.getDatabase(this).getDao();
+        movieId = getIntent().getIntExtra("id", 0);
         type = getIntent().getStringExtra("type");
         progressBar = findViewById(R.id.progressBar);
         coordinatorLayout = findViewById(R.id.coordinator);
@@ -120,7 +144,7 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
         runtime = findViewById(R.id.runtime);
         budget = findViewById(R.id.budget);
         revenue = findViewById(R.id.revenue);
-        final ImageButton fav = findViewById(R.id.favorite);
+        fav = findViewById(R.id.favorite);
         trailers = findViewById(R.id.recycler_trailers);
         similars = findViewById(R.id.recycler_similar);
         casts = findViewById(R.id.recycler_cast);
@@ -152,31 +176,33 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
         } else {
             loadData.loadTVData(movieId);
         }
-        if (Handler.isFavorite(this, movieId, type)){
-            fav.setImageResource(R.drawable.ic_baseline_favorite_24px);
-            fav.setTag("1");
-        }
-        else {
-            fav.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
-            fav.setTag("0");
-        }
+        new IsFavorite().execute();
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (fav.getTag().equals("1")){
-                    Handler.removeFavorite(FullMediaActivity.this, movieId, type);
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                if (fav.getTag().equals("1")) {
+                    new Thread(new Runnable() {
+                        public void run() {
+                            favoritePreviewMediaDao.removeFavoriteByQuery(movieId, type);
+                        }
+                    }).start();
                     Util.notify(coordinatorLayout, title.getText().toString()
                             .concat(" has been deleted from favorite collection."));
                     fav.setTag("0");
                     fav.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
                 }
                 else if (fav.getTag().equals("0")){
-                    FavoritePreviewMedia favoritePreviewMedia = new FavoritePreviewMedia();
+                    final FavoritePreviewMedia favoritePreviewMedia = new FavoritePreviewMedia();
                     favoritePreviewMedia.setResType(type);
                     favoritePreviewMedia.setResId(movieId);
                     favoritePreviewMedia.setPoster(path);
                     favoritePreviewMedia.setName(title.getText().toString());
-                    Handler.insertFavorite(FullMediaActivity.this, favoritePreviewMedia);
+                    new Thread(new Runnable() {
+                        public void run() {
+                            favoritePreviewMediaDao.insertFavorite(favoritePreviewMedia);
+                        }
+                    }).start();
                     Util.notify(coordinatorLayout, title.getText().toString()
                             .concat(" has been added to favorite collection."));
                     fav.setTag("1");
@@ -186,12 +212,35 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private class IsFavorite extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return favoritePreviewMediaDao.isFavorite(movieId, type) != null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean) {
+                fav.setImageResource(R.drawable.ic_baseline_favorite_24px);
+                fav.setTag("1");
+            }
+            else {
+                fav.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
+                fav.setTag("0");
+            }
+        }
+    }
+
     @Override
     public void onLoadComplete(boolean status) {
         count++;
         if (count == 4) {
             progressBar.setVisibility(View.GONE);
             scrollView.setVisibility(View.VISIBLE);
+            appBarLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -213,7 +262,7 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                         Movie movie = response.body();
                         path = movie.getPoster_path();
                         title.setText(movie.getTitle());
-                        setTitle(movie.getTitle());
+                        name = movie.getTitle();
                         if (movie.getBackdrop_path() != null) {
                             Glide.with(FullMediaActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_1000
@@ -373,7 +422,7 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                         TVShow movie = response.body();
                         path = movie.getPoster_path();
                         title.setText(movie.getOriginal_name());
-                        setTitle(movie.getOriginal_name());
+                        name = movie.getOriginal_name();
                         if (movie.getBackdrop_path() != null) {
                             Glide.with(FullMediaActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_1000

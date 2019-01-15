@@ -11,8 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeFull">
-        <activity android:name=".activity.Splash">
+        android:theme="@style/AppThemeSplash">
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash"
+            android:name=".activity.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,10 +25,22 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.PreviewFullListActivity" />
-        <activity android:name=".activity.FullMediaActivity" />
-        <activity android:name=".activity.CastActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFull"
+            android:name=".activity.MainActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFull"
+            android:name=".activity.PreviewFullListActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeMedia"
+            android:name=".activity.FullMediaActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:name=".activity.CastActivity" />
     </application>
 
 </manifest>

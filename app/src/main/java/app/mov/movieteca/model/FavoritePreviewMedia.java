@@ -2,12 +2,13 @@ package app.mov.movieteca.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "favorites")
 public class FavoritePreviewMedia {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
 
     @ColumnInfo(name = "res_id")
@@ -22,6 +23,7 @@ public class FavoritePreviewMedia {
     @ColumnInfo(name = "poster")
     private String poster;
 
+    @Ignore
     public FavoritePreviewMedia() { }
 
     public FavoritePreviewMedia(long id, Integer resId, String resType,

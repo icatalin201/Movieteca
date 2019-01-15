@@ -113,7 +113,11 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
     public boolean onQueryTextSubmit(String s) {
         label.setVisibility(View.GONE);
         query = s;
+        pagesOver = false;
         presentPage = 1;
+        loading = true;
+        previousTotal = 0;
+        visibleThreshold = 5;
         loadData();
         searchView.clearFocus();
         return true;
@@ -121,7 +125,8 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
 
     @Override
     public boolean onQueryTextChange(String s) {
-        return false;
+
+        return true;
     }
 
     private void loadData() {
@@ -185,7 +190,8 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
                             searchResult.setMediaType(Util.Constants.ACTOR);
                             break;
                     }
-                    if (searchResult.getPoster() == null) continue;
+                    if (searchResult.getPoster() == null ||
+                            searchResult.getPoster().equals("")) continue;
                     searchResults.add(searchResult);
                 }
                 searchResponse.setResults(searchResults);

@@ -17,9 +17,10 @@
         android:id="@+id/bottom_nagivation"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_menu"
+        app:labelVisibilityMode="unlabeled"
         android:background="@color/primaryColor"
-        app:itemIconTint="@color/colorWhite"
-        app:itemTextColor="@color/colorWhite"
+        app:itemIconTint="@color/bottom_nav_colors"
+        app:itemTextColor="@color/bottom_nav_colors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

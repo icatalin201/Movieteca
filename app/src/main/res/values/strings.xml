@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Movieteca</string>
-    <string name="app_name_motto">Movieteca - Entertainment at your fingertips</string>
+    <string name="app_name_motto">Entertainment at your fingertips</string>
+    <string name="app_version">App version: 2.0.0</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="age">Age</string>
@@ -32,4 +33,9 @@
     <string name="long_label">View Favorites</string>
     <string name="disabled_label">Favorites</string>
     <string name="search_label">Search for shows, movies and actors.</string>
+    <string name="credits">Special thanks</string>
+    <string name="info">Movieteca is an entertainment app that keeps you up to date with your favorite movies and series.\n\nFeatures:\n\n* List of movies or series that are now playing, popular, top rated or upcoming.\n* See details about movies, series or actors.\n* Search over 436,607 movies, 78,519 series, and 1,282,792 actors.\n* Mark as favorites.</string>
+    <string name="alert">This app doesn`t allow you to watch movies!\n"Piracy is illegal."</string>
+    <string name="share">Share</string>
+    <string name="rate">Rating</string>
 </resources>

@@ -30,8 +30,10 @@ import java.util.Objects;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.FavoriteAdapter;
-import app.mov.movieteca.database.Handler;
+import app.mov.movieteca.database.AppDatabase;
+import app.mov.movieteca.database.AppDatabaseHelper;
 import app.mov.movieteca.model.FavoritePreviewMedia;
+import app.mov.movieteca.model.FavoritePreviewMediaDao;
 import app.mov.movieteca.utils.Util;
 
 public class Favorites extends Fragment implements SearchView.OnQueryTextListener {
@@ -116,6 +118,13 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
     @SuppressLint("StaticFieldLeak")
     private class LoadData extends AsyncTask<Void, Void, List<FavoritePreviewMedia>> {
 
+        private FavoritePreviewMediaDao favoritePreviewMediaDao;
+
+        LoadData() {
+            AppDatabase appDatabase = AppDatabaseHelper.getDatabase(getActivity());
+            favoritePreviewMediaDao = appDatabase.getDao();
+        }
+
         @Override
         protected List<FavoritePreviewMedia> doInBackground(Void... voids) {
             String type;
@@ -126,7 +135,7 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
             } else {
                 type = Util.Constants.ACTOR;
             }
-            return Handler.getFavorites(getActivity(), type);
+            return favoritePreviewMediaDao.getFavorites(type);
         }
 
         @Override

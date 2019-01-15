@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = new Favorites();
                 item.setChecked(true);
                 break;
-            case R.id.more:
-                fragment = new More();
-                item.setChecked(true);
-                break;
+//            case R.id.more:
+//                fragment = new More();
+//                item.setChecked(true);
+//                break;
         }
         if (fragment != null) {
             Util.changeFragment(this, fragment);

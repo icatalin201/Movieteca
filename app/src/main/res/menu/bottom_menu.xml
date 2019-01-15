@@ -19,9 +19,9 @@
         android:icon="@drawable/ic_baseline_favorite_24px"
         android:title="@string/favorites"/>
 
-    <item android:id="@+id/more"
-        app:showAsAction="always|withText"
-        android:icon="@drawable/ic_baseline_more_horiz_24px"
-        android:title="@string/more"/>
+    <!--<item android:id="@+id/more"-->
+        <!--app:showAsAction="always|withText"-->
+        <!--android:icon="@drawable/ic_baseline_more_horiz_24px"-->
+        <!--android:title="@string/more"/>-->
 
 </menu>

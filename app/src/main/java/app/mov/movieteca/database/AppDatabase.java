@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import app.mov.movieteca.model.FavoritePreviewMedia;
 import app.mov.movieteca.model.FavoritePreviewMediaDao;
 
-@Database(entities = {FavoritePreviewMedia.class}, version = 1)
+@Database(entities = {FavoritePreviewMedia.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FavoritePreviewMediaDao getDao();

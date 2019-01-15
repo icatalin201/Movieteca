@@ -1,5 +1,7 @@
 package app.mov.movieteca.activity;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,9 +27,10 @@ import java.util.Objects;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.PersonMediaAdapter;
-import app.mov.movieteca.database.Handler;
+import app.mov.movieteca.database.AppDatabaseHelper;
 import app.mov.movieteca.model.BaseMediaForPerson;
 import app.mov.movieteca.model.FavoritePreviewMedia;
+import app.mov.movieteca.model.FavoritePreviewMediaDao;
 import app.mov.movieteca.model.MovieCastsDetails;
 import app.mov.movieteca.model.MovieCastsForPerson;
 import app.mov.movieteca.model.Person;
@@ -63,20 +66,22 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
     private int count;
 
     private String path;
+    private ImageButton favorite;
 
     private CoordinatorLayout coordinatorLayout;
+    private FavoritePreviewMediaDao favoritePreviewMediaDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast);
         count = 0;
+        this.favoritePreviewMediaDao = AppDatabaseHelper.getDatabase(this).getDao();
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         castId = getIntent().getIntExtra(Util.Constants.CAST_ID, 0);
         progressBar = findViewById(R.id.progressBar);
         layout = findViewById(R.id.cast_layout);
-        final ImageButton favorite = findViewById(R.id.favorite);
+        favorite = findViewById(R.id.favorite);
         name = findViewById(R.id.name);
         coordinatorLayout = findViewById(R.id.coordinator);
         moviesLabel = findViewById(R.id.movies_label);
@@ -103,31 +108,31 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
         movieRecycler.setAdapter(moviesAdapter);
         showRecycler.setAdapter(showsAdapter);
         new LoadData(this).loadData();
-        if (Handler.isFavorite(this, castId, Util.Constants.ACTOR)){
-            favorite.setImageResource(R.drawable.ic_baseline_favorite_24px);
-            favorite.setTag("1");
-        }
-        else {
-            favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
-            favorite.setTag("0");
-        }
+        new IsFavorite().execute();
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (favorite.getTag().equals("1")){
-                    Handler.removeFavorite(CastActivity.this, castId, Util.Constants.ACTOR);
+                    new Thread(new Runnable() {
+                        public void run() {
+                            favoritePreviewMediaDao.removeFavoriteByQuery(castId, Util.Constants.ACTOR);
+                        }
+                    }).start();
                     Util.notify(coordinatorLayout, name.getText().toString()
                             .concat(" has been deleted from favorite collection."));
                     favorite.setTag("0");
                     favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
                 }
                 else if (favorite.getTag().equals("0")){
-                    FavoritePreviewMedia favoritePreviewMedia = new FavoritePreviewMedia();
+                    final FavoritePreviewMedia favoritePreviewMedia = new FavoritePreviewMedia();
                     favoritePreviewMedia.setResType(Util.Constants.ACTOR);
                     favoritePreviewMedia.setResId(castId);
                     favoritePreviewMedia.setPoster(path);
                     favoritePreviewMedia.setName(name.getText().toString());
-                    Handler.insertFavorite(CastActivity.this, favoritePreviewMedia);
+                    new Thread(new Runnable() {
+                        public void run() {
+                            favoritePreviewMediaDao.insertFavorite(favoritePreviewMedia);                        }
+                    }).start();
                     Util.notify(coordinatorLayout, name.getText().toString()
                             .concat(" has been added to favorite collection."));
                     favorite.setTag("1");
@@ -135,6 +140,28 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
                 }
             }
         });
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class IsFavorite extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            return favoritePreviewMediaDao.isFavorite(castId, Util.Constants.ACTOR) != null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean) {
+                favorite.setImageResource(R.drawable.ic_baseline_favorite_24px);
+                favorite.setTag("1");
+            }
+            else {
+                favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24px);
+                favorite.setTag("0");
+            }
+        }
     }
 
     @Override
@@ -173,7 +200,7 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
                             Glide.with(CastActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_780
                                             .concat(person.getProfile_path()))
-                                    .apply(RequestOptions.centerCropTransform())
+                                    .apply(RequestOptions.circleCropTransform())
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(image);
                         } else {

@@ -110,10 +110,8 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
                     collapsingToolbarLayout.setTitle(name);
-                    getWindow().setStatusBarColor(getResources().getColor(R.color.primaryDarkColor));
                 } else {
                     collapsingToolbarLayout.setTitle("");
-                    getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
                 }
             }
         });

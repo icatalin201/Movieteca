@@ -11,10 +11,11 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:background="@color/primaryColor"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -41,6 +42,23 @@
                     android:background="@drawable/gradient"
                     android:layout_width="match_parent"
                     android:layout_height="400dp" />
+
+                <ImageButton
+                    android:contentDescription="@string/app_name"
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_baseline_keyboard_backspace_24px"
+                    android:translationZ="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:contentDescription="@string/share"
@@ -191,7 +209,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:paddingTop="8dp"
+                android:paddingTop="16dp"
                 android:paddingBottom="8dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"

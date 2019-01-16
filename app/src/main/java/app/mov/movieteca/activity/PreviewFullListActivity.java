@@ -52,6 +52,8 @@ public class PreviewFullListActivity extends AppCompatActivity {
         String extra = getIntent().getStringExtra("internal_type");
         internalType = getIntent().getStringExtra("extra");
         setTitle(extra);
+        Objects.requireNonNull(getSupportActionBar())
+                .setHomeAsUpIndicator(R.drawable.ic_baseline_keyboard_backspace_24px);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         progressBar = findViewById(R.id.progressBar);
         fullListRecycler = findViewById(R.id.full_list_recycler);

@@ -14,7 +14,6 @@ import android.widget.Toast;
 import app.mov.movieteca.R;
 import app.mov.movieteca.fragment.Favorites;
 import app.mov.movieteca.fragment.Home;
-import app.mov.movieteca.fragment.More;
 import app.mov.movieteca.fragment.Search;
 import app.mov.movieteca.utils.Util;
 

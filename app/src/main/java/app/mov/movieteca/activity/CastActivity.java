@@ -1,18 +1,23 @@
 package app.mov.movieteca.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.PersonMediaAdapter;
@@ -47,37 +51,39 @@ import retrofit2.Response;
 public class CastActivity extends AppCompatActivity implements LoadHelper {
 
     private ProgressBar progressBar;
-    private ScrollView layout;
-
+    private NestedScrollView layout;
     private TextView name;
     private TextView age;
     private TextView birthplace;
     private TextView bio;
     private TextView gender;
     private ImageView image;
+    private TextView moviesLabel;
+    private TextView showsLabel;
+    private ImageButton favorite;
+    private CoordinatorLayout coordinatorLayout;
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     private PersonMediaAdapter moviesAdapter;
     private PersonMediaAdapter showsAdapter;
 
-    private TextView moviesLabel;
-    private TextView showsLabel;
-
     private int castId;
     private int count;
-
     private String path;
-    private ImageButton favorite;
-
-    private CoordinatorLayout coordinatorLayout;
     private FavoritePreviewMediaDao favoritePreviewMediaDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("");
+        appBarLayout = findViewById(R.id.appbar);
+        collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         count = 0;
         this.favoritePreviewMediaDao = AppDatabaseHelper.getDatabase(this).getDao();
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         castId = getIntent().getIntExtra(Util.Constants.CAST_ID, 0);
         progressBar = findViewById(R.id.progressBar);
         layout = findViewById(R.id.cast_layout);
@@ -91,6 +97,35 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
         image = findViewById(R.id.image);
         birthplace = findViewById(R.id.birthplace);
         bio = findViewById(R.id.bio);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle(name.getText().toString());
+                } else {
+                    collapsingToolbarLayout.setTitle("");
+                }
+            }
+        });
+        ImageButton backArrow = findViewById(R.id.back);
+        ImageButton share = findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                Intent movieShareIntent = new Intent(Intent.ACTION_SEND);
+                movieShareIntent.setType("text/plain");
+                String extraText = name.getText().toString();
+                movieShareIntent.putExtra(Intent.EXTRA_TEXT, extraText);
+                startActivity(movieShareIntent);
+            }
+        });
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         RecyclerView movieRecycler = findViewById(R.id.movie_role_recycler);
         RecyclerView showRecycler = findViewById(R.id.show_role_recycler);
         movieRecycler.setHasFixedSize(true);
@@ -170,6 +205,7 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
         if (count == 3) {
             progressBar.setVisibility(View.GONE);
             layout.setVisibility(View.VISIBLE);
+            appBarLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -280,13 +316,6 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
             });
         }
 
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        setResult(1);
-        finish();
-        return super.onSupportNavigateUp();
     }
 
     @Override

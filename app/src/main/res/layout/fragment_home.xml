@@ -108,7 +108,7 @@
                     </FrameLayout>
 
                     <RelativeLayout
-                        android:background="@drawable/gradient"
+                        android:background="@drawable/gradient_light"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

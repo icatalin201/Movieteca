@@ -39,7 +39,7 @@
             android:name=".activity.FullMediaActivity" />
         <activity
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeMedia"
             android:name=".activity.CastActivity" />
     </application>
 

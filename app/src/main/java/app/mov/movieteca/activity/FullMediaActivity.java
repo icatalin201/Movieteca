@@ -1,6 +1,7 @@
 package app.mov.movieteca.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -12,8 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.HapticFeedbackConstants;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -27,7 +26,6 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.CastAdapter;
@@ -59,7 +57,6 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
 
     private ProgressBar progressBar;
     private NestedScrollView scrollView;
-
     private ImageView imageBackdrop;
     private ImageView imagePoster;
     private TextView title;
@@ -71,7 +68,18 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
     private TextView runtime;
     private TextView budget;
     private TextView revenue;
+    private TextView trailersLabel;
+    private TextView castLabel;
+    private TextView similarsLabel;
+    private RecyclerView trailers;
+    private RecyclerView similars;
+    private RecyclerView casts;
+    private ImageButton fav;
+    private CoordinatorLayout coordinatorLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
 
+    private FavoritePreviewMediaDao favoritePreviewMediaDao;
     private PreviewMediaAdapter similarMoviesAdapter;
     private TrailersAdapter trailersAdapter;
     private CastAdapter castAdapter;
@@ -81,22 +89,6 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
     private String path;
     private int movieId;
     private String name;
-
-    private TextView trailersLabel;
-    private TextView castLabel;
-    private TextView similarsLabel;
-    private RecyclerView trailers;
-    private RecyclerView similars;
-    private RecyclerView casts;
-
-    private ImageButton fav;
-
-    private FavoritePreviewMediaDao favoritePreviewMediaDao;
-
-    private CoordinatorLayout coordinatorLayout;
-    private Toolbar toolbar;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
 
     @Override
     public void onBackPressed() {
@@ -108,7 +100,7 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_media);
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         appBarLayout = findViewById(R.id.appbar);
         collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         setSupportActionBar(toolbar);
@@ -118,8 +110,10 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
                     collapsingToolbarLayout.setTitle(name);
+                    getWindow().setStatusBarColor(getResources().getColor(R.color.primaryDarkColor));
                 } else {
                     collapsingToolbarLayout.setTitle("");
+                    getWindow().setStatusBarColor(getResources().getColor(android.R.color.transparent));
                 }
             }
         });
@@ -127,6 +121,27 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
         this.favoritePreviewMediaDao = AppDatabaseHelper.getDatabase(this).getDao();
         movieId = getIntent().getIntExtra("id", 0);
         type = getIntent().getStringExtra("type");
+        ImageButton share = findViewById(R.id.share);
+        ImageButton backArrow = findViewById(R.id.back);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                Intent movieShareIntent = new Intent(Intent.ACTION_SEND);
+                movieShareIntent.setType("text/plain");
+                String extraText = "";
+                if (name != null) extraText += name + "\n";
+                extraText += tagline.getText().toString();
+                movieShareIntent.putExtra(Intent.EXTRA_TEXT, extraText);
+                startActivity(movieShareIntent);
+            }
+        });
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         progressBar = findViewById(R.id.progressBar);
         coordinatorLayout = findViewById(R.id.coordinator);
         scrollView = findViewById(R.id.entire_layout);

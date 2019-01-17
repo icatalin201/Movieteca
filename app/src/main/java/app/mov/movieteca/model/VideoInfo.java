@@ -1,16 +1,29 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Catalin on 12/21/2017.
  */
 
 public class VideoInfo {
 
+    @SerializedName("id")
     private String id;
+
+    @SerializedName("key")
     private String key;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("site")
     private String site;
+
+    @SerializedName("size")
     private Integer size;
+
+    @SerializedName("type")
     private String type;
 
     public VideoInfo(String id, String key, String name, String site, Integer size, String type) {

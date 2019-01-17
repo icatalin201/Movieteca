@@ -1,12 +1,17 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Catalin on 12/7/2017.
  */
 
 public class Genres {
 
+    @SerializedName("id")
     private Integer id;
+
+    @SerializedName("name")
     private String name;
 
     public Genres(Integer id, String name) {

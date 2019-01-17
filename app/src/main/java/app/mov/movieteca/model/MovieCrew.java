@@ -1,36 +1,51 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Catalin on 12/21/2017.
  */
 
 public class MovieCrew {
 
-    private String credit_id;
-    private String department;
-    private Integer gender;
-    private Integer id;
-    private String job;
-    private String name;
-    private String profile_path;
+    @SerializedName("credit_id")
+    private String creditId;
 
-    public MovieCrew(String credit_id, String department, Integer gender, Integer id,
-                     String job, String name, String profile_path) {
-        this.credit_id = credit_id;
+    @SerializedName("department")
+    private String department;
+
+    @SerializedName("gender")
+    private Integer gender;
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("job")
+    private String job;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("profile_path")
+    private String profilePath;
+
+    public MovieCrew(String creditId, String department, Integer gender, Integer id,
+                     String job, String name, String profilePath) {
+        this.creditId = creditId;
         this.department = department;
         this.gender = gender;
         this.id = id;
         this.job = job;
         this.name = name;
-        this.profile_path = profile_path;
+        this.profilePath = profilePath;
     }
 
-    public String getCredit_id() {
-        return credit_id;
+    public String getCreditId() {
+        return creditId;
     }
 
-    public void setCredit_id(String credit_id) {
-        this.credit_id = credit_id;
+    public void setCreditId(String creditId) {
+        this.creditId = creditId;
     }
 
     public String getDepartment() {
@@ -73,11 +88,11 @@ public class MovieCrew {
         this.name = name;
     }
 
-    public String getProfile_path() {
-        return profile_path;
+    public String getProfilePath() {
+        return profilePath;
     }
 
-    public void setProfile_path(String profile_path) {
-        this.profile_path = profile_path;
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
     }
 }

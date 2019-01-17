@@ -134,7 +134,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewMovieList1 = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getBackdropPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -142,7 +142,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         }
                         previewMediaAdapter.add(previewMovieList1);
                     }
-                    if (response.body().getTotal_pages().equals(response.body().getPage())){
+                    if (response.body().getTotalPages().equals(response.body().getPage())){
                         pagesOver = true;
                     }
                     else {
@@ -191,7 +191,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -199,7 +199,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         }
                         previewMediaAdapter.add(previewMovieList1);
                     }
-                    if (response.body().getTotal_pages().equals(response.body().getPage())){
+                    if (response.body().getTotalPages().equals(response.body().getPage())){
                         pagesOver = true;
                     }
                     else {

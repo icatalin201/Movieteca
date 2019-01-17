@@ -237,7 +237,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -265,7 +265,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -274,7 +274,7 @@ public class Home extends Fragment implements LoadHelper {
                         PreviewMovie previewMovie = getRandomMovie(previewMovieList1);
                         Glide.with(mainImage)
                                 .load(Util.Constants.IMAGE_LOADING_BASE_URL_1000
-                                        .concat(previewMovie.getBackdrop_path()))
+                                        .concat(previewMovie.getBackdropPath()))
                                 .apply(RequestOptions.centerCropTransform())
                                 .transition(DrawableTransitionOptions.withCrossFade())
                                 .into(mainImage);
@@ -302,7 +302,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -330,7 +330,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -352,7 +352,7 @@ public class Home extends Fragment implements LoadHelper {
 
         private PreviewTVShow getRandomTV(List<PreviewTVShow> previewTVShows) {
             PreviewTVShow previewMovie = previewTVShows.get(new Random().nextInt(previewTVShows.size()));
-            if (previewMovie.getBackdrop_path() == null) {
+            if (previewMovie.getBackdropPath() == null) {
                return getRandomTV(previewTVShows);
             }
             return previewMovie;
@@ -360,7 +360,7 @@ public class Home extends Fragment implements LoadHelper {
 
         private PreviewMovie getRandomMovie(List<PreviewMovie> previewMovies) {
             PreviewMovie previewMovie = previewMovies.get(new Random().nextInt(previewMovies.size()));
-            if (previewMovie.getBackdrop_path() == null) {
+            if (previewMovie.getBackdropPath() == null) {
                 return getRandomMovie(previewMovies);
             }
             return previewMovie;
@@ -378,7 +378,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewTVShows = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -406,7 +406,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewTVShows = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -415,11 +415,11 @@ public class Home extends Fragment implements LoadHelper {
                         PreviewTVShow previewMovie = getRandomTV(previewTVShows);
                         Glide.with(mainImage)
                                 .load(Util.Constants.IMAGE_LOADING_BASE_URL_1000
-                                        .concat(previewMovie.getBackdrop_path()))
+                                        .concat(previewMovie.getBackdropPath()))
                                 .apply(RequestOptions.centerCropTransform())
                                 .transition(DrawableTransitionOptions.withCrossFade())
                                 .into(mainImage);
-                        mainTitle.setText(previewMovie.getOriginal_name());
+                        mainTitle.setText(previewMovie.getOriginalName());
                         mainId = previewMovie.getId();
                         popularAdapter.add(previewTVShows);
                         loadHelper.onLoadComplete(true);
@@ -443,7 +443,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewTVShows = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -471,7 +471,7 @@ public class Home extends Fragment implements LoadHelper {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewTVShows = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);

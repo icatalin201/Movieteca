@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -117,7 +116,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                         : R.anim.down_from_top);
         favoriteViewHolder.itemView.startAnimation(animation);
         lastPosition = favoriteViewHolder.getAdapterPosition();
-
         FavoritePreviewMedia favoritePreviewMedia = mSortedList.get(i);
         if (favoritePreviewMedia.getPoster() != null) {
             Glide.with(context)
@@ -125,15 +123,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                     .apply(RequestOptions.centerCropTransform())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(favoriteViewHolder.image);
-            favoriteViewHolder.title.setVisibility(View.GONE);
         } else {
             Glide.with(context)
                     .load(R.drawable.ic_baseline_movie_creation_24px)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(favoriteViewHolder.image);
-            favoriteViewHolder.title.setVisibility(View.VISIBLE);
         }
-        favoriteViewHolder.title.setText(favoritePreviewMedia.getName());
     }
 
     @Override
@@ -145,13 +140,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
         private CardView item;
         private ImageView image;
-        private TextView title;
 
         FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
             item = itemView.findViewById(R.id.item);
             image = itemView.findViewById(R.id.image);
-            title = itemView.findViewById(R.id.title);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

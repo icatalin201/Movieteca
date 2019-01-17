@@ -1,5 +1,7 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,48 +10,69 @@ import java.util.List;
 
 public class TVShow {
 
-    private String backdrop_path;
-    private String first_air_date;
-    private List<Genres> genres;
-    private Integer id;
-    private String type;
-    private String original_name;
-    private Integer number_of_episodes;
-    private Integer number_of_seasons;
-    private String overview;
-    private String poster_path;
-    private Double vote_average;
+    @SerializedName("backdrop_path")
+    private String backdropPath;
 
-    public TVShow(String backdrop_path, String first_air_date,
-                  List<Genres> genres, Integer id, String type, String original_name,
-                  Integer number_of_episodes, Integer number_of_seasons, String overview, String poster_path, Double vote_average) {
-        this.backdrop_path = backdrop_path;
-        this.first_air_date = first_air_date;
+    @SerializedName("first_air_date")
+    private String firstAirDate;
+
+    @SerializedName("genres")
+    private List<Genres> genres;
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("type")
+    private String type;
+
+    @SerializedName("original_name")
+    private String originalName;
+
+    @SerializedName("number_of_episodes")
+    private Integer numberOfEpisodes;
+
+    @SerializedName("number_of_seasons")
+    private Integer numberOfSeasons;
+
+    @SerializedName("overview")
+    private String overview;
+
+    @SerializedName("poster_path")
+    private String posterPath;
+
+    @SerializedName("vote_average")
+    private Double voteAverage;
+
+    public TVShow(String backdropPath, String firstAirDate, List<Genres> genres, Integer id,
+                  String type, String originalName, Integer numberOfEpisodes,
+                  Integer numberOfSeasons, String overview, String posterPath, Double voteAverage) {
+        this.backdropPath = backdropPath;
+        this.firstAirDate = firstAirDate;
         this.genres = genres;
         this.id = id;
         this.type = type;
-        this.original_name = original_name;
-        this.number_of_episodes = number_of_episodes;
-        this.number_of_seasons = number_of_seasons;
+        this.originalName = originalName;
+        this.numberOfEpisodes = numberOfEpisodes;
+        this.numberOfSeasons = numberOfSeasons;
         this.overview = overview;
-        this.poster_path = poster_path;
-        this.vote_average = vote_average;
+        this.posterPath = posterPath;
+        this.voteAverage = voteAverage;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public String getFirst_air_date() {
-        return first_air_date;
+    public String getFirstAirDate() {
+        return firstAirDate;
     }
 
-    public void setFirst_air_date(String first_air_date) {
-        this.first_air_date = first_air_date;
+    public void setFirstAirDate(String firstAirDate) {
+        this.firstAirDate = firstAirDate;
     }
 
     public List<Genres> getGenres() {
@@ -76,28 +99,28 @@ public class TVShow {
         this.type = type;
     }
 
-    public String getOriginal_name() {
-        return original_name;
+    public String getOriginalName() {
+        return originalName;
     }
 
-    public void setOriginal_name(String original_name) {
-        this.original_name = original_name;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
-    public Integer getNumber_of_episodes() {
-        return number_of_episodes;
+    public Integer getNumberOfEpisodes() {
+        return numberOfEpisodes;
     }
 
-    public void setNumber_of_episodes(Integer number_of_episodes) {
-        this.number_of_episodes = number_of_episodes;
+    public void setNumberOfEpisodes(Integer numberOfEpisodes) {
+        this.numberOfEpisodes = numberOfEpisodes;
     }
 
-    public Integer getNumber_of_seasons() {
-        return number_of_seasons;
+    public Integer getNumberOfSeasons() {
+        return numberOfSeasons;
     }
 
-    public void setNumber_of_seasons(Integer number_of_seasons) {
-        this.number_of_seasons = number_of_seasons;
+    public void setNumberOfSeasons(Integer numberOfSeasons) {
+        this.numberOfSeasons = numberOfSeasons;
     }
 
     public String getOverview() {
@@ -108,19 +131,19 @@ public class TVShow {
         this.overview = overview;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    public Double getVote_average() {
-        return vote_average;
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setVote_average(Double vote_average) {
-        this.vote_average = vote_average;
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 }

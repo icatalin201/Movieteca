@@ -164,7 +164,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
                 JSONObject searchJsonObject = new JSONObject(jsonString.toString());
                 app.mov.movieteca.model.Search searchResponse = new app.mov.movieteca.model.Search();
                 searchResponse.setPage(searchJsonObject.getInt("page"));
-                searchResponse.setTotal_pages(searchJsonObject.getInt("total_pages"));
+                searchResponse.setTotalPages(searchJsonObject.getInt("total_pages"));
                 JSONArray resultsJsonArray = searchJsonObject.getJSONArray("results");
                 List<SearchResults> searchResults = new ArrayList<>();
                 for (int i = 0; i < resultsJsonArray.length(); i++) {
@@ -212,7 +212,7 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
             progressBar.setVisibility(View.GONE);
             recyclerView.setAlpha(1.0f);
             recyclerView.setVisibility(View.VISIBLE);
-            if (search.getPage().equals(search.getTotal_pages()))
+            if (search.getPage().equals(search.getTotalPages()))
                 pagesOver = true;
             else
                 presentPage++;

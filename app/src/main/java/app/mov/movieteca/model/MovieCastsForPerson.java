@@ -1,5 +1,7 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,43 +10,62 @@ import java.util.List;
 
 public class MovieCastsForPerson extends BaseMediaForPerson {
 
+    @SerializedName("character")
     private String character;
-    private String credit_id;
-    private String release_date;
-    private Integer vote_count;
-    private Boolean video;
-    private Boolean adult;
-    private Double vote_average;
-    private String title;
-    private List<Integer> genre_ids;
-    private String original_language;
-    private String original_title;
-    private Double popularity;
-    private Integer id;
-    private String backdrop_path;
-    private String overview;
-    private String poster_path;
 
-    public MovieCastsForPerson(String character, String credit_id, String release_date, Integer vote_count,
-                               Boolean video, Boolean adult, Double vote_average, String title,
-                               List<Integer> genre_ids, String original_language, String original_title,
-                               Double popularity, Integer id, String backdrop_path, String overview, String poster_path) {
+    @SerializedName("creditId")
+    private String creditId;
+
+    @SerializedName("release_date")
+    private String releaseDate;
+
+    @SerializedName("vote_count")
+    private Integer voteCount;
+
+    @SerializedName("vote_average")
+    private Double voteAverage;
+
+    @SerializedName("title")
+    private String title;
+
+    @SerializedName("genre_ids")
+    private List<Integer> genreIds;
+
+    @SerializedName("original_title")
+    private String originalTitle;
+
+    @SerializedName("popularity")
+    private Double popularity;
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("backdrop_path")
+    private String backdropPath;
+
+    @SerializedName("overview")
+    private String overview;
+
+    @SerializedName("poster_path")
+    private String posterPath;
+
+    public MovieCastsForPerson(String character, String creditId, String releaseDate,
+                               Integer voteCount, Double voteAverage, String title,
+                               List<Integer> genreIds, String originalTitle, Double popularity,
+                               Integer id, String backdropPath, String overview, String posterPath) {
         this.character = character;
-        this.credit_id = credit_id;
-        this.release_date = release_date;
-        this.vote_count = vote_count;
-        this.video = video;
-        this.adult = adult;
-        this.vote_average = vote_average;
+        this.creditId = creditId;
+        this.releaseDate = releaseDate;
+        this.voteCount = voteCount;
+        this.voteAverage = voteAverage;
         this.title = title;
-        this.genre_ids = genre_ids;
-        this.original_language = original_language;
-        this.original_title = original_title;
+        this.genreIds = genreIds;
+        this.originalTitle = originalTitle;
         this.popularity = popularity;
         this.id = id;
-        this.backdrop_path = backdrop_path;
+        this.backdropPath = backdropPath;
         this.overview = overview;
-        this.poster_path = poster_path;
+        this.posterPath = posterPath;
     }
 
     public String getCharacter() {
@@ -55,52 +76,36 @@ public class MovieCastsForPerson extends BaseMediaForPerson {
         this.character = character;
     }
 
-    public String getCredit_id() {
-        return credit_id;
+    public String getCreditId() {
+        return creditId;
     }
 
-    public void setCredit_id(String credit_id) {
-        this.credit_id = credit_id;
+    public void setCreditId(String creditId) {
+        this.creditId = creditId;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public Integer getVote_count() {
-        return vote_count;
+    public Integer getVoteCount() {
+        return voteCount;
     }
 
-    public void setVote_count(Integer vote_count) {
-        this.vote_count = vote_count;
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
     }
 
-    public Boolean getVideo() {
-        return video;
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setVideo(Boolean video) {
-        this.video = video;
-    }
-
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
-    public Double getVote_average() {
-        return vote_average;
-    }
-
-    public void setVote_average(Double vote_average) {
-        this.vote_average = vote_average;
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     public String getTitle() {
@@ -111,28 +116,20 @@ public class MovieCastsForPerson extends BaseMediaForPerson {
         this.title = title;
     }
 
-    public List<Integer> getGenre_ids() {
-        return genre_ids;
+    public List<Integer> getGenreIds() {
+        return genreIds;
     }
 
-    public void setGenre_ids(List<Integer> genre_ids) {
-        this.genre_ids = genre_ids;
+    public void setGenreIds(List<Integer> genreIds) {
+        this.genreIds = genreIds;
     }
 
-    public String getOriginal_language() {
-        return original_language;
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
-    public void setOriginal_language(String original_language) {
-        this.original_language = original_language;
-    }
-
-    public String getOriginal_title() {
-        return original_title;
-    }
-
-    public void setOriginal_title(String original_title) {
-        this.original_title = original_title;
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
     }
 
     public Double getPopularity() {
@@ -151,12 +148,12 @@ public class MovieCastsForPerson extends BaseMediaForPerson {
         this.id = id;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
     public String getOverview() {
@@ -167,11 +164,11 @@ public class MovieCastsForPerson extends BaseMediaForPerson {
         this.overview = overview;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 }

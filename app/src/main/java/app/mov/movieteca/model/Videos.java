@@ -1,5 +1,7 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,10 @@ import java.util.List;
 
 public class Videos {
 
+    @SerializedName("id")
     private Integer id;
+
+    @SerializedName("results")
     private List<VideoInfo> results;
 
     public Videos(Integer id, List<VideoInfo> results) {

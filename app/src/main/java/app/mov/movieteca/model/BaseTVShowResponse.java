@@ -1,17 +1,22 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class BaseTVShowResponse extends BaseResponse {
 
+    @SerializedName("results")
     private List<PreviewTVShow> results;
 
-    public BaseTVShowResponse(Integer page, List<PreviewTVShow> results,
-                              Integer total_results, Integer total_pages) {
-        this.page = page;
+    public BaseTVShowResponse() { }
+
+    public BaseTVShowResponse(List<PreviewTVShow> results, Integer totalPages,
+                              Integer totalResults, Integer page) {
         this.results = results;
-        this.total_results = total_results;
-        this.total_pages = total_pages;
+        this.totalPages = totalPages;
+        this.totalResults = totalResults;
+        this.page = page;
     }
 
     public List<PreviewTVShow> getResults() {

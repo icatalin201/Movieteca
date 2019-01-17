@@ -1,14 +1,23 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Catalin on 12/24/2017.
  */
 
 public class SearchResults {
 
+    @SerializedName("id")
     private Integer id;
+
+    @SerializedName("poster")
     private String poster;
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("media_type")
     private String mediaType;
 
     public SearchResults() {}

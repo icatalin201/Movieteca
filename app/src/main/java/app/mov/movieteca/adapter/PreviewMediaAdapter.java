@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -78,19 +76,10 @@ public class PreviewMediaAdapter extends RecyclerView.Adapter<PreviewMediaAdapte
         String path;
         if (previewMedia.getType().equals(Util.Constants.MOVIE))  {
             path = Util.Constants.IMAGE_LOADING_BASE_URL_780
-                    .concat(((PreviewMovie) previewMedia).getPoster_path());
+                    .concat(((PreviewMovie) previewMedia).getPosterPath());
         } else {
-            if (!fulllist) {
-                ViewGroup.LayoutParams params = mediaViewHolder.item.getLayoutParams();
-                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250,
-                        context.getResources().getDisplayMetrics());
-                mediaViewHolder.item.setLayoutParams(params);
-            }
             path = Util.Constants.IMAGE_LOADING_BASE_URL_780
-                    .concat(((PreviewTVShow) previewMedia).getBackdrop_path());
-            String title = ((PreviewTVShow) previewMedia).getOriginal_name();
-            mediaViewHolder.title.setText(title);
-            mediaViewHolder.title.setVisibility(View.VISIBLE);
+                    .concat(((PreviewTVShow) previewMedia).getPosterPath());
         }
 
         Glide.with(context)
@@ -109,13 +98,11 @@ public class PreviewMediaAdapter extends RecyclerView.Adapter<PreviewMediaAdapte
 
         private CardView item;
         private ImageView image;
-        private TextView title;
 
         MediaViewHolder(@NonNull View itemView) {
             super(itemView);
             item = itemView.findViewById(R.id.item);
             image = itemView.findViewById(R.id.image);
-            title = itemView.findViewById(R.id.title);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -58,6 +58,7 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private List<FavoritePreviewMedia> favoritePreviewMedia = new ArrayList<>();
+    private AppDatabase appDatabase;
 
     @Nullable
     @Override
@@ -80,6 +81,7 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
                 .loadLayoutAnimation(activity, R.anim.layout_animation_down));
         favoriteAdapter = new FavoriteAdapter(activity, ALPHABETICAL_COMPARATOR);
         recyclerView.setAdapter(favoriteAdapter);
+        appDatabase = AppDatabaseHelper.getDatabase(getActivity());
         new LoadData().execute();
         return view;
     }
@@ -88,6 +90,12 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
     public void onResume() {
         super.onResume();
         toolbar.setTitle(favOptions[position]);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        appDatabase.close();
     }
 
     @Override
@@ -121,7 +129,6 @@ public class Favorites extends Fragment implements SearchView.OnQueryTextListene
         private FavoritePreviewMediaDao favoritePreviewMediaDao;
 
         LoadData() {
-            AppDatabase appDatabase = AppDatabaseHelper.getDatabase(getActivity());
             favoritePreviewMediaDao = appDatabase.getDao();
         }
 

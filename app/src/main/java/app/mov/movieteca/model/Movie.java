@@ -1,5 +1,7 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,57 +10,74 @@ import java.util.List;
 
 public class Movie {
 
-    private Boolean adult;
+    @SerializedName("budget")
     private Integer budget;
-    private List<Genres> genres;
-    private Integer id;
-    private String imdb_id;
-    private String original_language;
-    private String original_title;
-    private String overview;
-    private Double popularity;
-    private String backdrop_path;
-    private String poster_path;
-    private String release_date;
-    private Integer revenue;
-    private Integer runtime;
-    private String status;
-    private String tagline;
-    private String title;
-    private Double vote_average;
-    private Integer vote_count;
 
-    public Movie(Boolean adult, Integer budget, List<Genres> genres, Integer id, String imdb_id,
-                 String original_language, String original_title, String overview, Double popularity,
-                 String backdrop_path, String poster_path, String release_date, Integer revenue,
-                 Integer runtime, String status, String tagline, String title, Double vote_average, Integer vote_count) {
-        this.adult = adult;
+    @SerializedName("genres")
+    private List<Genres> genres;
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("imdb_id")
+    private String imdbId;
+
+    @SerializedName("original_title")
+    private String originalTitle;
+
+    @SerializedName("overview")
+    private String overview;
+
+    @SerializedName("popularity")
+    private Double popularity;
+
+    @SerializedName("backdrop_path")
+    private String backdropPath;
+
+    @SerializedName("poster_path")
+    private String posterPath;
+
+    @SerializedName("release_date")
+    private String releaseDate;
+
+    @SerializedName("revenue")
+    private Integer revenue;
+
+    @SerializedName("runtime")
+    private Integer runtime;
+
+    @SerializedName("tagline")
+    private String tagline;
+
+    @SerializedName("title")
+    private String title;
+
+    @SerializedName("vote_average")
+    private Double voteAverage;
+
+    @SerializedName("vote_count")
+    private Integer voteCount;
+
+    public Movie(Integer budget, List<Genres> genres, Integer id, String imdbId, String originalTitle,
+                 String overview, Double popularity, String backdropPath, String posterPath,
+                 String releaseDate, Integer revenue, Integer runtime, String tagline, String title,
+                 Double voteAverage, Integer voteCount) {
         this.budget = budget;
         this.genres = genres;
         this.id = id;
-        this.imdb_id = imdb_id;
-        this.original_language = original_language;
-        this.original_title = original_title;
+        this.imdbId = imdbId;
+        this.originalTitle = originalTitle;
         this.overview = overview;
         this.popularity = popularity;
-        this.backdrop_path = backdrop_path;
-        this.poster_path = poster_path;
-        this.release_date = release_date;
+        this.backdropPath = backdropPath;
+        this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
         this.revenue = revenue;
         this.runtime = runtime;
-        this.status = status;
         this.tagline = tagline;
         this.title = title;
-        this.vote_average = vote_average;
-        this.vote_count = vote_count;
-    }
-
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
     }
 
     public Integer getBudget() {
@@ -85,28 +104,20 @@ public class Movie {
         this.id = id;
     }
 
-    public String getImdb_id() {
-        return imdb_id;
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setImdb_id(String imdb_id) {
-        this.imdb_id = imdb_id;
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
-    public String getOriginal_language() {
-        return original_language;
+    public String getOriginalTitle() {
+        return originalTitle;
     }
 
-    public void setOriginal_language(String original_language) {
-        this.original_language = original_language;
-    }
-
-    public String getOriginal_title() {
-        return original_title;
-    }
-
-    public void setOriginal_title(String original_title) {
-        this.original_title = original_title;
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
     }
 
     public String getOverview() {
@@ -125,28 +136,28 @@ public class Movie {
         this.popularity = popularity;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public String getPosterPath() {
+        return posterPath;
     }
 
-    public void setPoster_path(String poster_path) {
-        this.poster_path = poster_path;
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
-    public String getRelease_date() {
-        return release_date;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Integer getRevenue() {
@@ -165,14 +176,6 @@ public class Movie {
         this.runtime = runtime;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getTagline() {
         return tagline;
     }
@@ -189,19 +192,19 @@ public class Movie {
         this.title = title;
     }
 
-    public Double getVote_average() {
-        return vote_average;
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setVote_average(Double vote_average) {
-        this.vote_average = vote_average;
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
-    public Integer getVote_count() {
-        return vote_count;
+    public Integer getVoteCount() {
+        return voteCount;
     }
 
-    public void setVote_count(Integer vote_count) {
-        this.vote_count = vote_count;
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
     }
 }

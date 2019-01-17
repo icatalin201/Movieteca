@@ -31,6 +31,7 @@ import java.util.List;
 
 import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.PersonMediaAdapter;
+import app.mov.movieteca.database.AppDatabase;
 import app.mov.movieteca.database.AppDatabaseHelper;
 import app.mov.movieteca.model.BaseMediaForPerson;
 import app.mov.movieteca.model.FavoritePreviewMedia;
@@ -73,6 +74,14 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
     private String path;
     private FavoritePreviewMediaDao favoritePreviewMediaDao;
 
+    private AppDatabase appDatabase;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        appDatabase.close();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +92,8 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
         appBarLayout = findViewById(R.id.appbar);
         collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         count = 0;
-        this.favoritePreviewMediaDao = AppDatabaseHelper.getDatabase(this).getDao();
+        appDatabase = AppDatabaseHelper.getDatabase(this);
+        this.favoritePreviewMediaDao = appDatabase.getDao();
         castId = getIntent().getIntExtra(Util.Constants.CAST_ID, 0);
         progressBar = findViewById(R.id.progressBar);
         layout = findViewById(R.id.cast_layout);
@@ -227,15 +237,15 @@ public class CastActivity extends AppCompatActivity implements LoadHelper {
                         Person person = response.body();
                         setTitle(person.getName());
                         bio.setText(person.getBiography());
-                        birthplace.setText(String.format("Birthplace: %s", person.getPlace_of_birth()));
+                        birthplace.setText(String.format("Birthplace: %s", person.getPlaceOfBirth()));
                         String g = person.getGender() == 1 ? "Female" : "Male";
                         gender.setText(String.format("Gender: %s", g));
                         name.setText(person.getName());
-                        if (person.getProfile_path() != null) {
-                            path = person.getProfile_path();
+                        if (person.getProfilePath() != null) {
+                            path = person.getProfilePath();
                             Glide.with(CastActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_780
-                                            .concat(person.getProfile_path()))
+                                            .concat(person.getProfilePath()))
                                     .apply(RequestOptions.circleCropTransform())
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(image);

@@ -1,6 +1,6 @@
 package app.mov.movieteca.model;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Catalin on 12/24/2017.
@@ -8,18 +8,49 @@ import java.util.List;
 
 public class PreviewTVShow extends PreviewMedia {
 
+    @SerializedName("id")
     private Integer id;
-    private String backdrop_path;
-    private Double vote_average;
-    private List<Integer> genre_ids;
-    private String original_name;
 
-    public PreviewTVShow(Integer id, String backdrop_path, Double vote_average, List<Integer> genre_ids, String original_name) {
+    @SerializedName("backdrop_path")
+    private String backdropPath;
+
+    @SerializedName("vote_average")
+    private Double voteAverage;
+
+    @SerializedName("vote_count")
+    private Integer voteCount;
+
+    @SerializedName("overview")
+    private String overview;
+
+    @SerializedName("first_air_date")
+    private String firstAirDate;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("poster_path")
+    private String posterPath;
+
+    @SerializedName("popularity")
+    private Double popularity;
+
+    @SerializedName("original_name")
+    private String originalName;
+
+    public PreviewTVShow(Integer id, String backdropPath, Double voteAverage, Integer voteCount,
+                         String overview, String firstAirDate, String name, String posterPath,
+                         Double popularity, String originalName) {
         this.id = id;
-        this.backdrop_path = backdrop_path;
-        this.vote_average = vote_average;
-        this.genre_ids = genre_ids;
-        this.original_name = original_name;
+        this.backdropPath = backdropPath;
+        this.voteAverage = voteAverage;
+        this.voteCount = voteCount;
+        this.overview = overview;
+        this.firstAirDate = firstAirDate;
+        this.name = name;
+        this.posterPath = posterPath;
+        this.popularity = popularity;
+        this.originalName = originalName;
     }
 
     public Integer getId() {
@@ -30,35 +61,75 @@ public class PreviewTVShow extends PreviewMedia {
         this.id = id;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public Double getVote_average() {
-        return vote_average;
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setVote_average(Double vote_average) {
-        this.vote_average = vote_average;
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
-    public List<Integer> getGenre_ids() {
-        return genre_ids;
+    public Integer getVoteCount() {
+        return voteCount;
     }
 
-    public void setGenre_ids(List<Integer> genre_ids) {
-        this.genre_ids = genre_ids;
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
     }
 
-    public String getOriginal_name() {
-        return original_name;
+    public String getOverview() {
+        return overview;
     }
 
-    public void setOriginal_name(String original_name) {
-        this.original_name = original_name;
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public String getFirstAirDate() {
+        return firstAirDate;
+    }
+
+    public void setFirstAirDate(String firstAirDate) {
+        this.firstAirDate = firstAirDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 }

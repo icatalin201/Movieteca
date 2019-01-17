@@ -47,9 +47,9 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     @Override
     public void onBindViewHolder(@NonNull CastViewHolder castViewHolder, int i) {
         MovieCast movieCast = castList.get(i);
-        if (movieCast.getProfile_path() != null) {
+        if (movieCast.getProfilePath() != null) {
             Glide.with(context)
-                    .load(Util.Constants.IMAGE_LOADING_BASE_URL_342.concat(movieCast.getProfile_path()))
+                    .load(Util.Constants.IMAGE_LOADING_BASE_URL_342.concat(movieCast.getProfilePath()))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions.circleCropTransform())
                     .into(castViewHolder.castImage);

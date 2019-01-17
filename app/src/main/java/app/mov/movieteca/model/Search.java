@@ -1,5 +1,7 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -8,17 +10,16 @@ import java.util.List;
 
 public class Search {
 
+    @SerializedName("page")
     private Integer page;
+
+    @SerializedName("results")
     private List<SearchResults> results;
-    private Integer total_pages;
+
+    @SerializedName("total_pages")
+    private Integer totalPages;
 
     public Search() {}
-
-    public Search(Integer page, List<SearchResults> results, Integer total_pages) {
-        this.page = page;
-        this.results = results;
-        this.total_pages = total_pages;
-    }
 
     public Integer getPage() {
         return page;
@@ -36,11 +37,11 @@ public class Search {
         this.results = results;
     }
 
-    public Integer getTotal_pages() {
-        return total_pages;
+    public Integer getTotalPages() {
+        return totalPages;
     }
 
-    public void setTotal_pages(Integer total_pages) {
-        this.total_pages = total_pages;
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 }

@@ -1,11 +1,18 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Credits {
 
+    @SerializedName("id")
     private Integer id;
+
+    @SerializedName("cast")
     private List<MovieCast> cast;
+
+    @SerializedName("crew")
     private List<MovieCrew> crew;
 
     public Credits() { }

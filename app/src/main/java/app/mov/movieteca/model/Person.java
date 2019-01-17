@@ -1,32 +1,51 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Catalin on 12/23/2017.
  */
 
 public class Person {
 
+    @SerializedName("biography")
     private String biography;
-    private String birthday;
-    private String deathday;
-    private Integer gender;
-    private Integer id;
-    private String imdb_id;
-    private String name;
-    private String place_of_birth;
-    private String profile_path;
 
-    public Person(String biography, String birthday, String deathday, Integer gender, Integer id,
-                  String imdb_id, String name, String place_of_birth, String profile_path) {
+    @SerializedName("birthday")
+    private String birthday;
+
+    @SerializedName("deathday")
+    private String deathday;
+
+    @SerializedName("gender")
+    private Integer gender;
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("imdb_id")
+    private String imdbId;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("place_of_birth")
+    private String placeOfBirth;
+
+    @SerializedName("profile_path")
+    private String profilePath;
+
+    public Person(String biography, String birthday, String deathday, Integer gender,
+                  Integer id, String imdbId, String name, String placeOfBirth, String profilePath) {
         this.biography = biography;
         this.birthday = birthday;
         this.deathday = deathday;
         this.gender = gender;
         this.id = id;
-        this.imdb_id = imdb_id;
+        this.imdbId = imdbId;
         this.name = name;
-        this.place_of_birth = place_of_birth;
-        this.profile_path = profile_path;
+        this.placeOfBirth = placeOfBirth;
+        this.profilePath = profilePath;
     }
 
     public String getBiography() {
@@ -69,12 +88,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getImdb_id() {
-        return imdb_id;
+    public String getImdbId() {
+        return imdbId;
     }
 
-    public void setImdb_id(String imdb_id) {
-        this.imdb_id = imdb_id;
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
     }
 
     public String getName() {
@@ -85,19 +104,19 @@ public class Person {
         this.name = name;
     }
 
-    public String getPlace_of_birth() {
-        return place_of_birth;
+    public String getPlaceOfBirth() {
+        return placeOfBirth;
     }
 
-    public void setPlace_of_birth(String place_of_birth) {
-        this.place_of_birth = place_of_birth;
+    public void setPlaceOfBirth(String placeOfBirth) {
+        this.placeOfBirth = placeOfBirth;
     }
 
-    public String getProfile_path() {
-        return profile_path;
+    public String getProfilePath() {
+        return profilePath;
     }
 
-    public void setProfile_path(String profile_path) {
-        this.profile_path = profile_path;
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
     }
 }

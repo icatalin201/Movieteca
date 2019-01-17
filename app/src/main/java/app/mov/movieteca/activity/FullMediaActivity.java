@@ -31,6 +31,7 @@ import app.mov.movieteca.R;
 import app.mov.movieteca.adapter.CastAdapter;
 import app.mov.movieteca.adapter.PreviewMediaAdapter;
 import app.mov.movieteca.adapter.TrailersAdapter;
+import app.mov.movieteca.database.AppDatabase;
 import app.mov.movieteca.database.AppDatabaseHelper;
 import app.mov.movieteca.model.BaseMovieResponse;
 import app.mov.movieteca.model.BaseTVShowResponse;
@@ -90,10 +91,18 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
     private int movieId;
     private String name;
 
+    private AppDatabase appDatabase;
+
     @Override
     public void onBackPressed() {
         setResult(1);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        appDatabase.close();
     }
 
     @Override
@@ -116,7 +125,8 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
             }
         });
         count = 0;
-        this.favoritePreviewMediaDao = AppDatabaseHelper.getDatabase(this).getDao();
+        appDatabase = AppDatabaseHelper.getDatabase(this);
+        this.favoritePreviewMediaDao = appDatabase.getDao();
         movieId = getIntent().getIntExtra("id", 0);
         type = getIntent().getStringExtra("type");
         ImageButton share = findViewById(R.id.share);
@@ -273,13 +283,13 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                 public void onResponse(Call<Movie> call, Response<Movie> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         Movie movie = response.body();
-                        path = movie.getPoster_path();
+                        path = movie.getPosterPath();
                         title.setText(movie.getTitle());
                         name = movie.getTitle();
-                        if (movie.getBackdrop_path() != null) {
+                        if (movie.getBackdropPath() != null) {
                             Glide.with(FullMediaActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_1000
-                                            .concat(movie.getBackdrop_path()))
+                                            .concat(movie.getBackdropPath()))
                                     .apply(RequestOptions.centerCropTransform())
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageBackdrop);
@@ -289,10 +299,10 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageBackdrop);
                         }
-                        if (movie.getPoster_path() != null) {
+                        if (movie.getPosterPath() != null) {
                             Glide.with(FullMediaActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_780
-                                            .concat(movie.getPoster_path()))
+                                            .concat(movie.getPosterPath()))
                                     .apply(RequestOptions.centerCropTransform())
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imagePoster);
@@ -317,14 +327,14 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                                     Util.formatValue(movie.getRevenue())));
                             revenue.setVisibility(View.VISIBLE);
                         }
-                        if (movie.getRelease_date() != null && !movie.getRelease_date().equals("")){
+                        if (movie.getReleaseDate() != null && !movie.getReleaseDate().equals("")){
                             releaseDate.setText(String.format("Release date: %s",
-                                    Util.convertDateFromFormatToFormat(movie.getRelease_date(),
+                                    Util.convertDateFromFormatToFormat(movie.getReleaseDate(),
                                             Util.DateFormats.INVERSE_FORMAT,
                                             Util.DateFormats.STANDARD_FORMAT)));
                             releaseDate.setVisibility(View.VISIBLE);
                         }
-                        rating.setText(String.valueOf(movie.getVote_average()));
+                        rating.setText(String.valueOf(movie.getVoteAverage()));
                         if (movie.getTagline() != null) {
                             tagline.setText(movie.getTagline());
                             tagline.setVisibility(View.VISIBLE);
@@ -361,7 +371,7 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                         List<PreviewMovie> previewMovieList = response.body().getResults();
                         List<PreviewMovie> previewMovieList1 = new ArrayList<>();
                         for (PreviewMovie previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getPoster_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);
@@ -433,13 +443,13 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                 public void onResponse(Call<TVShow> call, Response<TVShow> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         TVShow movie = response.body();
-                        path = movie.getPoster_path();
-                        title.setText(movie.getOriginal_name());
-                        name = movie.getOriginal_name();
-                        if (movie.getBackdrop_path() != null) {
+                        path = movie.getPosterPath();
+                        title.setText(movie.getOriginalName());
+                        name = movie.getOriginalName();
+                        if (movie.getBackdropPath() != null) {
                             Glide.with(FullMediaActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_1000
-                                            .concat(movie.getBackdrop_path()))
+                                            .concat(movie.getBackdropPath()))
                                     .apply(RequestOptions.centerCropTransform())
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageBackdrop);
@@ -449,10 +459,10 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageBackdrop);
                         }
-                        if (movie.getPoster_path() != null) {
+                        if (movie.getPosterPath() != null) {
                             Glide.with(FullMediaActivity.this)
                                     .load(Util.Constants.IMAGE_LOADING_BASE_URL_780
-                                            .concat(movie.getPoster_path()))
+                                            .concat(movie.getPosterPath()))
                                     .apply(RequestOptions.centerCropTransform())
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imagePoster);
@@ -462,23 +472,23 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                                     .transition(DrawableTransitionOptions.withCrossFade())
                                     .into(imageBackdrop);
                         }
-                        if (movie.getNumber_of_episodes() != null){
+                        if (movie.getNumberOfEpisodes() != null){
                             budget.setText(String.format("Number of episodes: %s",
-                                    movie.getNumber_of_episodes()));
+                                    movie.getNumberOfEpisodes()));
                             budget.setVisibility(View.VISIBLE);
                         }
-                        if (movie.getNumber_of_seasons() != null){
+                        if (movie.getNumberOfSeasons() != null){
                             runtime.setText(String.format("Number of seasons: %s",
-                                    movie.getNumber_of_seasons()));
+                                    movie.getNumberOfSeasons()));
                             runtime.setVisibility(View.VISIBLE);
                         }
-                        if (movie.getFirst_air_date() != null){
+                        if (movie.getFirstAirDate() != null){
                             releaseDate.setText(String.format("First air date: %s",
-                                    Util.convertDateFromFormatToFormat(movie.getFirst_air_date(),
+                                    Util.convertDateFromFormatToFormat(movie.getFirstAirDate(),
                                     Util.DateFormats.INVERSE_FORMAT,
                                     Util.DateFormats.STANDARD_FORMAT)));
                         }
-                        rating.setText(String.valueOf(movie.getVote_average()));
+                        rating.setText(String.valueOf(movie.getVoteAverage()));
                         overview.setText(movie.getOverview());
                         String genre = "";
                         if (movie.getGenres() != null) {
@@ -511,7 +521,7 @@ public class FullMediaActivity extends AppCompatActivity implements LoadHelper {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewMovieList1 = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdrop_path() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);

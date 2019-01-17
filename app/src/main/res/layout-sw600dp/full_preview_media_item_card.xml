@@ -12,35 +12,11 @@
     app:cardElevation="4dp"
     app:cardCornerRadius="4dp">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/image"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name_motto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/image"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/app_name_motto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </FrameLayout>
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/title"
-            android:background="@color/primaryDarkColorT"
-            android:layout_alignParentBottom="true"
-            android:padding="8dp"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textColor="@color/colorWhite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </android.support.v7.widget.CardView>

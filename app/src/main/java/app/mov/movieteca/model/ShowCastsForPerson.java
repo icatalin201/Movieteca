@@ -1,22 +1,34 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Catalin on 12/23/2017.
  */
 
 public class ShowCastsForPerson extends BaseMediaForPerson {
 
+    @SerializedName("id")
     private Integer id;
-    private String backdrop_path;
-    private String credit_id;
-    private String original_name;
+
+    @SerializedName("backdrop_path")
+    private String backdropPath;
+
+    @SerializedName("credit_id")
+    private String creditId;
+
+    @SerializedName("original_name")
+    private String originalName;
+
+    @SerializedName("character")
     private String character;
 
-    public ShowCastsForPerson(Integer id, String backdrop_path, String credit_id, String original_name, String character) {
+    public ShowCastsForPerson(Integer id, String backdropPath,
+                              String creditId, String originalName, String character) {
         this.id = id;
-        this.backdrop_path = backdrop_path;
-        this.credit_id = credit_id;
-        this.original_name = original_name;
+        this.backdropPath = backdropPath;
+        this.creditId = creditId;
+        this.originalName = originalName;
         this.character = character;
     }
 
@@ -28,28 +40,28 @@ public class ShowCastsForPerson extends BaseMediaForPerson {
         this.id = id;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
-    public String getCredit_id() {
-        return credit_id;
+    public String getCreditId() {
+        return creditId;
     }
 
-    public void setCredit_id(String credit_id) {
-        this.credit_id = credit_id;
+    public void setCreditId(String creditId) {
+        this.creditId = creditId;
     }
 
-    public String getOriginal_name() {
-        return original_name;
+    public String getOriginalName() {
+        return originalName;
     }
 
-    public void setOriginal_name(String original_name) {
-        this.original_name = original_name;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     public String getCharacter() {

@@ -1,25 +1,32 @@
 package app.mov.movieteca.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class BaseResponse {
 
-    Integer total_results;
-    Integer total_pages;
+    @SerializedName("total_results")
+    Integer totalResults;
+
+    @SerializedName("total_pages")
+    Integer totalPages;
+
+    @SerializedName("page")
     Integer page;
 
-    public Integer getTotal_results() {
-        return total_results;
+    public Integer getTotalResults() {
+        return totalResults;
     }
 
-    public void setTotal_results(Integer total_results) {
-        this.total_results = total_results;
+    public void setTotalResults(Integer totalResults) {
+        this.totalResults = totalResults;
     }
 
-    public Integer getTotal_pages() {
-        return total_pages;
+    public Integer getTotalPages() {
+        return totalPages;
     }
 
-    public void setTotal_pages(Integer total_pages) {
-        this.total_pages = total_pages;
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 
     public Integer getPage() {

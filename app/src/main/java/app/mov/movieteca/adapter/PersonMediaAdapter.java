@@ -53,16 +53,18 @@ public class PersonMediaAdapter extends RecyclerView.Adapter<PersonMediaAdapter.
         String path = null;
         BaseMediaForPerson model = list.get(i);
         if (model.getType().equals(Util.Constants.MOVIE)) {
-            title = ((MovieCastsForPerson) model).getOriginal_title();
+            title = ((MovieCastsForPerson) model).getOriginalTitle();
             role = ((MovieCastsForPerson) model).getCharacter();
-            if (((MovieCastsForPerson) model).getBackdrop_path() != null) {
-                path = Util.Constants.IMAGE_LOADING_BASE_URL_780.concat(((MovieCastsForPerson) model).getBackdrop_path());
+            if (((MovieCastsForPerson) model).getBackdropPath() != null) {
+                path = Util.Constants.IMAGE_LOADING_BASE_URL_780
+                        .concat(((MovieCastsForPerson) model).getBackdropPath());
             }
         } else {
-            title = ((ShowCastsForPerson) model).getOriginal_name();
+            title = ((ShowCastsForPerson) model).getOriginalName();
             role = ((ShowCastsForPerson) model).getCharacter();
-            if (((ShowCastsForPerson) model).getBackdrop_path() != null) {
-                path = Util.Constants.IMAGE_LOADING_BASE_URL_780.concat(((ShowCastsForPerson) model).getBackdrop_path());
+            if (((ShowCastsForPerson) model).getBackdropPath() != null) {
+                path = Util.Constants.IMAGE_LOADING_BASE_URL_780
+                        .concat(((ShowCastsForPerson) model).getBackdropPath());
             }
         }
         if (path != null) {

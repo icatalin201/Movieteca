@@ -6,8 +6,8 @@ android {
         applicationId "app.mov.movieteca"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 20
-        versionName "2.0"
+        versionCode 23
+        versionName "2.3"
     }
     buildTypes {
         release {

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -75,7 +74,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(searchViewHolder.image);
         }
-        searchViewHolder.title.setText(searchResults.getName());
     }
 
     @Override
@@ -93,13 +91,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         private CardView item;
         private ImageView image;
-        private TextView title;
 
         SearchViewHolder(@NonNull View itemView) {
             super(itemView);
             item = itemView.findViewById(R.id.item);
             image = itemView.findViewById(R.id.image);
-            title = itemView.findViewById(R.id.title);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

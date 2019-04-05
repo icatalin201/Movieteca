@@ -134,7 +134,7 @@ public class PreviewFullListActivity extends AppCompatActivity {
                         List<PreviewTVShow> previewMovieList = response.body().getResults();
                         List<PreviewTVShow> previewMovieList1 = new ArrayList<>();
                         for (PreviewTVShow previewMovie : previewMovieList) {
-                            if (previewMovie == null || previewMovie.getBackdropPath() == null) {
+                            if (previewMovie == null || previewMovie.getPosterPath() == null) {
                                 continue;
                             }
                             previewMovie.setType(type);

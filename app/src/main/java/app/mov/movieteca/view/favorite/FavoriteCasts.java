@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class FavoriteCast extends Fragment {
+public class FavoriteCasts extends Fragment {
 
     @BindView(R.id.no_content)
     TextView noContent;
@@ -42,8 +42,9 @@ public class FavoriteCast extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite_movies, container, false);
         unbinder = ButterKnife.bind(this, view);
-        favoriteAdapter = new FavoriteAdapter(getContext(), Favorites.ALPHABETICAL_COMPARATOR);
+        favoriteAdapter = new FavoriteAdapter(getContext());
         recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(favoriteAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setLayoutAnimation(AnimationUtils
                 .loadLayoutAnimation(getContext(), R.anim.layout_animation_down));
@@ -61,9 +62,11 @@ public class FavoriteCast extends Fragment {
             favoriteAdapter.add(favoritePreviewMedia);
             if (favoritePreviewMedia.size() == 0) {
                 noContent.setVisibility(View.VISIBLE);
+            } else {
+                noContent.setVisibility(View.GONE);
             }
         });
-        favoriteViewModel.getFavorites(Constants.MOVIE);
+        favoriteViewModel.getFavorites(Constants.ACTOR);
         return view;
     }
 

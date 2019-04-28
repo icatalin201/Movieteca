@@ -1,4 +1,4 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 

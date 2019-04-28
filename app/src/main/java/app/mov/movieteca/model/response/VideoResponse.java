@@ -1,4 +1,4 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Catalin on 12/20/2017.
  */
 
-public class Videos {
+public class VideoResponse {
 
     @SerializedName("id")
     private Integer id;
@@ -16,7 +16,7 @@ public class Videos {
     @SerializedName("results")
     private List<VideoInfo> results;
 
-    public Videos(Integer id, List<VideoInfo> results) {
+    public VideoResponse(Integer id, List<VideoInfo> results) {
         this.id = id;
         this.results = results;
     }

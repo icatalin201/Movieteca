@@ -1,4 +1,4 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -35,18 +35,8 @@ public class Person {
     @SerializedName("profile_path")
     private String profilePath;
 
-    public Person(String biography, String birthday, String deathday, Integer gender,
-                  Integer id, String imdbId, String name, String placeOfBirth, String profilePath) {
-        this.biography = biography;
-        this.birthday = birthday;
-        this.deathday = deathday;
-        this.gender = gender;
-        this.id = id;
-        this.imdbId = imdbId;
-        this.name = name;
-        this.placeOfBirth = placeOfBirth;
-        this.profilePath = profilePath;
-    }
+    @SerializedName("popularity")
+    private double popularity;
 
     public String getBiography() {
         return biography;
@@ -118,5 +108,13 @@ public class Person {
 
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
+    }
+
+    public double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
     }
 }

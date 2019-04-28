@@ -1,4 +1,4 @@
-package app.mov.movieteca.mvp.view.adapter;
+package app.mov.movieteca.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,20 +9,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import app.mov.movieteca.R;
-import app.mov.movieteca.mvp.model.SearchResults;
-import app.mov.movieteca.mvp.view.activity.CastActivity;
-import app.mov.movieteca.mvp.view.activity.FullMediaActivity;
-import app.mov.movieteca.util.Util;
+import app.mov.movieteca.model.SearchResults;
+import app.mov.movieteca.util.Constants;
+import app.mov.movieteca.view.cast.CastActivity;
+import app.mov.movieteca.view.movie.MovieActivity;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
 
@@ -48,7 +49,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @NonNull
     @Override
     public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.full_preview_media_item_card,
+        View view = LayoutInflater.from(context).inflate(R.layout.media_item_card,
                 viewGroup, false);
         return new SearchViewHolder(view);
     }
@@ -64,7 +65,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         SearchResults searchResults = searchResultsList.get(i);
         if (searchResults.getPoster() != null) {
             Glide.with(context)
-                    .load(Util.Constants.IMAGE_LOADING_BASE_URL_780.concat(searchResults.getPoster()))
+                    .load(Constants.IMAGE_LOADING_BASE_URL_780.concat(searchResults.getPoster()))
                     .apply(RequestOptions.centerCropTransform())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(searchViewHolder.image);
@@ -101,14 +102,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 public void onClick(View view) {
                     Intent intent = null;
                     SearchResults searchResults = searchResultsList.get(getAdapterPosition());
-                    if (searchResults.getMediaType().equals(Util.Constants.MOVIE) ||
-                            searchResults.getMediaType().equals(Util.Constants.TV_SHOW)) {
-                        intent = new Intent(context, FullMediaActivity.class);
+                    if (searchResults.getMediaType().equals(Constants.MOVIE) ||
+                            searchResults.getMediaType().equals(Constants.TV_SHOW)) {
+                        intent = new Intent(context, MovieActivity.class);
                         intent.putExtra("id", searchResults.getId());
                         intent.putExtra("type", searchResults.getMediaType());
-                    } else if (searchResults.getMediaType().equals(Util.Constants.ACTOR)) {
+                    } else if (searchResults.getMediaType().equals(Constants.ACTOR)) {
                         intent = new Intent(context, CastActivity.class);
-                        intent.putExtra(Util.Constants.CAST_ID, searchResults.getId());
+                        intent.putExtra("id", searchResults.getId());
                     }
                     if (intent != null) {
                         context.startActivity(intent);

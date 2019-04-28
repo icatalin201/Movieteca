@@ -1,4 +1,4 @@
-package app.mov.movieteca.view.home;
+package app.mov.movieteca.view.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -8,17 +8,18 @@ import java.util.List;
 import java.util.ListIterator;
 
 import javax.inject.Inject;
+
 import app.mov.movieteca.application.Movieteca;
-import app.mov.movieteca.model.PreviewMovie;
 import app.mov.movieteca.model.response.BaseMovieResponse;
-import app.mov.movieteca.model.Genre;
+import app.mov.movieteca.model.response.Genre;
+import app.mov.movieteca.model.response.PreviewMovie;
 import app.mov.movieteca.repository.GenreRepository;
 import app.mov.movieteca.repository.MovieRepository;
-import app.mov.movieteca.util.ListUtils;
+import app.mov.movieteca.util.Utils;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class HomeMovieViewModel extends ViewModel {
+public class MoviesViewModel extends ViewModel {
 
     private final MediatorLiveData<List<PreviewMovie>> popular = new MediatorLiveData<>();
     private final MediatorLiveData<List<PreviewMovie>> upcoming = new MediatorLiveData<>();
@@ -61,7 +62,7 @@ public class HomeMovieViewModel extends ViewModel {
         return genres;
     }
 
-    public HomeMovieViewModel() {
+    public MoviesViewModel() {
         Movieteca.getApplicationComponent().inject(this);
         isLoading.setValue(true);
     }
@@ -91,7 +92,7 @@ public class HomeMovieViewModel extends ViewModel {
         return true;
     }
 
-    public void findNowPlayingMovies(Integer page, String region) {
+    private void findNowPlayingMovies(Integer page, String region) {
         Disposable disposable = movieRepository
                 .findNowPlayingMovies(page, region)
                 .map(BaseMovieResponse::getResults)
@@ -103,13 +104,13 @@ public class HomeMovieViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void findPopularMovies(Integer page, String region) {
+    private void findPopularMovies(Integer page, String region) {
         Disposable disposable = movieRepository
                 .findPopularMovies(page, region)
                 .map(BaseMovieResponse::getResults)
                 .filter(this::filterList)
                 .subscribe(previewMovies -> {
-                    PreviewMovie previewMovie = ListUtils.getRandomMovie(previewMovies);
+                    PreviewMovie previewMovie = Utils.getRandomMovie(previewMovies);
                     mainItem.setValue(previewMovie);
                     popular.setValue(previewMovies);
                     onComplete();
@@ -117,7 +118,7 @@ public class HomeMovieViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void findTopRatedMovies(Integer page, String region) {
+    private void findTopRatedMovies(Integer page, String region) {
         Disposable disposable = movieRepository
                 .findTopRatedMovies(page, region)
                 .map(BaseMovieResponse::getResults)
@@ -129,7 +130,7 @@ public class HomeMovieViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void findUpcomingMovies(Integer page, String region) {
+    private void findUpcomingMovies(Integer page, String region) {
         Disposable disposable = movieRepository
                 .findUpcomingMovies(page, region)
                 .map(BaseMovieResponse::getResults)
@@ -141,7 +142,7 @@ public class HomeMovieViewModel extends ViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void findGenres() {
+    private void findGenres() {
         Disposable disposable = genreRepository
                 .findGenresForMovies()
                 .subscribe(genres1 -> {

@@ -1,10 +1,10 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Credits {
+public class CreditsResponse {
 
     @SerializedName("id")
     private Integer id;
@@ -15,9 +15,9 @@ public class Credits {
     @SerializedName("crew")
     private List<MovieCrew> crew;
 
-    public Credits() { }
+    public CreditsResponse() { }
 
-    public Credits(Integer id, List<MovieCast> cast, List<MovieCrew> crew) {
+    public CreditsResponse(Integer id, List<MovieCast> cast, List<MovieCrew> crew) {
         this.id = id;
         this.cast = cast;
         this.crew = crew;

@@ -1,5 +1,7 @@
-package app.mov.movieteca.view.fragment;
+package app.mov.movieteca.view.search;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,30 +18,57 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 import app.mov.movieteca.R;
-import app.mov.movieteca.model.SearchResults;
-import app.mov.movieteca.view.adapter.SearchAdapter;
+import app.mov.movieteca.model.response.Genre;
+import app.mov.movieteca.model.response.PreviewMovie;
+import app.mov.movieteca.view.adapter.GenreAdapter;
+import app.mov.movieteca.view.adapter.PreviewMovieAdapter;
+import app.mov.movieteca.view.movie.MovieActivity;
+import app.mov.movieteca.view.viewmodel.SearchViewModel;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class Search extends Fragment implements SearchView.OnQueryTextListener {
+public class Search extends Fragment
+        implements SearchView.OnQueryTextListener, GenreAdapter.OnItemClickListener,
+        PreviewMovieAdapter.OnItemClickedListener {
 
-    private String query;
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
-    private SearchAdapter searchAdapter;
+    @BindView(R.id.recycler)
+    RecyclerView genreRecycler;
+    @BindView(R.id.search_recycler)
+    RecyclerView searchRecycler;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     private SearchView searchView;
+    private GenreAdapter genreAdapter;
+    private Unbinder unbinder;
+    private AppCompatActivity appCompatActivity;
+    private SearchViewModel searchViewModel;
+    private PreviewMovieAdapter previewMovieAdapter;
 
-    private boolean pagesOver = false;
     private int presentPage = 1;
     private boolean loading = true;
     private int previousTotal = 0;
     private int visibleThreshold = 5;
-    private TextView label;
+    private String query, genre;
+    private boolean searchMode = true;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        appCompatActivity = (AppCompatActivity) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        unbinder.unbind();
+    }
 
     @Nullable
     @Override
@@ -48,21 +76,42 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        unbinder = ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
+        searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        searchViewModel.subscribeGenres();
         Toolbar toolbar = view.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        Objects.requireNonNull(activity).setSupportActionBar(toolbar);
-        recyclerView = view.findViewById(R.id.search);
-        progressBar = view.findViewById(R.id.progressBar);
-        label = view.findViewById(R.id.label);
-        searchAdapter = new SearchAdapter(getActivity(), new ArrayList<SearchResults>());
-        recyclerView.setAdapter(searchAdapter);
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutAnimation(AnimationUtils
-                .loadLayoutAnimation(getActivity(), R.anim.layout_animation_down));
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        appCompatActivity.setSupportActionBar(toolbar);
+        genreAdapter = new GenreAdapter(this);
+        previewMovieAdapter = new PreviewMovieAdapter(this, appCompatActivity, true);
+        genreRecycler.setLayoutManager(new LinearLayoutManager(appCompatActivity,
+                LinearLayoutManager.HORIZONTAL, false));
+        genreRecycler.setHasFixedSize(true);
+        genreRecycler.setAdapter(genreAdapter);
+        genreRecycler.setLayoutAnimation(AnimationUtils
+                .loadLayoutAnimation(appCompatActivity, R.anim.layout_animation_down));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(appCompatActivity, 3);
+        searchRecycler.setLayoutManager(gridLayoutManager);
+        searchRecycler.setHasFixedSize(true);
+        searchRecycler.setAdapter(previewMovieAdapter);
+        searchRecycler.setLayoutAnimation(AnimationUtils
+                .loadLayoutAnimation(appCompatActivity, R.anim.layout_animation_down));
+        toolbar.setTitle(R.string.search);
+        searchViewModel.getIsLoading().observe(this, isLoading -> {
+            if (isLoading) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+        searchViewModel.getMoviesGenre().observe(this, genres -> {
+            genreAdapter.add(genres);
+        });
+        searchViewModel.getSearch().observe(this, previewMovies -> {
+            previewMovieAdapter.add(previewMovies);
+            presentPage++;
+        });
+        searchRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
 
@@ -76,19 +125,21 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
                         previousTotal = totalItemCount;
                     }
                 }
-                if (!loading && (totalItemCount - visibleItemCount) <=
-                        (firstVisibleItem + visibleThreshold)) {
-                    loadData();
+                if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                    if (searchMode) {
+                        searchViewModel.findMovies(presentPage, query);
+                    } else {
+                        searchViewModel.find(presentPage, genre);
+                    }
                     loading = true;
                 }
             }
         });
-        toolbar.setTitle(R.string.search);
         return view;
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) menuItem.getActionView();
@@ -99,30 +150,39 @@ public class Search extends Fragment implements SearchView.OnQueryTextListener {
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        label.setVisibility(View.GONE);
+        previewMovieAdapter.clear();
+        searchMode = true;
         query = s;
-        pagesOver = false;
-        presentPage = 1;
-        loading = true;
-        previousTotal = 0;
-        visibleThreshold = 5;
-        loadData();
+        searchViewModel.findMovies(1, query);
         searchView.clearFocus();
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
-
         return true;
     }
 
-    private void loadData() {
-        if (pagesOver) return;
-        progressBar.setVisibility(View.VISIBLE);
-        recyclerView.setAlpha(0.3f);
-//        new LoadData().execute();
+    @Override
+    public void onItemClick(Genre genre) {
+//        String genres = genre.getId().toString();
+//        Intent intent = new Intent(appCompatActivity, GenreMovieActivity.class);
+//        intent.putExtra("title",  genre.getName());
+//        intent.putExtra("genre", genres);
+//        startActivity(intent);
+        previewMovieAdapter.clear();
+        searchMode = false;
+        this.genre = genre.getId().toString();
+        searchViewModel.find(1, this.genre);
     }
+
+    @Override
+    public void onClick(PreviewMovie previewMovie) {
+        Intent intent = new Intent(appCompatActivity, MovieActivity.class);
+        intent.putExtra("id", previewMovie.getId());
+        startActivity(intent);
+    }
+
 
 //    @SuppressLint("StaticFieldLeak")
 //    private class LoadData extends AsyncTask<Void, Void, app.mov.movieteca.model.Search> {

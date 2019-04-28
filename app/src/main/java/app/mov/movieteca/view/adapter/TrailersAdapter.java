@@ -1,35 +1,42 @@
-package app.mov.movieteca.mvp.view.adapter;
+package app.mov.movieteca.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import app.mov.movieteca.R;
-import app.mov.movieteca.mvp.model.VideoInfo;
-import app.mov.movieteca.util.Util;
+import app.mov.movieteca.model.response.VideoInfo;
+import app.mov.movieteca.util.Constants;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailersViewHolder> {
 
     private Context context;
-    private List<VideoInfo> videosList;
+    private List<VideoInfo> videosList = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
 
-    public TrailersAdapter(Context context, List<VideoInfo> videosList) {
+    public interface OnItemClickListener {
+        void onClick(VideoInfo videoInfo);
+    }
+
+    public TrailersAdapter(Context context, OnItemClickListener onItemClickListener) {
         this.context = context;
-        this.videosList = videosList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     public void add(List<VideoInfo> videosList) {
@@ -49,9 +56,9 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         VideoInfo videoInfo = videosList.get(i);
         if (videoInfo.getKey() != null) {
             Glide.with(context)
-                    .load(Util.Constants.YOUTUBE_THUMBNAIL_BASE_URL
+                    .load(Constants.YOUTUBE_THUMBNAIL_BASE_URL
                             .concat(videoInfo.getKey())
-                            .concat(Util.Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY))
+                            .concat(Constants.YOUTUBE_THUMBNAIL_IMAGE_QUALITY))
                     .apply(RequestOptions.centerCropTransform())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(trailersViewHolder.trailerImage);
@@ -77,26 +84,20 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
     class TrailersViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView trailerImage;
-        private LinearLayout trailerCard;
-        private TextView trailerInfo;
+        @BindView(R.id.trailer_image)
+        ImageView trailerImage;
+        @BindView(R.id.trailer_info)
+        TextView trailerInfo;
 
 
         TrailersViewHolder(@NonNull View itemView) {
             super(itemView);
-            trailerCard = itemView.findViewById(R.id.trailer_card);
-            trailerImage = itemView.findViewById(R.id.trailer_image);
-            trailerInfo = itemView.findViewById(R.id.trailer_info);
+            ButterKnife.bind(this, itemView);
+        }
 
-            trailerCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse(Util.Constants.YOUTUBE_WATCH_BASE_URL +
-                                    videosList.get(getAdapterPosition()).getKey()));
-                    context.startActivity(intent);
-                }
-            });
+        @OnClick(R.id.trailer_card)
+        void onClick() {
+            onItemClickListener.onClick(videosList.get(getAdapterPosition()));
         }
     }
 }

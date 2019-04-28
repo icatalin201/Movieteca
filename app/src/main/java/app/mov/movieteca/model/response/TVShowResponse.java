@@ -1,4 +1,4 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Catalin on 12/20/2017.
  */
 
-public class TVShow extends Media {
+public class TVShowResponse {
 
     @SerializedName("backdrop_path")
     private String backdropPath;
@@ -17,7 +17,7 @@ public class TVShow extends Media {
     private String firstAirDate;
 
     @SerializedName("genres")
-    private List<Genres> genres;
+    private List<Genre> genres;
 
     @SerializedName("id")
     private Integer id;
@@ -43,9 +43,9 @@ public class TVShow extends Media {
     @SerializedName("vote_average")
     private Double voteAverage;
 
-    public TVShow(String backdropPath, String firstAirDate, List<Genres> genres, Integer id,
-                  String type, String originalName, Integer numberOfEpisodes,
-                  Integer numberOfSeasons, String overview, String posterPath, Double voteAverage) {
+    public TVShowResponse(String backdropPath, String firstAirDate, List<Genre> genres, Integer id,
+                          String type, String originalName, Integer numberOfEpisodes,
+                          Integer numberOfSeasons, String overview, String posterPath, Double voteAverage) {
         this.backdropPath = backdropPath;
         this.firstAirDate = firstAirDate;
         this.genres = genres;
@@ -75,11 +75,11 @@ public class TVShow extends Media {
         this.firstAirDate = firstAirDate;
     }
 
-    public List<Genres> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genres> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 

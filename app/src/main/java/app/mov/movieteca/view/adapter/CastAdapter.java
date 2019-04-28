@@ -1,35 +1,43 @@
-package app.mov.movieteca.mvp.view.adapter;
+package app.mov.movieteca.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import app.mov.movieteca.R;
-import app.mov.movieteca.mvp.model.MovieCast;
-import app.mov.movieteca.mvp.view.activity.CastActivity;
-import app.mov.movieteca.util.Util;
+import app.mov.movieteca.model.response.MovieCast;
+import app.mov.movieteca.util.Constants;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
 
     private Context context;
-    private List<MovieCast> castList;
+    private List<MovieCast> castList = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
 
-    public CastAdapter(Context context, List<MovieCast> castList) {
+    public interface OnItemClickListener {
+        void onClick(MovieCast movieCast);
+    }
+
+    public CastAdapter(Context context, OnItemClickListener onItemClickListener) {
         this.context = context;
-        this.castList = castList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     public void add(List<MovieCast> movieCasts) {
@@ -49,7 +57,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         MovieCast movieCast = castList.get(i);
         if (movieCast.getProfilePath() != null) {
             Glide.with(context)
-                    .load(Util.Constants.IMAGE_LOADING_BASE_URL_342.concat(movieCast.getProfilePath()))
+                    .load(Constants.IMAGE_LOADING_BASE_URL_342.concat(movieCast.getProfilePath()))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions.circleCropTransform())
                     .into(castViewHolder.castImage);
@@ -74,27 +82,23 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     class CastViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView castName;
-        private TextView castMovieName;
-        private ImageView castImage;
-        private CardView castCard;
+        @BindView(R.id.cast_name)
+        TextView castName;
+        @BindView(R.id.cast_movie_name)
+        TextView castMovieName;
+        @BindView(R.id.image_view_cast)
+        ImageView castImage;
+        @BindView(R.id.cast_card)
+        CardView castCard;
 
         CastViewHolder(@NonNull View itemView) {
             super(itemView);
-            castName = itemView.findViewById(R.id.cast_name);
-            castMovieName = itemView.findViewById(R.id.cast_movie_name);
-            castImage = itemView.findViewById(R.id.image_view_cast);
-            castCard = itemView.findViewById(R.id.cast_card);
-            castName.setSelected(true);
-            castMovieName.setSelected(true);
-            castCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, CastActivity.class);
-                    intent.putExtra(Util.Constants.CAST_ID, castList.get(getAdapterPosition()).getId());
-                    context.startActivity(intent);
-                }
-            });
+            ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick(R.id.cast_card)
+        void onClick() {
+            onItemClickListener.onClick(castList.get(getAdapterPosition()));
         }
     }
 }

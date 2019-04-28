@@ -1,4 +1,4 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Catalin on 12/23/2017.
  */
 
-public class ShowCastsForPerson extends BaseMediaForPerson {
+public class ShowCastsForPerson {
 
     @SerializedName("id")
     private Integer id;

@@ -1,4 +1,4 @@
-package app.mov.movieteca.model;
+package app.mov.movieteca.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,13 +8,13 @@ import java.util.List;
  * Created by Catalin on 12/7/2017.
  */
 
-public class Movie extends Media {
+public class MovieResponse {
 
     @SerializedName("budget")
     private Integer budget;
 
     @SerializedName("genres")
-    private List<Genres> genres;
+    private List<Genre> genres;
 
     @SerializedName("id")
     private Integer id;
@@ -58,10 +58,10 @@ public class Movie extends Media {
     @SerializedName("vote_count")
     private Integer voteCount;
 
-    public Movie(Integer budget, List<Genres> genres, Integer id, String imdbId, String originalTitle,
-                 String overview, Double popularity, String backdropPath, String posterPath,
-                 String releaseDate, Integer revenue, Integer runtime, String tagline, String title,
-                 Double voteAverage, Integer voteCount) {
+    public MovieResponse(Integer budget, List<Genre> genres, Integer id, String imdbId, String originalTitle,
+                         String overview, Double popularity, String backdropPath, String posterPath,
+                         String releaseDate, Integer revenue, Integer runtime, String tagline, String title,
+                         Double voteAverage, Integer voteCount) {
         this.budget = budget;
         this.genres = genres;
         this.id = id;
@@ -88,11 +88,11 @@ public class Movie extends Media {
         this.budget = budget;
     }
 
-    public List<Genres> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(List<Genres> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 

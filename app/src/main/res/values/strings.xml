@@ -38,4 +38,22 @@
     <string name="alert">This app doesn`t allow you to watch movies!\n"Piracy is illegal."</string>
     <string name="share">Share</string>
     <string name="rate">Rating</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Need a TMDb Account? Sign up</string>
+    <string name="guest">Continue as Guest</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="genres">Genres</string>
+    <string name="profile">Profile</string>
+    <string name="airing_today">Airing today</string>
+    <string name="on_the_air">On the air</string>
+    <string name="my_rated_movies">My rated Movies</string>
+    <string name="my_rated_tv_shows">My rated TV Shows</string>
+    <string name="logout">Logout</string>
+    <string name="reviews">Reviews</string>
+    <string name="see_more">See more</string>
+    <string name="main">Main</string>
+    <string name="latest_movie">Latest Movie</string>
+    <string name="popular_casts">Popular Casts</string>
+    <string name="latest_tv_show">Latest TV Show</string>
 </resources>

@@ -9,7 +9,7 @@
         <intent
             android:action="android.intent.action.LAUNCH_FAVORITES"
             android:targetPackage="app.mov.movieteca"
-            android:targetClass="app.mov.movieteca.activity.MainActivity">
+            android:targetClass="app.mov.movieteca.view.MainActivity">
         </intent>
     </shortcut>
 </shortcuts>

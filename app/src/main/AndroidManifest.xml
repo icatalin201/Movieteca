@@ -1,47 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="app.mov.movieteca">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".application.Movieteca"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppThemeSplash">
+        android:theme="@style/AppThemeSplash"
+        android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeSplash"
-            android:name=".activity.Splash">
+            android:theme="@style/AppThemeFull" />
+        <activity
+            android:name=".view.Splash"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
+            android:name=".view.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeFull"
-            android:name=".activity.MainActivity" />
+            android:theme="@style/AppThemeFull" />
+        <activity
+            android:name=".view.tvshow.FullShowListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFull" />
+        <activity
+            android:name=".view.movie.FullMovieListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFull" />
+        <activity
+            android:name=".view.movie.GenreMovieActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeFull" />
         <activity
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeFull"
-            android:name=".activity.PreviewFullListActivity" />
+            android:name=".view.tvshow.GenreShowActivity"/>
         <activity
+            android:name=".view.movie.MovieActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeMedia"
-            android:name=".activity.FullMediaActivity" />
+            android:theme="@style/AppThemeMedia" />
         <activity
+            android:name=".view.tvshow.ShowActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeMedia"
-            android:name=".activity.CastActivity" />
+            android:theme="@style/AppThemeMedia" />
+        <activity
+            android:name=".view.cast.CastActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeMedia" />
     </application>
 
 </manifest>

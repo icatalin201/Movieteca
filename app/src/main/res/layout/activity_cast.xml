@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
-    tools:context=".activity.CastActivity">
+    tools:context=".view.cast.CastActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-        android:visibility="gone"
         android:background="@color/primaryColor"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="@color/primaryColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_collapseMode="parallax"
                 android:layout_width="match_parent"
                 android:layout_height="250dp">
@@ -128,21 +127,19 @@
 
                 </LinearLayout>
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 app:layout_collapseMode="pin"
                 android:background="@android:color/transparent"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+                android:layout_height="?attr/actionBarSize"/>
 
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -154,13 +151,12 @@
         android:indeterminateTint="@color/colorWhite"
         android:visibility="visible"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/cast_layout"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:scrollbars="none"
-        android:visibility="gone"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -192,7 +188,6 @@
 
             <TextView
                 android:id="@+id/movies_label"
-                android:visibility="gone"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
@@ -203,7 +198,7 @@
                 android:textColor="@color/colorWhite"
                 android:text="@string/role_movie"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/movie_role_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -211,7 +206,6 @@
             <TextView
                 android:id="@+id/shows_label"
                 android:paddingTop="8dp"
-                android:visibility="gone"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
                 android:paddingBottom="8dp"
@@ -221,7 +215,7 @@
                 android:textColor="@color/colorWhite"
                 android:text="@string/role_show"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/show_role_recycler"
                 android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
@@ -230,6 +224,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

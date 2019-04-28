@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:theme="@style/AppTheme.Toolbar"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorWhite"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/layout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:text="@string/popular_casts"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_popular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.3"
+                    android:background="@color/colorGray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:text="@string/latest_movie"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/movie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/movie_image"
+                        android:layout_width="150dp"
+                        android:layout_height="200dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/movie_title"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintTop_toTopOf="@id/movie_image"
+                        app:layout_constraintStart_toEndOf="@id/movie_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="0dp"
+                        android:padding="16dp"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/movie_overview"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintTop_toBottomOf="@id/movie_title"
+                        app:layout_constraintStart_toEndOf="@id/movie_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/movie_image"
+                        android:ellipsize="end"
+                        android:minLines="5"
+                        android:maxLines="7"
+                        android:layout_width="0dp"
+                        android:padding="16dp"
+                        android:layout_height="0dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:alpha="0.3"
+                    android:background="@color/colorGray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:text="@string/latest_tv_show"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/show"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/show_image"
+                        android:layout_width="150dp"
+                        android:layout_height="200dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/show_title"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintTop_toTopOf="@id/show_image"
+                        app:layout_constraintStart_toEndOf="@id/show_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="0dp"
+                        android:padding="16dp"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/show_overview"
+                        app:layout_constraintTop_toBottomOf="@id/show_title"
+                        app:layout_constraintStart_toEndOf="@id/show_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintBottom_toBottomOf="@id/show_image"
+                        android:ellipsize="end"
+                        android:minLines="5"
+                        android:maxLines="7"
+                        android:layout_width="0dp"
+                        android:padding="16dp"
+                        android:layout_height="0dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

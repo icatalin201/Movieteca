@@ -116,6 +116,7 @@ public class UserViewModel extends ViewModel {
                         accountAvatar.setGravatar(accountGravatar);
                         account.setAvatar(accountAvatar);
                         account.setName("Guest");
+                        account.setUsername("guest");
                         shared.storeObject(Shared.ACCOUNT_KEY, account);
                         this.account.setValue(account);
                     } else {

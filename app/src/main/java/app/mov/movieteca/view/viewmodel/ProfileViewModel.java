@@ -120,8 +120,7 @@ public class ProfileViewModel extends ViewModel {
     }
 
     public void logout() {
-        shared.clearObject(Shared.GUEST_KEY);
-        shared.clearObject(Shared.SESSION_KEY);
+        shared.clear();
     }
 
 }

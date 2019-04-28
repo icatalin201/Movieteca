@@ -8,7 +8,6 @@ import app.mov.movieteca.model.response.BaseMovieResponse;
 import app.mov.movieteca.model.response.CreditsResponse;
 import app.mov.movieteca.model.response.FavoriteResponse;
 import app.mov.movieteca.model.response.MovieResponse;
-import app.mov.movieteca.model.response.PreviewMovie;
 import app.mov.movieteca.model.response.ReviewResponse;
 import app.mov.movieteca.model.response.VideoResponse;
 import io.reactivex.Single;

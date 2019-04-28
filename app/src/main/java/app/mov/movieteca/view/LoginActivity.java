@@ -62,10 +62,12 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         });
         userViewModel.getAccount().observe(this, account -> {
-            new Thread(() -> {
-                userViewModel.loadFavoriteMovies();
-                userViewModel.loadFavoriteShows();
-            }).start();
+            if (account.getId() != 0) {
+                new Thread(() -> {
+                    userViewModel.loadFavoriteMovies();
+                    userViewModel.loadFavoriteShows();
+                }).start();
+            }
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });

@@ -47,8 +47,10 @@ public class MovieViewModel extends ViewModel {
         Movieteca.getApplicationComponent().inject(this);
         Account account = shared.getObject(Shared.ACCOUNT_KEY, null, Account.class);
         accountId = account.getId();
-        SessionResponse sessionResponse = shared.getObject(Shared.SESSION_KEY, null, SessionResponse.class);
-        sessionId = sessionResponse.getSessionId();
+        if (accountId != 0) {
+            SessionResponse sessionResponse = shared.getObject(Shared.SESSION_KEY, null, SessionResponse.class);
+            sessionId = sessionResponse.getSessionId();
+        }
     }
 
     public MediatorLiveData<List<Review>> getReviews() {

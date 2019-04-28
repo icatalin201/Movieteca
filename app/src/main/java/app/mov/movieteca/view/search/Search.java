@@ -150,11 +150,13 @@ public class Search extends Fragment
 
     @Override
     public boolean onQueryTextSubmit(String s) {
+        presentPage = 1;
         previewMovieAdapter.clear();
         searchMode = true;
         query = s;
         searchViewModel.findMovies(1, query);
         searchView.clearFocus();
+        searchRecycler.scrollToPosition(0);
         return true;
     }
 
@@ -170,10 +172,12 @@ public class Search extends Fragment
 //        intent.putExtra("title",  genre.getName());
 //        intent.putExtra("genre", genres);
 //        startActivity(intent);
+        presentPage = 1;
         previewMovieAdapter.clear();
         searchMode = false;
         this.genre = genre.getId().toString();
-        searchViewModel.find(1, this.genre);
+        searchRecycler.scrollToPosition(0);
+        searchViewModel.find(presentPage, this.genre);
     }
 
     @Override
